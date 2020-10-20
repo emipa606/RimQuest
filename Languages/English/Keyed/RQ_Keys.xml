@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
-<RQ_LoadingScreen>Setting Quest Giver...</RQ_LoadingScreen>
-<RQ_SilverAmt>{0} silver</RQ_SilverAmt>
-<RQ_CannotQuest>Cannot check for quests</RQ_CannotQuest>
-<RQ_QuestWith>Check for quests with {0}</RQ_QuestWith>
-<RQ_QuestOpportunity>Quest Opportunity</RQ_QuestOpportunity>
-<RQ_QuestDialog>{0} approaches {1} and speaks for a while. While {1} has [PAWN_possessive] own business to attend to, [PAWN_pronoun] tells {0} about a few opportunities [PAWN_pronoun] has heard about while traveling through the area. [PAWN_pronoun] does not have time to attend to everything, and [PAWN_pronoun] offers to share an opportunity in exchange for some silver ({2} total).\n\nWhich one will {0} ask about?</RQ_QuestDialog>
-<RQ_QuestDialogTwo>{0} writes down a rough map. [PAWN_pronoun] informs {1} how and where to get started.</RQ_QuestDialogTwo>
-<RQ_LackFunds>Not Enough Silver</RQ_LackFunds>
-<RQ_LackFundsMessage>Your colony doesn't have enough silver.</RQ_LackFundsMessage>
+  <RQ_LoadingScreen>Setting Quest Giver...</RQ_LoadingScreen>
+  <RQ_SilverAmt>{0} silver</RQ_SilverAmt>
+  <RQ_CannotQuest>Cannot check for quests</RQ_CannotQuest>
+  <RQ_QuestWith>Check for quests with {0}</RQ_QuestWith>
+  <RQ_QuestOpportunity>Quest Opportunity</RQ_QuestOpportunity>
+  <RQ_QuestDialog>{0} approaches {1} and speaks for a while. While {1} has [PAWN_possessive] own business to attend to, [PAWN_pronoun] tells {0} about a few opportunities [PAWN_pronoun] has heard about while traveling through the area. [PAWN_pronoun] does not have time to attend to everything, and [PAWN_pronoun] offers to share an opportunity in exchange for some silver ({2} total).\n\nWhich one will {0} ask about?</RQ_QuestDialog>
+  <RQ_QuestDialogTwo>{0} writes down the specifics of the quest. [PAWN_pronoun] informs {1} how to get started.</RQ_QuestDialogTwo>
+  <RQ_LackFunds>Not Enough Silver</RQ_LackFunds>
+  <RQ_LackFundsMessage>Your colony doesn't have enough silver.</RQ_LackFundsMessage>
 
 </LanguageData>

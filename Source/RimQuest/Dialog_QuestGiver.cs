@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -10,7 +11,7 @@ namespace RimQuest
 {
     public class Dialog_QuestGiver : Window
     {
-        private string title = "RQ_QuestOpportunity".Translate();
+        private readonly string title = "RQ_QuestOpportunity".Translate();
 
         private const float TitleHeight = 42f;
 
@@ -28,11 +29,11 @@ namespace RimQuest
 
         public Pawn interactor;
 
-        public IncidentDef selectedIncident = null;
+        public QuestScriptDef selectedQuest = null;
 
         private Vector2 scrollPosition = Vector2.zero;
 
-        private float creationRealTime = -1f;
+        private readonly float creationRealTime = -1f;
 
         private string text => "RQ_QuestDialog".Translate(interactor.LabelShort, questPawn.pawn.LabelShort, actualSilverCost);
 
@@ -60,8 +61,7 @@ namespace RimQuest
         private int DetermineSilverCost()
         {
             var currentSilver = defaultSilverCost; //50
-            var priceFactorBuy_TraderPriceFactor =
-                (float) questPawn.pawn.Faction.RelationWith(Faction.OfPlayer).goodwill;
+            var priceFactorBuy_TraderPriceFactor =                (float)questPawn.pawn.Faction.RelationWith(Faction.OfPlayer).goodwill;
             priceFactorBuy_TraderPriceFactor += (priceFactorBuy_TraderPriceFactor < 0f) ? 0f : 100f;
             priceFactorBuy_TraderPriceFactor *= (priceFactorBuy_TraderPriceFactor < 0f) ? -1f : 1f;
             priceFactorBuy_TraderPriceFactor *= 0.005f;
@@ -74,7 +74,7 @@ namespace RimQuest
             currentSilver = Mathf.Max(currentSilver, 1);
             currentSilver /= priceGain_PlayerNegotiator;
 
-            currentSilver = currentSilver + (currentSilver * priceFactorBuy_TraderPriceFactor *
+            currentSilver += (currentSilver * priceFactorBuy_TraderPriceFactor *
                                              (1f + Find.Storyteller.difficulty.tradePriceFactorLoss));
             currentSilver = Mathf.Min(currentSilver, 200f);
             return Mathf.RoundToInt(currentSilver);
@@ -105,19 +105,29 @@ namespace RimQuest
                 this.text.AdjustedFor(questPawn.pawn));
             for (var index = 0; index < questPawn.quests.Count; index++)
             {
-                IncidentDef incidentDef = questPawn.quests[index];
+                QuestScriptDef questScriptDef = questPawn.quests[index];
+                var defname = questScriptDef.defName;
+                if(defname.Contains("_"))
+                {
+                    defname = questScriptDef.defName.Split('_')[1];
+                }
+                if(questScriptDef.defName.Contains("Hospitality"))
+                {
+                    defname = questScriptDef.defName.Replace("_", " ");
+                }
+                var questName = Regex.Replace(defname, "(\\B[A-Z])", " $1");
                 Rect rect6 = new Rect(24f,
                     (viewRect.height - CalcOptionsHeight(width)) +
-                    (Text.CalcHeight(incidentDef.LabelCap, width) + 12f) * index + 8f, viewRect.width / 2f,
-                    Text.CalcHeight(incidentDef.LabelCap, width));
+                    (Text.CalcHeight(questName, width) + 12f) * index + 8f, viewRect.width / 2f,
+                    Text.CalcHeight(questName, width));
                 if (Mouse.IsOver(rect6))
                 {
                     Widgets.DrawHighlight(rect6);
                 }
                 ;
-                if (Widgets.RadioButtonLabeled(rect6, incidentDef.LabelCap, selectedIncident == incidentDef))
+                if (Widgets.RadioButtonLabeled(rect6, questName, selectedQuest == questScriptDef))
                 {
-                    selectedIncident = incidentDef;
+                    selectedQuest = questScriptDef;
                 }
             }
             Widgets.EndScrollView();
@@ -128,20 +138,17 @@ namespace RimQuest
             }
             if (actualPlayerSilver >= actualSilverCost)
             {
-                if (selectedIncident != null &&
+                if (selectedQuest != null &&
                     Widgets.ButtonText(
                         new Rect(inRect.width / 2f + 20f, inRect.height - 35f, inRect.width / 2f - 20f, 35f),
                         "Confirm".Translate() + " (" + "RQ_SilverAmt".Translate(actualSilverCost) + ")", true, false, true))
                 {
-                    IncidentParms incidentParms =
-                        StorytellerUtility.DefaultParmsNow(selectedIncident.category, Find.World);
-                    if (selectedIncident.pointsScaleable)
-                    {
-                        StorytellerComp storytellerComp = Find.Storyteller.storytellerComps.First((StorytellerComp x) =>
+                    var incidentParms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.GiveQuest, Find.World);
+                    var storytellerComp = Find.Storyteller.storytellerComps.First((StorytellerComp x) =>
                             x is StorytellerComp_OnOffCycle || x is StorytellerComp_RandomMain);
-                        incidentParms = storytellerComp.GenerateParms(selectedIncident.category, incidentParms.target);
-                    }
-                    selectedIncident.Worker.TryExecute(incidentParms);
+                     incidentParms = storytellerComp.GenerateParms(IncidentCategoryDefOf.GiveQuest, incidentParms.target);
+
+                    QuestUtility.SendLetterQuestAvailable(QuestUtility.GenerateQuestAndMakeAvailable(selectedQuest, incidentParms.points));
                     var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
                     if (questPawns != null && questPawns.Contains(questPawn))
                         questPawns.Remove(questPawn);
@@ -149,7 +156,7 @@ namespace RimQuest
                     ReceiveSilver(questPawn.pawn, actualSilverCost);
                     this.Close(true);
                     Find.WindowStack.Add(new Dialog_MessageBox(
-                        "RQ_QuestDialogTwo".Translate( questPawn.pawn.LabelShort, interactor.LabelShort)
+                        "RQ_QuestDialogTwo".Translate(questPawn.pawn.LabelShort, interactor.LabelShort)
                             .AdjustedFor(questPawn.pawn), "OK".Translate(), null, null, null, title));
                 }
             }
@@ -196,9 +203,9 @@ namespace RimQuest
         private float CalcOptionsHeight(float width)
         {
             var result = 0f;
-            foreach (var inc in questPawn.quests)
+            foreach (var quest in questPawn.quests)
             {
-                result += Text.CalcHeight(inc.letterLabel, width);
+                result += Text.CalcHeight(quest.label, width);
             }
             return result;
         }

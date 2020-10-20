@@ -10,13 +10,13 @@ namespace RimQuest
     {
         public Pawn pawn;
         public QuestGiverDef questGiverDef;
-        public List<IncidentDef> quests;
+        public List<QuestScriptDef> quests;
 
         public QuestPawn()
         {
         }
         
-        public QuestPawn(Pawn pawn, QuestGiverDef questGiverDef, List<IncidentDef> quests)
+        public QuestPawn(Pawn pawn, QuestGiverDef questGiverDef, List<QuestScriptDef> quests)
         {
             this.pawn = pawn;
             this.questGiverDef = questGiverDef;
@@ -42,36 +42,32 @@ namespace RimQuest
 
         private void GenerateQuests()
         {
-            quests = new List<IncidentDef>();
-            
+            quests = new List<QuestScriptDef>();            
             var tempQuestsFromDef = questGiverDef.anyQuest ? GenerateAllQuests() : new List<QuestGenOption>(questGiverDef.quests);
             for (int i = 0; i < questGiverDef.maxOptions; i++)
             {
-                var quest = tempQuestsFromDef.RandomElementByWeight(x => x.selectionWeight);
-                quests.Add(quest.def);
-                tempQuestsFromDef.Remove(quest);
+                if (tempQuestsFromDef.TryRandomElementByWeight(x => x.selectionWeight, out var quest))
+                {
+                    quests.Add(quest.def);
+                    tempQuestsFromDef.Remove(quest);
+                }
             }
         }
 
         private List<QuestGenOption> GenerateAllQuests()
         {
             List<QuestGenOption> result = new List<QuestGenOption>();
-            foreach (var def in DefDatabase<IncidentDef>.AllDefsListForReading.Where(IsAcceptableQuest))
+            foreach (var def in DefDatabase<QuestScriptDef>.AllDefsListForReading.Where(IsAcceptableQuest))
             {
-                //Log.Message(def.label);
                 result.Add(new QuestGenOption(def, 100));
             }
             return result;
         }
 
-        private bool IsAcceptableQuest(IncidentDef x)
+        private bool IsAcceptableQuest(QuestScriptDef x)
         {
-            return x.targetTags.Contains(IncidentTargetTagDefOf.World) && x.letterDef != LetterDefOf.NegativeEvent &&
-                   x.defName != "JourneyOffer" &&
-                   x.defName != "CultIncident_StarsAreWrong" &&
-                   x.defName != "CultIncident_StarsAreRight" &&
-                   x.defName != "HPLovecraft_BloodMoon" &&
-                   x.defName != "Aurora" &&
+            return (x.defName.Contains("OpportunitySite_") || 
+                   (x.defName.Contains("Hospitality_") && !x.defName.Contains("Util_"))) &&
                    (x.GetModExtension<RimQuest_ModExtension>()?.canBeARimQuest ?? true); //mod extension value if not null, otherwise assumed true.
         }
 

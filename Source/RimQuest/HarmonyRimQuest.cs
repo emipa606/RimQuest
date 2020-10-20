@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -19,10 +19,10 @@ namespace RimQuest
         
         static HarmonyPatches()
         {
-            var harmony = HarmonyInstance.Create("rimworld.rimquest");
+            var harmony = new Harmony("rimworld.rimquest");
             harmony.Patch(AccessTools.Method(typeof(PawnUIOverlay), "DrawPawnGUIOverlay"),
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(DrawPawnGUIOverlay)));
-            harmony.Patch(AccessTools.Method(typeof(PawnRenderer), "RenderPawnAt", new []{typeof(Vector3), typeof(RotDrawMode), typeof(bool)}),
+            harmony.Patch(AccessTools.Method(typeof(PawnRenderer), "RenderPawnAt", new []{typeof(Vector3), typeof(RotDrawMode), typeof(bool), typeof(bool)}),
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(RenderPawnAt)));
             harmony.Patch(AccessTools.Method(typeof(IncidentWorker_VisitorGroup), "TryConvertOnePawnToSmallTrader"),
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(AddQuestGiver)));
@@ -33,7 +33,7 @@ namespace RimQuest
         }
 
         //PawnRenderer
-        public static void RenderPawnAt(PawnRenderer __instance, Vector3 drawLoc, RotDrawMode bodyDrawType, bool headStump)
+        public static void RenderPawnAt(PawnRenderer __instance, Vector3 drawLoc, RotDrawMode bodyDrawType, bool headStump, bool invisible)
         {
             var pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
             if (pawn.GetQuestPawn() != null) RenderExclamationPointOverlay(pawn);            
@@ -81,8 +81,10 @@ namespace RimQuest
                     var pTarg = (Pawn)dest.Thing;
                     void Action4()
                     {
-                        var job = new Job(RimQuestDefOf.RQ_QuestWithPawn, pTarg);
-                        job.playerForced = true;
+                        var job = new Job(RimQuestDefOf.RQ_QuestWithPawn, pTarg)
+                        {
+                            playerForced = true
+                        };
                         pawn.jobs.TryTakeOrderedJob(job);
                     }
                     var str = string.Empty;
@@ -111,7 +113,7 @@ namespace RimQuest
         {
             if (!__result || !(pawns?.Count > 1)) return;
             var newQuestPawn = RimQuestUtility.GetNewQuestGiver(pawns);
-            if (newQuestPawn?.Faction == null) return;
+            if (newQuestPawn == null || newQuestPawn?.Faction == null) return;
             var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
             if (!questPawns.Any(x => x.pawn == newQuestPawn))
             {

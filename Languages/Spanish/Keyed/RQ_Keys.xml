@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
-<RQ_LoadingScreen>Setting Quest Giver...</RQ_LoadingScreen>
-<RQ_SilverAmt>{0} de plata</RQ_SilverAmt>
-<RQ_CannotQuest>No se puede comprobar si hay misiones</RQ_CannotQuest>
-<RQ_QuestWith>Comprobar las misiones de {0}</RQ_QuestWith>
-<RQ_QuestOpportunity>Oferta de misión</RQ_QuestOpportunity>
-<RQ_QuestDialog>{0} se aproxima a {1} para charlar un poco. Si bien {1} tiene [PAWN_possessive] su propio negocio que atender, le cuenta a {0} sobre algunas oportunidades de las que [PAWN_pronoun] ha oído hablar mientras viajaba por la zona. [PAWN_pronoun] no tiene tiempo para ocuparse de todo, pero se ofrece a compartir algunas oportunidades a cambio un poco de plata ({2} en total).\n\n¿Sobre cual de ellas preguntará?</RQ_QuestDialog>
-<RQ_QuestDialogTwo>{0} esboza un mapa aproximado. [PAWN_pronoun] informa a {1} cómo y por dónde empezar.</RQ_QuestDialogTwo>
-<RQ_LackFunds>No hay suficiente plata</RQ_LackFunds>
-<RQ_LackFundsMessage>Su colonia no tiene suficiente plata.</RQ_LackFundsMessage>
-
+  <RQ_LoadingScreen>Setting Quest Giver...</RQ_LoadingScreen>
+  <RQ_SilverAmt>{0} de plata</RQ_SilverAmt>
+  <RQ_CannotQuest>No se puede comprobar si hay misiones</RQ_CannotQuest>
+  <RQ_QuestWith>Comprobar las misiones de {0}</RQ_QuestWith>
+  <RQ_QuestOpportunity>Oferta de misión</RQ_QuestOpportunity>
+  <RQ_QuestDialog>{0} se aproxima a {1} para charlar un poco. Si bien {1} tiene [PAWN_possessive] su propio negocio que atender, le cuenta a {0} sobre algunas oportunidades de las que [PAWN_pronoun] ha oído hablar mientras viajaba por la zona. [PAWN_pronoun] no tiene tiempo para ocuparse de todo, pero se ofrece a compartir algunas oportunidades a cambio un poco de plata ({2} en total).\n\n¿Sobre cual de ellas preguntará?</RQ_QuestDialog>
+  <RQ_QuestDialogTwo>{0} esboza un mapa aproximado. [PAWN_pronoun] informa a {1} cómo y por dónde empezar.</RQ_QuestDialogTwo>
+  <RQ_LackFunds>No hay suficiente plata</RQ_LackFunds>
+  <RQ_LackFundsMessage>Su colonia no tiene suficiente plata.</RQ_LackFundsMessage>
 </LanguageData>

@@ -1,21 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Patch>
-
-    <!-- Example patch for adding certain World Incidents to RimQuest's blacklist.  -->
-    <!-- FOR MODDERS: You can add the below to your own mod to patch your own incidentDefs.  -->
-    <Operation Class="PatchOperationFindMod">
-        <mods>
-            <li>RimQuest</li>
-        </mods>
-        <match Class="PatchOperationAddModExtension">
-            <xpath>/Defs/IncidentDef[defName="Quest_JourneyOffer"]</xpath>
-            <value>
-                <li Class = "RimQuest.RimQuest_ModExtension">
-                    <canBeARimQuest>false</canBeARimQuest>
-                </li>
-            </value>
-        </match>
-    </Operation>
-
+  <!-- Example patch for adding certain World Incidents to RimQuest's blacklist.  -->
+  <!-- FOR MODDERS: You can add the below to your own mod to patch your own incidentDefs.  -->
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>RimQuest</li>
+    </mods>
+    <match Class="PatchOperationAddModExtension">
+      <xpath>/Defs/IncidentDef[defName="Quest_JourneyOffer"]</xpath>
+      <value>
+        <li Class="RimQuest.RimQuest_ModExtension">
+          <canBeARimQuest>false</canBeARimQuest>
+        </li>
+      </value>
+    </match>
+  </Operation>
 </Patch>

@@ -10,7 +10,7 @@ namespace RimQuest
         {
         }
 
-        public QuestGenOption(IncidentDef def, float selectionWeight)
+        public QuestGenOption(QuestScriptDef def, float selectionWeight)
         {
             this.def = def;
             this.selectionWeight = selectionWeight;
@@ -22,7 +22,7 @@ namespace RimQuest
             this.selectionWeight = (float)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(float));
         }
 
-        public IncidentDef def;
+        public QuestScriptDef def;
 
         public float selectionWeight;
     }
