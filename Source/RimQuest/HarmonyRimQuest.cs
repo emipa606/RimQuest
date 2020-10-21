@@ -14,7 +14,7 @@ namespace RimQuest
 {
 
     [StaticConstructorOnStartup]
-    static class HarmonyPatches
+    public static class HarmonyPatches
     {
         
         static HarmonyPatches()

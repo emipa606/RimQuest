@@ -19,6 +19,7 @@
   </modDependencies>
   <loadAfter>
     <li>brrainz.harmony</li>
+    <li>Orion.Hospitality</li>
   </loadAfter>
   <description>Update of Jecrells mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=1354114366
@@ -33,6 +34,8 @@ https://github.com/emipa606/RimQuest
 
 - This is an unofficial port
 - This will be removed when/if Jecrell comes back
+- Added support for the new Quest-types
+- Added support for Guest-groups from Hospitality-mod
 	
 --- Original Description ---
 Adds quest givers to trader groups and caravans. This mod exists for those of us who feel that RimWorld could use a little more direction from time to time, and a good quest is just what we need!
