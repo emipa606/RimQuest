@@ -10,7 +10,8 @@ namespace RimQuest
         public List<TechLevel> techLevels;
         public int maxOptions = 3;
         public bool anyQuest = false;
-        public List<QuestGenOption> quests;
+        public List<QuestGenOption> questsScripts;
+        public List<IncidentGenOption> quests;
         public List<string> tags;
     }
 }

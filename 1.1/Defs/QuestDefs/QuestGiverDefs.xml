@@ -18,13 +18,14 @@
     <techLevels>
       <li>Medieval</li>
     </techLevels>
-    <quests>
+    <quests />
+    <questsScripts>
       <OpportunitySite_BanditCamp>5</OpportunitySite_BanditCamp>
       <OpportunitySite_ItemStash>4</OpportunitySite_ItemStash>
       <OpportunitySite_DownedRefugee>4</OpportunitySite_DownedRefugee>
       <OpportunitySite_PrisonerWillingToJoin>4</OpportunitySite_PrisonerWillingToJoin>
       <OpportunitySite_PeaceTalks>1</OpportunitySite_PeaceTalks>
-    </quests>
+    </questsScripts>
   </RimQuest.QuestGiverDef>
   <!-- Tribal quest givers are more likely to want bandit camps eradicated. -->
   <RimQuest.QuestGiverDef>
@@ -33,13 +34,14 @@
       <li>TribeCivil</li>
       <li>TribeRough</li>
     </factions>
-    <quests>
+    <quests />
+    <questsScripts>
       <OpportunitySite_BanditCamp>8</OpportunitySite_BanditCamp>
       <OpportunitySite_ItemStash>4</OpportunitySite_ItemStash>
       <OpportunitySite_PeaceTalks>3</OpportunitySite_PeaceTalks>
       <OpportunitySite_DownedRefugee>1</OpportunitySite_DownedRefugee>
       <OpportunitySite_PrisonerWillingToJoin>1</OpportunitySite_PrisonerWillingToJoin>
-    </quests>
+    </questsScripts>
   </RimQuest.QuestGiverDef>
   <!-- Neolithic quest givers are the same as tribal ones -->
   <RimQuest.QuestGiverDef>
@@ -47,13 +49,14 @@
     <techLevels>
       <li>Neolithic</li>
     </techLevels>
-    <quests>
+    <quests />
+    <questsScripts>
       <OpportunitySite_BanditCamp>10</OpportunitySite_BanditCamp>
       <OpportunitySite_ItemStash>5</OpportunitySite_ItemStash>
       <OpportunitySite_PeaceTalks>3</OpportunitySite_PeaceTalks>
       <OpportunitySite_DownedRefugee>1</OpportunitySite_DownedRefugee>
       <OpportunitySite_PrisonerWillingToJoin>1</OpportunitySite_PrisonerWillingToJoin>
-    </quests>
+    </questsScripts>
   </RimQuest.QuestGiverDef>
   <!-- Animals, undefined types will only have item stash and downed refugees. -->
   <RimQuest.QuestGiverDef>
@@ -62,9 +65,10 @@
       <li>Animal</li>
       <li>Neolithic</li>
     </techLevels>
-    <quests>
+    <quests />
+    <questsScripts>
       <OpportunitySite_ItemStash>1</OpportunitySite_ItemStash>
       <OpportunitySite_DownedRefugee>1</OpportunitySite_DownedRefugee>
-    </quests>
+    </questsScripts>
   </RimQuest.QuestGiverDef>
 </Defs>

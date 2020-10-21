@@ -29,7 +29,7 @@ namespace RimQuest
 
         public Pawn interactor;
 
-        public QuestScriptDef selectedQuest = null;
+        public object selectedQuest = null;
 
         private Vector2 scrollPosition = Vector2.zero;
 
@@ -61,7 +61,7 @@ namespace RimQuest
         private int DetermineSilverCost()
         {
             var currentSilver = defaultSilverCost; //50
-            var priceFactorBuy_TraderPriceFactor =                (float)questPawn.pawn.Faction.RelationWith(Faction.OfPlayer).goodwill;
+            var priceFactorBuy_TraderPriceFactor = (float)questPawn.pawn.Faction.RelationWith(Faction.OfPlayer).goodwill;
             priceFactorBuy_TraderPriceFactor += (priceFactorBuy_TraderPriceFactor < 0f) ? 0f : 100f;
             priceFactorBuy_TraderPriceFactor *= (priceFactorBuy_TraderPriceFactor < 0f) ? -1f : 1f;
             priceFactorBuy_TraderPriceFactor *= 0.005f;
@@ -103,19 +103,36 @@ namespace RimQuest
             Widgets.BeginScrollView(outRect, ref this.scrollPosition, viewRect, true);
             Widgets.Label(new Rect(0f, 0f, viewRect.width, viewRect.height - CalcOptionsHeight(width)),
                 this.text.AdjustedFor(questPawn.pawn));
-            for (var index = 0; index < questPawn.quests.Count; index++)
+            for (var index = 0; index < questPawn.questsAndIncidents.Count; index++)
             {
-                QuestScriptDef questScriptDef = questPawn.quests[index];
-                var defname = questScriptDef.defName;
-                if(defname.Contains("_"))
+                string defname;
+                object questDef = null;
+                string questName = string.Empty;
+                if (questPawn.questsAndIncidents[index] is QuestScriptDef questScriptDef)
                 {
-                    defname = questScriptDef.defName.Split('_')[1];
+                    defname = questScriptDef.defName;
+                    if (defname.Contains("_"))
+                    {
+                        defname = questScriptDef.defName.Split('_')[1];
+                    }
+                    if (questScriptDef.defName.Contains("Hospitality"))
+                    {
+                        defname = questScriptDef.defName.Replace("_", " ");
+                    }
+                    questName = Regex.Replace(defname, "(\\B[A-Z])", " $1");
+                    questDef = questScriptDef;
                 }
-                if(questScriptDef.defName.Contains("Hospitality"))
+                if (questPawn.questsAndIncidents[index] is IncidentDef incidentDef)
                 {
-                    defname = questScriptDef.defName.Replace("_", " ");
+                    defname = incidentDef.defName;
+                    questName = incidentDef.LabelCap;
+                    questDef = incidentDef;
                 }
-                var questName = Regex.Replace(defname, "(\\B[A-Z])", " $1");
+                if (string.IsNullOrEmpty(questName))
+                {
+                    continue;
+                }
+
                 Rect rect6 = new Rect(24f,
                     (viewRect.height - CalcOptionsHeight(width)) +
                     (Text.CalcHeight(questName, width) + 12f) * index + 8f, viewRect.width / 2f,
@@ -124,10 +141,9 @@ namespace RimQuest
                 {
                     Widgets.DrawHighlight(rect6);
                 }
-                ;
-                if (Widgets.RadioButtonLabeled(rect6, questName, selectedQuest == questScriptDef))
+                if (Widgets.RadioButtonLabeled(rect6, questName, selectedQuest == questDef))
                 {
-                    selectedQuest = questScriptDef;
+                    selectedQuest = questDef;
                 }
             }
             Widgets.EndScrollView();
@@ -143,12 +159,25 @@ namespace RimQuest
                         new Rect(inRect.width / 2f + 20f, inRect.height - 35f, inRect.width / 2f - 20f, 35f),
                         "Confirm".Translate() + " (" + "RQ_SilverAmt".Translate(actualSilverCost) + ")", true, false, true))
                 {
-                    var incidentParms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.GiveQuest, Find.World);
-                    var storytellerComp = Find.Storyteller.storytellerComps.First((StorytellerComp x) =>
-                            x is StorytellerComp_OnOffCycle || x is StorytellerComp_RandomMain);
-                     incidentParms = storytellerComp.GenerateParms(IncidentCategoryDefOf.GiveQuest, incidentParms.target);
-
-                    QuestUtility.SendLetterQuestAvailable(QuestUtility.GenerateQuestAndMakeAvailable(selectedQuest, incidentParms.points));
+                    if (selectedQuest is QuestScriptDef questDef)
+                    {
+                        var incidentParms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.GiveQuest, Find.World);
+                        var storytellerComp = Find.Storyteller.storytellerComps.First((StorytellerComp x) =>
+                                x is StorytellerComp_OnOffCycle || x is StorytellerComp_RandomMain);
+                        incidentParms = storytellerComp.GenerateParms(IncidentCategoryDefOf.GiveQuest, incidentParms.target);
+                        QuestUtility.SendLetterQuestAvailable(QuestUtility.GenerateQuestAndMakeAvailable(questDef, incidentParms.points));
+                    }
+                    if (selectedQuest is IncidentDef incidentDef)
+                    {
+                        IncidentParms incidentParms = StorytellerUtility.DefaultParmsNow(incidentDef.category, Find.World);
+                        if (incidentDef.pointsScaleable)
+                        {
+                            StorytellerComp storytellerComp = Find.Storyteller.storytellerComps.First((StorytellerComp x) =>
+                                x is StorytellerComp_OnOffCycle || x is StorytellerComp_RandomMain);
+                            incidentParms = storytellerComp.GenerateParms(incidentDef.category, incidentParms.target);
+                        }
+                        incidentDef.Worker.TryExecute(incidentParms);
+                    }
                     var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
                     if (questPawns != null && questPawns.Contains(questPawn))
                         questPawns.Remove(questPawn);
@@ -206,6 +235,10 @@ namespace RimQuest
             foreach (var quest in questPawn.quests)
             {
                 result += Text.CalcHeight(quest.label, width);
+            }
+            foreach (var incident in questPawn.incidents)
+            {
+                result += Text.CalcHeight(incident.letterLabel, width);
             }
             return result;
         }

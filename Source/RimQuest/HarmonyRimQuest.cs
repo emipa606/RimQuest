@@ -20,8 +20,8 @@ namespace RimQuest
         static HarmonyPatches()
         {
             var harmony = new Harmony("rimworld.rimquest");
-            harmony.Patch(AccessTools.Method(typeof(PawnUIOverlay), "DrawPawnGUIOverlay"),
-                null, new HarmonyMethod(typeof(HarmonyPatches), nameof(DrawPawnGUIOverlay)));
+            //harmony.Patch(AccessTools.Method(typeof(PawnUIOverlay), "DrawPawnGUIOverlay"),
+            //    null, new HarmonyMethod(typeof(HarmonyPatches), nameof(DrawPawnGUIOverlay)));
             harmony.Patch(AccessTools.Method(typeof(PawnRenderer), "RenderPawnAt", new []{typeof(Vector3), typeof(RotDrawMode), typeof(bool), typeof(bool)}),
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(RenderPawnAt)));
             harmony.Patch(AccessTools.Method(typeof(IncidentWorker_VisitorGroup), "TryConvertOnePawnToSmallTrader"),
@@ -101,10 +101,10 @@ namespace RimQuest
 
         
         //public class PawnUIOverlay
-        public static void DrawPawnGUIOverlay(PawnUIOverlay __instance)
-        {
+        //public static void DrawPawnGUIOverlay(PawnUIOverlay __instance)
+        //{
 
-        }
+        //}
         
 
         //IncidentWorker_VisitorGroup
@@ -146,8 +146,8 @@ namespace RimQuest
             drawPos.y = Altitudes.AltitudeFor(AltitudeLayer.MetaOverlays) + 0.28125f;
             if (t is Pawn)
             {
-                drawPos.x += (float)t.def.size.x - 0.52f;
-                drawPos.z += (float)t.def.size.z - 0.45f;
+                drawPos.x += t.def.size.x - 0.52f;
+                drawPos.z += t.def.size.z - 0.45f;
             }
             RenderPulsingOverlayQuest(t, HarmonyPatches.ExclamationPointMat, drawPos, MeshPool.plane05);
         }
@@ -157,8 +157,8 @@ namespace RimQuest
         
         private static void RenderPulsingOverlayQuest(Thing thing, Material mat, Vector3 drawPos, Mesh mesh)
         {
-            var num = (Time.realtimeSinceStartup + 397f * (float)(thing.thingIDNumber % 571)) * 4f;
-            var num2 = ((float)Math.Sin((double)num) + 1f) * 0.5f;
+            var num = (Time.realtimeSinceStartup + 397f * (thing.thingIDNumber % 571)) * 4f;
+            var num2 = ((float)Math.Sin(num) + 1f) * 0.5f;
             num2 = 0.3f + num2 * 0.7f;
             var material = FadedMaterialPool.FadedVersionOf(mat, num2);
             Graphics.DrawMesh(mesh, drawPos, Quaternion.identity, material, 0);

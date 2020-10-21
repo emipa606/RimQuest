@@ -6,7 +6,7 @@ namespace RimQuest
     {
         public RimQuestMod(ModContentPack content) : base(content)
         {
-           
+
         }
     }
 }
