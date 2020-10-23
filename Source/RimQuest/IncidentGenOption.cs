@@ -19,7 +19,7 @@ namespace RimQuest
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
             DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "def", xmlRoot.Name);
-            this.selectionWeight = (float)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(float));
+            selectionWeight = (float)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(float));
         }
 
         public IncidentDef def;

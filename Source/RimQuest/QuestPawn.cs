@@ -12,7 +12,7 @@ namespace RimQuest
         public QuestGiverDef questGiverDef;
         public List<QuestScriptDef> quests;
         public List<IncidentDef> incidents;
-        public List<object> questsAndIncidents;
+        public List<object> questsAndIncidents = new List<object>();
 
         public QuestPawn()
         {
@@ -110,7 +110,7 @@ namespace RimQuest
             }
         }
 
-        private void GenerateQuestsAndIncidents()
+        public void GenerateQuestsAndIncidents()
         {
             questsAndIncidents = new List<object>();
             List<object> tempListToChooseFrom = (from quest in quests select quest as object).ToList();
@@ -145,10 +145,10 @@ namespace RimQuest
 
         public void ExposeData()
         {
-            Scribe_References.Look(ref this.pawn, "pawn");
-            Scribe_Defs.Look(ref this.questGiverDef, "questGiverDef");
-            Scribe_Collections.Look<QuestScriptDef>(ref this.quests, "quests", LookMode.Def);
-            Scribe_Collections.Look<IncidentDef>(ref this.incidents, "incidents", LookMode.Def);
+            Scribe_References.Look(ref pawn, "pawn");
+            Scribe_Defs.Look(ref questGiverDef, "questGiverDef");
+            Scribe_Collections.Look(ref quests, "quests", LookMode.Def);
+            Scribe_Collections.Look(ref incidents, "incidents", LookMode.Def);
         }
     }
 }

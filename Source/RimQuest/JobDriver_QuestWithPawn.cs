@@ -12,7 +12,7 @@ namespace RimQuest
 
         public override bool TryMakePreToilReservations(bool yeaaa)
         {
-            return this.pawn.Reserve(this.QuestGiver, this.job, 1, -1, null);
+            return pawn.Reserve(QuestGiver, job, 1, -1, null);
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
