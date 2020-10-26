@@ -136,6 +136,12 @@ namespace RimQuest
                     }
                     questDef = questScriptDef;
                 }
+                if (questPawn.questsAndIncidents[index] is IncidentDef incidentDef)
+                {
+                    defname = incidentDef.defName;
+                    questName = incidentDef.LabelCap;
+                    questDef = incidentDef;
+                }
                 if (string.IsNullOrEmpty(questName))
                 {
                     continue;
