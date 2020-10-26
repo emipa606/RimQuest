@@ -28,9 +28,9 @@
   <!-- Your colony doesn't have enough silver. -->
   <RQ_LackFundsMessage>Ваше поселение не располагает необходимым количеством серебра.</RQ_LackFundsMessage>
   
-  <!-- <RimQuest_OpportunitySite_BanditCamp>Лагерь бандитов</RimQuest_OpportunitySite_BanditCamp> -->
+  <RimQuest_OpportunitySite_BanditCamp>Лагерь бандитов</RimQuest_OpportunitySite_BanditCamp>
   <RimQuest_OpportunitySite_DownedRefugee>Спасение беженца</RimQuest_OpportunitySite_DownedRefugee>
-  <!-- <RimQuest_OpportunitySite_ItemStash>Схрон с припасами</RimQuest_OpportunitySite_ItemStash> -->
+  <RimQuest_OpportunitySite_ItemStash>Схрон с припасами</RimQuest_OpportunitySite_ItemStash>
   <RimQuest_OpportunitySite_PeaceTalks>Переговоры</RimQuest_OpportunitySite_PeaceTalks>
   <RimQuest_OpportunitySite_PrisonerWillingToJoin>Спасение пленника</RimQuest_OpportunitySite_PrisonerWillingToJoin>
   <RimQuest_Hospitality_Refugee>Приютить странника</RimQuest_Hospitality_Refugee>
