@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+
   <RQ_LoadingScreen>Setting Quest Giver...</RQ_LoadingScreen>
   <RQ_SilverAmt>{0} silver</RQ_SilverAmt>
   <RQ_CannotQuest>Cannot check for quests</RQ_CannotQuest>
@@ -9,5 +10,21 @@
   <RQ_QuestDialogTwo>{0} writes down the specifics of the quest. [PAWN_pronoun] informs {1} how to get started.</RQ_QuestDialogTwo>
   <RQ_LackFunds>Not Enough Silver</RQ_LackFunds>
   <RQ_LackFundsMessage>Your colony doesn't have enough silver.</RQ_LackFundsMessage>
+  
+  <!-- Template for translating quests: -->
+  <!-- <RimQuest_DEFNAME>Quest name</RimQuest_DEFNAME> -->
+  <!-- Where DEFNAME is a QuestScriptDef defName [RimWorld\Data\Core|Royalty\Defs\QuestScriptDefs] -->
+  <RimQuest_OpportunitySite_BanditCamp>Bandit camp</RimQuest_OpportunitySite_BanditCamp>
+  <RimQuest_OpportunitySite_DownedRefugee>Downed refugee</RimQuest_OpportunitySite_DownedRefugee>
+  <RimQuest_OpportunitySite_ItemStash>Item stash</RimQuest_OpportunitySite_ItemStash>
+  <RimQuest_OpportunitySite_PeaceTalks>Peace talks</RimQuest_OpportunitySite_PeaceTalks>
+  <RimQuest_OpportunitySite_PrisonerWillingToJoin>Prisoner willing to join</RimQuest_OpportunitySite_PrisonerWillingToJoin>
+  <RimQuest_Hospitality_Refugee>Hospitality refugee</RimQuest_Hospitality_Refugee>
+  <RimQuest_Hospitality_Animals>Hospitality animals</RimQuest_Hospitality_Animals>
+  <RimQuest_Hospitality_Joiners>Hospitality joiners</RimQuest_Hospitality_Joiners>
+  <RimQuest_Hospitality_Prisoners>Hospitality prisoners</RimQuest_Hospitality_Prisoners>
+  
+  <!-- A RimWorld of Magic -->
+  <RimQuest_TM_OpportunitySite_ArcaneBandits>Arcane bandits</RimQuest_TM_OpportunitySite_ArcaneBandits>
 
 </LanguageData>
