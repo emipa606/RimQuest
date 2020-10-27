@@ -111,20 +111,29 @@ namespace RimQuest
             for (var index = 0; index < questPawn.questsAndIncidents.Count; index++)
             {
                 string defname;
+                string keyedName;
                 object questDef = null;
                 string questName = string.Empty;
                 if (questPawn.questsAndIncidents[index] is QuestScriptDef questScriptDef)
                 {
                     defname = questScriptDef.defName;
-                    if (defname.Contains("_"))
+                    keyedName = "RimQuest_" + defname;
+                    if ((!Prefs.DevMode && keyedName.Translate() == keyedName) || (Prefs.DevMode && (keyedName.Translate().ToString().Contains("RìṁQùèșṭ_"))))
                     {
-                        defname = questScriptDef.defName.Split('_')[1];
+                        if (defname.Contains("_"))
+                        {
+                            defname = questScriptDef.defName.Split('_')[1];
+                        }
+                        if (questScriptDef.defName.Contains("Hospitality"))
+                        {
+                            defname = questScriptDef.defName.Replace("_", " ");
+                        }
+                        questName = Regex.Replace(defname, "(\\B[A-Z])", " $1");
                     }
-                    if (questScriptDef.defName.Contains("Hospitality"))
+                    else
                     {
-                        defname = questScriptDef.defName.Replace("_", " ");
+                        questName = keyedName.Translate();
                     }
-                    questName = Regex.Replace(defname, "(\\B[A-Z])", " $1");
                     questDef = questScriptDef;
                 }
                 if (questPawn.questsAndIncidents[index] is IncidentDef incidentDef)
