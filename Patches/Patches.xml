@@ -4,7 +4,7 @@
   <!-- FOR MODDERS: You can add the below to your own mod to patch your own incidentDefs.  -->
   <Operation Class="PatchOperationFindMod">
     <mods>
-      <li>RimQuest</li>
+      <li>RimQuest (Continued)</li>
     </mods>
     <match Class="PatchOperationAddModExtension">
       <xpath>/Defs/IncidentDef[defName="Quest_JourneyOffer"]</xpath>
