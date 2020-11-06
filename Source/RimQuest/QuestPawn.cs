@@ -30,12 +30,24 @@ namespace RimQuest
         {
             this.pawn = pawn;
             var pawnFaction = pawn.Faction.def;
-            if (pawnFaction == null) Log.Error("Factionless quest giver.");
+            if (pawnFaction == null)
+            {
+                Log.Error("Factionless quest giver.");
+            }
+
             GenerateQuestGiver(pawnFaction);
-            if (questGiverDef == null) Log.Error("No quest giver found.");
+            if (questGiverDef == null)
+            {
+                Log.Error("No quest giver found.");
+            }
+
             GenerateAllQuests();
             GenerateAllIncidents();
             GenerateQuestsAndIncidents();
+            if(quests.Count() == 0)
+            {
+                Log.Warning("No quests generated");
+            }
         }
 
         private void GenerateQuestGiver(FactionDef pawnFaction)
@@ -53,7 +65,7 @@ namespace RimQuest
             {
                 return;
             }
-            List<QuestGenOption> result = new List<QuestGenOption>();
+            var result = new List<QuestGenOption>();
             if (!questGiverDef.anyQuest)
             {
                 foreach (var questGen in new List<QuestGenOption>(questGiverDef.questsScripts))
@@ -68,7 +80,7 @@ namespace RimQuest
                     result.Add(new QuestGenOption(def, 100));
                 }
             }
-            for (int i = 0; i < questGiverDef.maxOptions; i++)
+            for (var i = 0; i < questGiverDef.maxOptions; i++)
             {
                 if (result.TryRandomElementByWeight(x => x.selectionWeight, out var quest))
                 {
@@ -85,7 +97,7 @@ namespace RimQuest
             {
                 return;
             }
-            List<IncidentGenOption> result = new List<IncidentGenOption>();
+            var result = new List<IncidentGenOption>();
             if (!questGiverDef.anyQuest)
             {
                 foreach (var incidentGen in new List<IncidentGenOption>(questGiverDef.quests))
@@ -100,7 +112,7 @@ namespace RimQuest
                     result.Add(new IncidentGenOption(def, 100));
                 }
             }
-            for (int i = 0; i < questGiverDef.maxOptions; i++)
+            for (var i = 0; i < questGiverDef.maxOptions; i++)
             {
                 if (result.TryRandomElementByWeight(x => x.selectionWeight, out var incident))
                 {
@@ -113,10 +125,10 @@ namespace RimQuest
         public void GenerateQuestsAndIncidents()
         {
             questsAndIncidents = new List<object>();
-            List<object> tempListToChooseFrom = (from quest in quests select quest as object).ToList();
+            var tempListToChooseFrom = (from quest in quests select quest as object).ToList();
             tempListToChooseFrom.AddRange(from incident in incidents select incident as object);
 
-            for (int i = 0; i < questGiverDef.maxOptions; i++)
+            for (var i = 0; i < questGiverDef.maxOptions; i++)
             {
                 var objectToAdd = tempListToChooseFrom.RandomElement();
                 questsAndIncidents.Add(objectToAdd);

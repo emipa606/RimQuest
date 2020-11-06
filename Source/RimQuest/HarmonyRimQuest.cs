@@ -36,7 +36,10 @@ namespace RimQuest
         public static void RenderPawnAt(PawnRenderer __instance, Vector3 drawLoc, RotDrawMode bodyDrawType, bool headStump, bool invisible)
         {
             var pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
-            if (pawn.GetQuestPawn() != null) RenderExclamationPointOverlay(pawn);            
+            if (pawn.GetQuestPawn() != null)
+            {
+                RenderExclamationPointOverlay(pawn);
+            }
         }
 
         //PawnGroupKindWorker_Trader
@@ -51,11 +54,19 @@ namespace RimQuest
                 {
                     List<Pawn> newPawnList = map.mapPawns.AllPawnsSpawned.FindAll(x => x.Faction == pawn.Faction && !x.IsPrisoner);   
                     var newQuestPawn = RimQuestUtility.GetNewQuestGiver(outPawns);
-                    if (newQuestPawn?.Faction == null) return;
+                    if (newQuestPawn?.Faction == null)
+                    {
+                        return;
+                    }
+
                     var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
                     if (!questPawns.Any(x => x.pawn == newQuestPawn))
                     {
-                        questPawns.Add(new QuestPawn(newQuestPawn));
+                        var questPawn = new QuestPawn(newQuestPawn);
+                        if (questPawn != null)
+                        {
+                            questPawns.Add(questPawn);
+                        }
                     }
                 }
             }, "RQ_LoadingScreen".Translate(), true, null);
@@ -89,7 +100,10 @@ namespace RimQuest
                     }
                     var str = string.Empty;
                     if (pTarg.Faction != null)
+                    {
                         str = " (" + pTarg.Faction.Name + ")";
+                    }
+
                     var label = "RQ_QuestWith".Translate(pTarg.LabelShort) + str;
                     var action = (Action) Action4;
                     var priority2 = MenuOptionPriority.InitiateSocial;
@@ -111,13 +125,25 @@ namespace RimQuest
         //TryConvertOneSmallTrader
         public static void AddQuestGiver(List<Pawn> pawns, Faction faction, Map map, ref bool __result)
         {
-            if (!__result || !(pawns?.Count > 1)) return;
+            if (!__result || !(pawns?.Count > 1))
+            {
+                return;
+            }
+
             var newQuestPawn = RimQuestUtility.GetNewQuestGiver(pawns);
-            if (newQuestPawn == null || newQuestPawn?.Faction == null) return;
+            if (newQuestPawn == null || newQuestPawn?.Faction == null)
+            {
+                return;
+            }
+
             var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
             if (!questPawns.Any(x => x.pawn == newQuestPawn))
             {
-                questPawns.Add(new QuestPawn(newQuestPawn));
+                var questPawn = new QuestPawn(newQuestPawn);
+                if (questPawn != null)
+                {
+                    questPawns.Add(questPawn);
+                }
             }
         }
 
@@ -141,7 +167,11 @@ namespace RimQuest
         
         private static void RenderExclamationPointOverlay(Thing t)
         {
-            if (!t.Spawned) return;
+            if (!t.Spawned)
+            {
+                return;
+            }
+
             var drawPos = t.DrawPos;
             drawPos.y = Altitudes.AltitudeFor(AltitudeLayer.MetaOverlays) + 0.28125f;
             if (t is Pawn)
@@ -157,9 +187,9 @@ namespace RimQuest
         
         private static void RenderPulsingOverlayQuest(Thing thing, Material mat, Vector3 drawPos, Mesh mesh)
         {
-            var num = (Time.realtimeSinceStartup + 397f * (thing.thingIDNumber % 571)) * 4f;
+            var num = (Time.realtimeSinceStartup + (397f * (thing.thingIDNumber % 571))) * 4f;
             var num2 = ((float)Math.Sin(num) + 1f) * 0.5f;
-            num2 = 0.3f + num2 * 0.7f;
+            num2 = 0.3f + (num2 * 0.7f);
             var material = FadedMaterialPool.FadedVersionOf(mat, num2);
             Graphics.DrawMesh(mesh, drawPos, Quaternion.identity, material, 0);
         }

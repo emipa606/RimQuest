@@ -21,49 +21,59 @@
     <li>brrainz.harmony</li>
     <li>Orion.Hospitality</li>
   </loadAfter>
-  <description>Update of Jecrells mod
+  <description>[img]https://i.imgur.com/WAEzk68.png[/img]
+Update of Jecrells mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=1354114366
-
-[img]https://i.imgur.com/wtwHAQu.png[/img]
-
-Support-chat:
-https://invite.gg/mlie
-
-Non-steam version:
-https://github.com/emipa606/RimQuest
 
 - This is an unofficial port
 - This will be removed when/if Jecrell comes back
-- Added support for the new Quest-types
-- Added support for Guest-groups from Hospitality-mod
+- Added support for the new QuestScriptDef-type as well as the old IncidentDef
+- Added support for guest-groups from Orions Hospitality mod
+https://steamcommunity.com/sharedfiles/filedetails/?id=753498552
+
+[img]https://i.imgur.com/7Gzt3Rg.png[/img]
+
+[table]
+	[tr]
+		[td][url=https://invite.gg/Mlie][img]https://i.imgur.com/zdzzBrc.png[/img][/url][/td]
+		[td][url=https://github.com/emipa606/RimQuest][img]https://i.imgur.com/kTkpTOE.png[/img][/url][/td]
+	[/tr]
+[/table]
 	
---- Original Description ---
+[img]https://i.imgur.com/NOW7jU1.png[/img]
+
 Adds quest givers to trader groups and caravans. This mod exists for those of us who feel that RimWorld could use a little more direction from time to time, and a good quest is just what we need!
+
+[img]https://i.imgur.com/xPCXgr9.jpg[/img]
 
 When a trader or caravan arrives, simply right click the character with a green exclamation mark above their head to see what quests are available.
 
+[img]https://i.imgur.com/ZA8vatO.jpg[/img]
+
 After accepting a quest, it will be available to you on the world map. This version contains vanilla events from RimWorld, but more quests are planned to be added in the future.
 
-Also...
+[img]https://i.imgur.com/859MWl0.jpg[/img]
+
+[h1]Also...[/h1]
 Steam is giving me trouble uploading screenshots, today.
 I've put a bunch of screenshots at the link below, for you fellower RimWorlder, until Steam decides I can upload my screenshots here.
 https://www.patreon.com/posts/18019471
 
-Thank you, one and all.
+[h1]Thank you, one and all.[/h1]
 
 Also, a tip of my hat to my most wonderful supporters on Patreon. My goal of full-time modding is getting closer and closer.
 
-The Amazing Supporters of Jecrell's Modding Madness
-AC, Alex Mederer, Alexander, Alexander Vass, Alexandr Zaporin, Allic, Aron Glasser, Audrin Navarro, Austin Harbert, Baron Xot, Ben Stanley, Bennett Herlihy, Blaze Reynolds, Calum, Chelsea Archambeau, Christopher, Clifford Campbell, Dakota, Dan Winn, ♥♥♥♥ Jones, Don Butterblume, Evan Hwang, Fredric Sundberg, George Chong Chuang Mi, GoSu, Harry ♥♥♥♥♥, J, Jacob Duga, John Boehr, Jonathan Holzinger, Jordan Robinson, Josh McCabe, Justin Andreas, Karol Rybak, Kevin Reagan, Liam Farmer, Luis Salvatierra, Magnus Merkelbach, Marcus Sireanu, Mark, MC, meatface, Michael Lauder, Michael Paugh, Moshat, Oliver White, Pie_from_Hell, Populous25, Robin Hager, and Roxxploxx.
+[h1]The Amazing Supporters of Jecrell's Modding Madness[/h1]
+AC, Alex Mederer, Alexander, Alexander Vass, Alexandr Zaporin, Allic, Aron Glasser, Audrin Navarro, Austin Harbert, Baron Xot, Ben Stanley, Bennett Herlihy, Blaze Reynolds, Calum, Chelsea Archambeau, Christopher, Clifford Campbell, Dakota, Dan Winn, Dick Jones, Don Butterblume, Evan Hwang, Fredric Sundberg, George Chong Chuang Mi, GoSu, Harry Dicks, J, Jacob Duga, John Boehr, Jonathan Holzinger, Jordan Robinson, Josh McCabe, Justin Andreas, Karol Rybak, Kevin Reagan, Liam Farmer, Luis Salvatierra, Magnus Merkelbach, Marcus Sireanu, Mark, MC, meatface, Michael Lauder, Michael Paugh, Moshat, Oliver White, Pie_from_Hell, Populous25, Robin Hager, and Roxxploxx.
 
 Available in English, 한국어 Korean (by ㅇㄷ), and 日本語 Japanese (by Proxyer)
 
-Frequently Asked Questions:
+[h1]Frequently Asked Questions:[/h1]
 
-Q: Do I need a new save to play this mod?
-A: No new saves are needed to play this mod.
+[b]Q:[/b] Do I need a new save to play this mod?
+[b]A:[/b] No new saves are needed to play this mod.
 
-What's next?
+[h1]What's next?[/h1]
 Lord of the Rims seems to be the next mod series closest to release.
 https://ludeon.com/forums/index.php?topic=39130.0
 

@@ -24,7 +24,9 @@ namespace RimQuest
             {
                 var actor = trade.actor;
                 if (QuestGiver.CanRequestQuestNow())
+                {
                     Find.WindowStack.Add(new Dialog_QuestGiver(QuestGiver.GetQuestPawn(), actor));
+                }
             };
             yield return trade;
             yield break;

@@ -54,8 +54,7 @@ namespace RimQuest
         private int DetermineSilverAvailable(Pawn pawn)
         {
             var currencies = pawn.Map.listerThings.ThingsOfDef(ThingDefOf.Silver);
-            if (currencies == null || currencies.Count <= 0) return 0;
-            return currencies.Sum(currency => currency.stackCount);
+            return currencies == null || currencies.Count <= 0 ? 0 : currencies.Sum(currency => currency.stackCount);
         }
 
         private int DetermineSilverCost()
@@ -71,12 +70,15 @@ namespace RimQuest
 
             //Avoid 0's for division operation
             if (priceGain_PlayerNegotiator == 0)
+            {
                 priceGain_PlayerNegotiator = Mathf.Max(priceFactorBuy_TraderPriceFactor, 1);
+            }
+
             currentSilver = Mathf.Max(currentSilver, 1);
             currentSilver /= priceGain_PlayerNegotiator;
 
-            currentSilver += (currentSilver * priceFactorBuy_TraderPriceFactor *
-                                             (1f + Find.Storyteller.difficulty.tradePriceFactorLoss));
+            currentSilver += currentSilver * priceFactorBuy_TraderPriceFactor *
+                                             (1f + Find.Storyteller.difficulty.tradePriceFactorLoss);
             currentSilver = Mathf.Min(currentSilver, 200f);
             return Mathf.RoundToInt(currentSilver);
         }
@@ -90,7 +92,7 @@ namespace RimQuest
 
         public override void DoWindowContents(Rect inRect)
         {
-            float num = inRect.y;
+            var num = inRect.y;
             //if (!this.title.NullOrEmpty())
             //{
             Verse.Text.Font = GameFont.Medium;
@@ -98,9 +100,9 @@ namespace RimQuest
             num += TitleHeight;
             //}
             Verse.Text.Font = GameFont.Small;
-            Rect outRect = new Rect(inRect.x, num, inRect.width, inRect.height - ButtonHeight - 5f - num);
-            float width = outRect.width - 16f;
-            Rect viewRect = new Rect(0f, 0f, width, CalcHeight(width) + CalcOptionsHeight(width));
+            var outRect = new Rect(inRect.x, num, inRect.width, inRect.height - ButtonHeight - 5f - num);
+            var width = outRect.width - 16f;
+            var viewRect = new Rect(0f, 0f, width, CalcHeight(width) + CalcOptionsHeight(width));
             Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect, true);
             Widgets.Label(new Rect(0f, 0f, viewRect.width, viewRect.height - CalcOptionsHeight(width)),
                 Text.AdjustedFor(questPawn.pawn));
@@ -113,12 +115,12 @@ namespace RimQuest
                 string defname;
                 string keyedName;
                 object questDef = null;
-                string questName = string.Empty;
+                var questName = string.Empty;
                 if (questPawn.questsAndIncidents[index] is QuestScriptDef questScriptDef)
                 {
                     defname = questScriptDef.defName;
                     keyedName = "RimQuest_" + defname;
-                    if ((!Prefs.DevMode && keyedName.Translate() == keyedName) || (Prefs.DevMode && (keyedName.Translate().ToString().Contains("RìṁQùèșṭ_"))))
+                    if ((!Prefs.DevMode && keyedName.Translate() == keyedName) || (Prefs.DevMode && keyedName.Translate().ToString().Contains("RìṁQùèșṭ_")))
                     {
                         if (defname.Contains("_"))
                         {
@@ -147,9 +149,9 @@ namespace RimQuest
                     continue;
                 }
 
-                Rect rect6 = new Rect(24f,
-                    (viewRect.height - CalcOptionsHeight(width)) +
-                    (Verse.Text.CalcHeight(questName, width) + 12f) * index + 8f, viewRect.width / 2f,
+                var rect6 = new Rect(24f,
+                    viewRect.height - CalcOptionsHeight(width) +
+                    ((Verse.Text.CalcHeight(questName, width) + 12f) * index) + 8f, viewRect.width / 2f,
                     Verse.Text.CalcHeight(questName, width));
                 if (Mouse.IsOver(rect6))
                 {
@@ -161,7 +163,7 @@ namespace RimQuest
                 }
             }
             Widgets.EndScrollView();
-            if (Widgets.ButtonText(new Rect(0f, inRect.height - ButtonHeight, inRect.width / 2f - 20f, ButtonHeight),
+            if (Widgets.ButtonText(new Rect(0f, inRect.height - ButtonHeight, (inRect.width / 2f) - 20f, ButtonHeight),
                 "CancelButton".Translate(), true, false, true))
             {
                 Close(true);
@@ -170,7 +172,7 @@ namespace RimQuest
             {
                 if (selectedQuest != null &&
                     Widgets.ButtonText(
-                        new Rect(inRect.width / 2f + 20f, inRect.height - ButtonHeight, inRect.width / 2f - 20f, ButtonHeight),
+                        new Rect((inRect.width / 2f) + 20f, inRect.height - ButtonHeight, (inRect.width / 2f) - 20f, ButtonHeight),
                         "Confirm".Translate() + " (" + "RQ_SilverAmt".Translate(actualSilverCost) + ")", true, false, true))
                 {
                     if (selectedQuest is QuestScriptDef questDef)
@@ -194,7 +196,10 @@ namespace RimQuest
                     }
                     var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
                     if (questPawns != null && questPawns.Contains(questPawn))
+                    {
                         questPawns.Remove(questPawn);
+                    }
+
                     SoundDefOf.ExecuteTrade.PlayOneShotOnCamera(null);
                     ReceiveSilver(questPawn.pawn, actualSilverCost);
                     Close(true);
@@ -206,7 +211,7 @@ namespace RimQuest
             else
             {
                 if (Widgets.ButtonText(
-                    new Rect(inRect.width / 2f + 20f, inRect.height - ButtonHeight, inRect.width / 2f - 20f, ButtonHeight),
+                    new Rect((inRect.width / 2f) + 20f, inRect.height - ButtonHeight, (inRect.width / 2f) - 20f, ButtonHeight),
                     "RQ_LackFunds".Translate(), true, false, true))
                 {
                     SoundDefOf.ClickReject.PlayOneShotOnCamera(null);
@@ -217,7 +222,7 @@ namespace RimQuest
 
         public void ReceiveSilver(Pawn receiver, int amountOwed)
         {
-            int amountUnpaid = amountOwed;
+            var amountUnpaid = amountOwed;
             List<Thing> currencies = receiver.Map.listerThings.ThingsOfDef(ThingDefOf.Silver);
             if (currencies != null && currencies.Count > 0)
             {
@@ -227,7 +232,7 @@ namespace RimQuest
                     {
                         break;
                     }
-                    int num = Math.Min(amountUnpaid, currency.stackCount);
+                    var num = Math.Min(amountUnpaid, currency.stackCount);
                     currency.SplitOff(num).Destroy(DestroyMode.Vanish);
                     amountUnpaid -= num;
                 }

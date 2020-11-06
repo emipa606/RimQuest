@@ -1,33 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
   <!-- Setting Quest Giver... -->
   <RQ_LoadingScreen>Установка хранителя историй...</RQ_LoadingScreen>
-  
   <!-- {0} silver -->
   <RQ_SilverAmt>{0} серебра</RQ_SilverAmt>
-  
   <!-- Cannot check for quests -->
   <RQ_CannotQuest>Не может расспросить о слухах:</RQ_CannotQuest>
-  
   <!-- Check for quests with {0} -->
   <RQ_QuestWith>Расспросить о слухах: {0}</RQ_QuestWith>
-  
   <!-- Quest Opportunity -->
   <RQ_QuestOpportunity>Шанс проявить себя</RQ_QuestOpportunity>
-  
   <!-- {0} approaches {1} and speaks for a while. While {1} has [PAWN_possessive] own business to attend to, [PAWN_pronoun] tells {0} about a few opportunities [PAWN_pronoun] has heard about while traveling through the area. [PAWN_pronoun] does not have time to attend to everything, and [PAWN_pronoun] offers to share an opportunity in exchange for some silver ({2} total).\n\nWhich one will {0} ask about? -->
   <RQ_QuestDialog>{0} подходит к {1} и они обмениваются приветствиями.\nНе отрываясь от своих дел, {1} рассказывает {0} о нескольких историях, что [PAWN_objective] довелось услышать во время путешествия по этому району от местных жителей.\n{1} говорит, что некоторые из них оказались в беде и наверняка не останутся в долгу за оказанную им помощь, но у н[PAWN_possessive] не так много времени, чтобы успеть разобраться во всех ситуациях, поэтому [PAWN_pronoun] предлагает поделиться информацией в обмен на некоторое количество серебра - всего {2}.\n\nО чём будет спрашивать {0}?</RQ_QuestDialog>
-  
   <!-- {0} writes down the specifics of the quest. [PAWN_pronoun] informs {1} how to get started. -->
   <RQ_QuestDialogTwo>(*Name){0}(/Name) записывает подробности переданной информации и говорит (*Name){1}(/Name), с чего стоит начать.</RQ_QuestDialogTwo>
-  
   <!-- Not Enough Silver -->
   <RQ_LackFunds>Недостаточно серебра</RQ_LackFunds>
-  
   <!-- Your colony doesn't have enough silver. -->
   <RQ_LackFundsMessage>Ваше поселение не располагает необходимым количеством серебра.</RQ_LackFundsMessage>
-  
   <RimQuest_OpportunitySite_BanditCamp>Лагерь бандитов</RimQuest_OpportunitySite_BanditCamp>
   <RimQuest_OpportunitySite_DownedRefugee>Спасение беженца</RimQuest_OpportunitySite_DownedRefugee>
   <RimQuest_OpportunitySite_ItemStash>Схрон с припасами</RimQuest_OpportunitySite_ItemStash>
@@ -37,8 +27,6 @@
   <RimQuest_Hospitality_Animals>Приютить животное</RimQuest_Hospitality_Animals>
   <RimQuest_Hospitality_Joiners>Приютить союзника</RimQuest_Hospitality_Joiners>
   <RimQuest_Hospitality_Prisoners>Разместить заключённого</RimQuest_Hospitality_Prisoners>
-  
   <!-- A RimWorld of Magic -->
   <RimQuest_TM_OpportunitySite_ArcaneBandits>Мистические бандиты</RimQuest_TM_OpportunitySite_ArcaneBandits>
-
 </LanguageData>

@@ -16,8 +16,12 @@ namespace RimQuest
         public static bool CanRequestQuestNow(this Pawn pawn)
         {
             if (pawn.Dead || !pawn.Spawned || !pawn.CanCasuallyInteractNow() ||
-                (pawn.Downed || pawn.IsPrisoner || pawn.Faction == Faction.OfPlayer) ||
-                (pawn.Faction != null && pawn.Faction.HostileTo(Faction.OfPlayer))) return false;
+                pawn.Downed || pawn.IsPrisoner || pawn.Faction == Faction.OfPlayer ||
+                (pawn.Faction != null && pawn.Faction.HostileTo(Faction.OfPlayer)))
+            {
+                return false;
+            }
+
             var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
             return !questPawns.NullOrEmpty() && questPawns.Any(x => x.pawn == pawn);
         }
@@ -25,9 +29,7 @@ namespace RimQuest
         public static QuestPawn GetQuestPawn(this Pawn pawn)
         {
             var possiblePawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
-            if(possiblePawns != null && possiblePawns.Count > 0)
-            return possiblePawns.FirstOrDefault(x => x.pawn == pawn);
-            return null;
+            return possiblePawns != null && possiblePawns.Count > 0 ? possiblePawns.FirstOrDefault(x => x.pawn == pawn) : null;
         }
     }
 }
