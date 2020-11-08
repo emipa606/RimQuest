@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Manifest>
   <identifier>RimQuest</identifier>
-  <version>1.2.4.0</version>
+  <version>1.2.5.0</version>
   <dependencies />
   <incompatibleWith />
   <loadBefore />
