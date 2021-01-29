@@ -30,6 +30,8 @@ namespace RimQuest
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(AddQuestGiverTwo)));
             harmony.Patch(AccessTools.Method(typeof(FloatMenuMakerMap), "AddHumanlikeOrders"),
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(AddHumanlikeOrders)));
+            harmony.Patch(AccessTools.Method(typeof(IncidentWorker_NeutralGroup), "SpawnPawns"),
+                null, new HarmonyMethod(typeof(HarmonyPatches), nameof(AddQuestGiverThree)));
         }
 
         //PawnRenderer
@@ -147,6 +149,36 @@ namespace RimQuest
             }
         }
 
+
+        public static void AddQuestGiverThree(IncidentParms parms, List<Pawn> __result, IncidentWorker_TravelerGroup __instance)
+        {
+            if (__result == null|| __result.Count == 0)
+            {
+                return;
+            }
+
+            if(__instance.def.defName != "TravelerGroup")
+            {
+                //Log.Message($"Skip Incident: {__instance.def.defName}");
+                return;
+            }
+
+            var newQuestPawn = RimQuestUtility.GetNewQuestGiver(__result);
+            if (newQuestPawn == null || newQuestPawn?.Faction == null)
+            {
+                return;
+            }
+
+            var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
+            if (!questPawns.Any(x => x.pawn == newQuestPawn))
+            {
+                var questPawn = new QuestPawn(newQuestPawn);
+                if (questPawn != null)
+                {
+                    questPawns.Add(questPawn);
+                }
+            }
+        }
 
 
         private static TargetingParameters ForQuest()

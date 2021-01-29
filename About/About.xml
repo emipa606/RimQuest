@@ -28,8 +28,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1354114366
 - This is an unofficial port
 - This will be removed when/if Jecrell comes back
 - Added support for the new QuestScriptDef-type as well as the old IncidentDef
-- Added support for guest-groups from Orions Hospitality mod
-https://steamcommunity.com/sharedfiles/filedetails/?id=753498552
+- Added support for guest-groups from Orions [url=https://steamcommunity.com/sharedfiles/filedetails/?id=753498552]Hospitality mod[/url]
 - Added Russian translation and a way to translate Quest-type quests. Thanks Reiquard!
 
 [img]https://i.imgur.com/7Gzt3Rg.png[/img]
@@ -55,10 +54,6 @@ After accepting a quest, it will be available to you on the world map. This vers
 
 [img]https://i.imgur.com/859MWl0.jpg[/img]
 
-[h1]Also...[/h1]
-Steam is giving me trouble uploading screenshots, today.
-I've put a bunch of screenshots at the link below, for you fellower RimWorlder, until Steam decides I can upload my screenshots here.
-https://www.patreon.com/posts/18019471
 
 [h1]Thank you, one and all.[/h1]
 
@@ -78,5 +73,18 @@ Available in English, 한국어 Korean (by ㅇㄷ), and 日本語 Japanese (by P
 Lord of the Rims seems to be the next mod series closest to release.
 https://ludeon.com/forums/index.php?topic=39130.0
 
-This mod was commissioned by Bradr44.</description>
+This mod was commissioned by Bradr44.
+
+
+[img]https://i.imgur.com/Rs6T6cr.png[/img]
+[list]
+[*] See if the the error persists if you just have this mod and its requirements active.
+[*] If not, try adding your other mods until it happens again.
+[*] Post your error-log using [url=https://steamcommunity.com/workshop/filedetails/?id=818773962]HugsLib[/url] and command Ctrl+F12
+[*] For best support, please use the Discord-channel for error-reporting.
+[*] Do not report errors by making a discussion-thread, I get no notification of that.
+[*] If you have the solution for a problem, please post it to the GitHub repository.
+[/list]
+</description>
 </ModMetaData>
+
