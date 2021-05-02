@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RQ_LoadingScreen>Setting Quest Giver...</RQ_LoadingScreen>
+  <RQ_SilverAmt>{0} argent</RQ_SilverAmt>
+  <RQ_CannotQuest>Impossible de vérifier les quêtes</RQ_CannotQuest>
+  <RQ_QuestWith>Vérifiez les quêtes {0}</RQ_QuestWith>
+  <RQ_QuestOpportunity>Offre de quête</RQ_QuestOpportunity>
+  <RQ_QuestDialog>{0} se dirige vers {1} pour bavarder un peu. Bien que {1} ait [PAWN_possessive] sa propre entreprise à gérer, il parle à {0} de certaines opportunités dont [PAWN_pronoun] a entendu parler lors de ses déplacements dans la région. [PAWN_pronoun] n'a pas le temps de s'occuper de tout, mais propose de partager quelques opportunités en échange d'un peu d'argent ({2} au total). \n \n Laquelle allez-vous entreprendre?</RQ_QuestDialog>
+  <RQ_QuestDialogTwo>{0} dessine une carte approximative. [PAWN_pronoun] indique à {1} comment et par où commencer.</RQ_QuestDialogTwo>
+  <RQ_LackFunds>Pas assez d'argent</RQ_LackFunds>
+  <RQ_LackFundsMessage>Votre colonie n'a pas assez d'argent.</RQ_LackFundsMessage>
+</LanguageData>

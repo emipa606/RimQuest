@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <name>RimQuest (Continued)</name>
   <packageId>Mlie.RimQuest</packageId>
@@ -30,6 +30,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1354114366
 - Added support for the new QuestScriptDef-type as well as the old IncidentDef
 - Added support for guest-groups from Orions [url=https://steamcommunity.com/sharedfiles/filedetails/?id=753498552]Hospitality mod[/url]
 - Added Russian translation and a way to translate Quest-type quests. Thanks Reiquard!
+- Added questgivers to traveling groups passing by
 
 [img]https://i.imgur.com/7Gzt3Rg.png[/img]
 
@@ -85,6 +86,6 @@ This mod was commissioned by Bradr44.
 [*] Do not report errors by making a discussion-thread, I get no notification of that.
 [*] If you have the solution for a problem, please post it to the GitHub repository.
 [/list]
+
 </description>
 </ModMetaData>
-
