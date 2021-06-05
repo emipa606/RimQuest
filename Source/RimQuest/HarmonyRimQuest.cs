@@ -34,13 +34,11 @@ namespace RimQuest
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(AddQuestGiverThree)));
         }
 
-        //PawnRenderer
-        public static void RenderPawnAt(PawnRenderer __instance, Vector3 drawLoc, RotDrawMode bodyDrawType, bool headStump, bool invisible)
+        public static void RenderPawnAt(PawnRenderer __instance, Pawn ___pawn, Vector3 drawLoc, RotDrawMode bodyDrawType, bool headStump, bool invisible)
         {
-            var pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
-            if (pawn.GetQuestPawn() != null)
+            if (___pawn.GetQuestPawn() != null)
             {
-                RenderExclamationPointOverlay(pawn);
+                RenderExclamationPointOverlay(___pawn);
             }
         }
 
@@ -61,7 +59,7 @@ namespace RimQuest
                         return;
                     }
 
-                    var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
+                    var questPawns = RimQuestTracker.Instance.questPawns;
                     if (!questPawns.Any(x => x.pawn == newQuestPawn))
                     {
                         var questPawn = new QuestPawn(newQuestPawn);
@@ -138,7 +136,7 @@ namespace RimQuest
                 return;
             }
 
-            var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
+            var questPawns = RimQuestTracker.Instance.questPawns;
             if (!questPawns.Any(x => x.pawn == newQuestPawn))
             {
                 var questPawn = new QuestPawn(newQuestPawn);
@@ -169,7 +167,7 @@ namespace RimQuest
                 return;
             }
 
-            var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
+            var questPawns = RimQuestTracker.Instance.questPawns;
             if (!questPawns.Any(x => x.pawn == newQuestPawn))
             {
                 var questPawn = new QuestPawn(newQuestPawn);

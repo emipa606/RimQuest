@@ -194,7 +194,7 @@ namespace RimQuest
                         }
                         incidentDef.Worker.TryExecute(incidentParms);
                     }
-                    var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
+                    var questPawns = RimQuestTracker.Instance.questPawns;
                     if (questPawns != null && questPawns.Contains(questPawn))
                     {
                         questPawns.Remove(questPawn);
