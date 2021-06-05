@@ -14,6 +14,11 @@ namespace RimQuest
             Instance = this;
         }
 
+        public override void FinalizeInit()
+        {
+            base.FinalizeInit();
+            Instance = this;
+        }
         public override void WorldComponentTick()
         {
             base.WorldComponentTick();
@@ -27,6 +32,7 @@ namespace RimQuest
         {
             base.ExposeData();
             Scribe_Collections.Look(ref questPawns, "questPawns", LookMode.Deep);
+            Instance = this;
         }
     }
 }
