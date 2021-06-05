@@ -22,13 +22,13 @@ namespace RimQuest
                 return false;
             }
 
-            var questPawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
+            var questPawns = RimQuestTracker.Instance.questPawns;
             return !questPawns.NullOrEmpty() && questPawns.Any(x => x.pawn == pawn);
         }
 
         public static QuestPawn GetQuestPawn(this Pawn pawn)
         {
-            var possiblePawns = Find.World.GetComponent<RimQuestTracker>().questPawns;
+            var possiblePawns = RimQuestTracker.Instance.questPawns;
             return possiblePawns != null && possiblePawns.Count > 0 ? possiblePawns.FirstOrDefault(x => x.pawn == pawn) : null;
         }
     }
