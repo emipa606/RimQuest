@@ -10,7 +10,9 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1354114366
 - Added support for the new QuestScriptDef-type as well as the old IncidentDef
 - Added support for guest-groups from Orions https://steamcommunity.com/sharedfiles/filedetails/?id=753498552]Hospitality mod
 - Added Russian translation and a way to translate Quest-type quests. Thanks Reiquard!
+- Added french translation, thanks qux!
 - Added questgivers to traveling groups passing by
+- Performance optimizations by Taranchuk
 
 ![Image](https://i.imgur.com/7Gzt3Rg.png)
 

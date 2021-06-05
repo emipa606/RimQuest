@@ -1,14 +1,15 @@
-﻿using HarmonyLib;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using HarmonyLib;
+using Hospitality;
+using RimQuest;
 using Verse;
 
 namespace HospitalityPatch
 {
-
     [StaticConstructorOnStartup]
-    static class HospitalityPatch
+    internal static class HospitalityPatch
     {
         static HospitalityPatch()
         {
@@ -16,19 +17,20 @@ namespace HospitalityPatch
             harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
 
-        [HarmonyPatch(typeof(Hospitality.IncidentWorker_VisitorGroup))]
+        [HarmonyPatch(typeof(IncidentWorker_VisitorGroup))]
         [HarmonyPatch("GiveItems")]
         public class Prefix_IncidentWorker_VisitorGroup
         {
             [HarmonyPrefix]
             public static void Prefix(ref IEnumerable<Pawn> visitors)
             {
-                if(visitors == null || visitors.Count() == 0)
+                if (visitors == null || !visitors.Any())
                 {
                     return;
                 }
+
                 var value = true;
-                RimQuest.HarmonyPatches.AddQuestGiver(visitors.ToList(), null, null, ref value);
+                HarmonyPatches.AddQuestGiver(visitors.ToList(), null, null, ref value);
             }
         }
     }

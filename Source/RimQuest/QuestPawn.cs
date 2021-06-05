@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
@@ -8,17 +7,18 @@ namespace RimQuest
 {
     public class QuestPawn : IExposable
     {
-        public Pawn pawn;
-        public QuestGiverDef questGiverDef;
-        public List<QuestScriptDef> quests;
         public List<IncidentDef> incidents;
+        public Pawn pawn;
+        private QuestGiverDef questGiverDef;
+        public List<QuestScriptDef> quests;
         public List<object> questsAndIncidents = new List<object>();
 
         public QuestPawn()
         {
         }
 
-        public QuestPawn(Pawn pawn, QuestGiverDef questGiverDef, List<QuestScriptDef> quests, List<IncidentDef> incidents)
+        public QuestPawn(Pawn pawn, QuestGiverDef questGiverDef, List<QuestScriptDef> quests,
+            List<IncidentDef> incidents)
         {
             this.pawn = pawn;
             this.questGiverDef = questGiverDef;
@@ -44,17 +44,25 @@ namespace RimQuest
             GenerateAllQuests();
             GenerateAllIncidents();
             GenerateQuestsAndIncidents();
-            if(quests.Count() == 0)
+            if (!quests.Any())
             {
                 Log.Warning("No quests generated");
             }
         }
 
+        public void ExposeData()
+        {
+            Scribe_References.Look(ref pawn, "pawn");
+            Scribe_Defs.Look(ref questGiverDef, "questGiverDef");
+            Scribe_Collections.Look(ref quests, "quests", LookMode.Def);
+            Scribe_Collections.Look(ref incidents, "incidents", LookMode.Def);
+        }
+
         private void GenerateQuestGiver(FactionDef pawnFaction)
         {
             questGiverDef = DefDatabase<QuestGiverDef>.AllDefs.FirstOrDefault(x =>
-                (x.factions != null && x.factions.Contains(pawnFaction)) ||
-                (x.techLevels != null && x.techLevels.Contains(pawnFaction.techLevel)));
+                x.factions != null && x.factions.Contains(pawnFaction) ||
+                x.techLevels != null && x.techLevels.Contains(pawnFaction.techLevel));
         }
 
 
@@ -65,6 +73,7 @@ namespace RimQuest
             {
                 return;
             }
+
             var result = new List<QuestGenOption>();
             if (!questGiverDef.anyQuest)
             {
@@ -80,23 +89,27 @@ namespace RimQuest
                     result.Add(new QuestGenOption(def, 100));
                 }
             }
+
             for (var i = 0; i < questGiverDef.maxOptions; i++)
             {
-                if (result.TryRandomElementByWeight(x => x.selectionWeight, out var quest))
+                if (!result.TryRandomElementByWeight(x => x.selectionWeight, out var quest))
                 {
-                    quests.Add(quest.def);
-                    result.Remove(quest);
+                    continue;
                 }
+
+                quests.Add(quest.def);
+                result.Remove(quest);
             }
         }
 
         private void GenerateAllIncidents()
         {
             incidents = new List<IncidentDef>();
-            if(!questGiverDef.anyQuest && questGiverDef.quests == null)
+            if (!questGiverDef.anyQuest && questGiverDef.quests == null)
             {
                 return;
             }
+
             var result = new List<IncidentGenOption>();
             if (!questGiverDef.anyQuest)
             {
@@ -112,13 +125,16 @@ namespace RimQuest
                     result.Add(new IncidentGenOption(def, 100));
                 }
             }
+
             for (var i = 0; i < questGiverDef.maxOptions; i++)
             {
-                if (result.TryRandomElementByWeight(x => x.selectionWeight, out var incident))
+                if (!result.TryRandomElementByWeight(x => x.selectionWeight, out var incident))
                 {
-                    incidents.Add(incident.def);
-                    result.Remove(incident);
+                    continue;
                 }
+
+                incidents.Add(incident.def);
+                result.Remove(incident);
             }
         }
 
@@ -139,8 +155,9 @@ namespace RimQuest
         private bool IsAcceptableQuest(QuestScriptDef x)
         {
             return (x.defName.Contains("OpportunitySite_") ||
-                   (x.defName.Contains("Hospitality_") && !x.defName.Contains("Util_"))) &&
-                   (x.GetModExtension<RimQuest_ModExtension>()?.canBeARimQuest ?? true); //mod extension value if not null, otherwise assumed true.
+                    x.defName.Contains("Hospitality_") && !x.defName.Contains("Util_")) &&
+                   (x.GetModExtension<RimQuest_ModExtension>()?.canBeARimQuest ??
+                    true); //mod extension value if not null, otherwise assumed true.
         }
 
         private bool IsAcceptableIncident(IncidentDef x)
@@ -152,15 +169,8 @@ namespace RimQuest
                    x.defName != "HPLovecraft_BloodMoon" &&
                    x.defName != "Aurora" &&
                    !x.defName.Contains("GiveQuest") &&
-                   (x.GetModExtension<RimQuest_ModExtension>()?.canBeARimQuest ?? true); //mod extension value if not null, otherwise assumed true.
-        }
-
-        public void ExposeData()
-        {
-            Scribe_References.Look(ref pawn, "pawn");
-            Scribe_Defs.Look(ref questGiverDef, "questGiverDef");
-            Scribe_Collections.Look(ref quests, "quests", LookMode.Def);
-            Scribe_Collections.Look(ref incidents, "incidents", LookMode.Def);
+                   (x.GetModExtension<RimQuest_ModExtension>()?.canBeARimQuest ??
+                    true); //mod extension value if not null, otherwise assumed true.
         }
     }
 }

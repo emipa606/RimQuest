@@ -1,28 +1,28 @@
-﻿using HarmonyLib;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using HarmonyLib;
+using RimWorld;
+using UnityEngine;
 using Verse;
 using Verse.AI;
-using System.Reflection;
-using UnityEngine;
-using Verse.AI.Group;
 
 namespace RimQuest
 {
-
     [StaticConstructorOnStartup]
     public static class HarmonyPatches
     {
-        
+        private static readonly Material ExclamationPointMat =
+            MaterialPool.MatFrom("UI/Overlays/RQ_ExclamationPoint", ShaderDatabase.MetaOverlay);
+
         static HarmonyPatches()
         {
             var harmony = new Harmony("rimworld.rimquest");
             //harmony.Patch(AccessTools.Method(typeof(PawnUIOverlay), "DrawPawnGUIOverlay"),
             //    null, new HarmonyMethod(typeof(HarmonyPatches), nameof(DrawPawnGUIOverlay)));
-            harmony.Patch(AccessTools.Method(typeof(PawnRenderer), "RenderPawnAt", new []{typeof(Vector3), typeof(RotDrawMode), typeof(bool), typeof(bool)}),
+            harmony.Patch(
+                AccessTools.Method(typeof(PawnRenderer), "RenderPawnAt",
+                    new[] {typeof(Vector3), typeof(RotDrawMode), typeof(bool), typeof(bool)}),
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(RenderPawnAt)));
             harmony.Patch(AccessTools.Method(typeof(IncidentWorker_VisitorGroup), "TryConvertOnePawnToSmallTrader"),
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(AddQuestGiver)));
@@ -34,7 +34,8 @@ namespace RimQuest
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(AddQuestGiverThree)));
         }
 
-        public static void RenderPawnAt(PawnRenderer __instance, Pawn ___pawn, Vector3 drawLoc, RotDrawMode bodyDrawType, bool headStump, bool invisible)
+        public static void RenderPawnAt(PawnRenderer __instance, Pawn ___pawn, Vector3 drawLoc,
+            RotDrawMode bodyDrawType, bool headStump, bool invisible)
         {
             if (___pawn.GetQuestPawn() != null)
             {
@@ -49,28 +50,27 @@ namespace RimQuest
             LongEventHandler.QueueLongEvent(() =>
             {
                 var pawn = outPawns.FirstOrDefault(x => x.Spawned);
-                Map map = pawn?.MapHeld;
-                if (map != null)
+                var map = pawn?.MapHeld;
+                if (map == null)
                 {
-                    List<Pawn> newPawnList = map.mapPawns.AllPawnsSpawned.FindAll(x => x.Faction == pawn.Faction && !x.IsPrisoner);   
-                    var newQuestPawn = RimQuestUtility.GetNewQuestGiver(outPawns);
-                    if (newQuestPawn?.Faction == null)
-                    {
-                        return;
-                    }
-
-                    var questPawns = RimQuestTracker.Instance.questPawns;
-                    if (!questPawns.Any(x => x.pawn == newQuestPawn))
-                    {
-                        var questPawn = new QuestPawn(newQuestPawn);
-                        if (questPawn != null)
-                        {
-                            questPawns.Add(questPawn);
-                        }
-                    }
+                    return;
                 }
-            }, "RQ_LoadingScreen".Translate(), true, null);
 
+                var newQuestPawn = RimQuestUtility.GetNewQuestGiver(outPawns);
+                if (newQuestPawn?.Faction == null)
+                {
+                    return;
+                }
+
+                var questPawns = RimQuestTracker.Instance.questPawns;
+                if (questPawns.Any(x => x.pawn == newQuestPawn))
+                {
+                    return;
+                }
+
+                var questPawn = new QuestPawn(newQuestPawn);
+                questPawns.Add(questPawn);
+            }, "RQ_LoadingScreen".Translate(), true, null);
         }
 
         //FloatMenuMakerMap
@@ -81,15 +81,18 @@ namespace RimQuest
                 var dest = localTargetInfo4;
                 if (!pawn.CanReach(dest, PathEndMode.OnCell, Danger.Deadly))
                 {
-                    opts.Add(new FloatMenuOption("RQ_CannotQuest".Translate() + " (" + "NoPath".Translate() + ")", null));
+                    opts.Add(
+                        new FloatMenuOption("RQ_CannotQuest".Translate() + " (" + "NoPath".Translate() + ")", null));
                 }
                 else if (pawn.skills.GetSkill(SkillDefOf.Social).TotallyDisabled)
                 {
-                    opts.Add(new FloatMenuOption("CannotPrioritizeWorkTypeDisabled".Translate(SkillDefOf.Social.LabelCap), null));
+                    opts.Add(new FloatMenuOption(
+                        "CannotPrioritizeWorkTypeDisabled".Translate(SkillDefOf.Social.LabelCap), null));
                 }
                 else
                 {
-                    var pTarg = (Pawn)dest.Thing;
+                    var pTarg = (Pawn) dest.Thing;
+
                     void Action4()
                     {
                         var job = new Job(RimQuestDefOf.RQ_QuestWithPawn, pTarg)
@@ -98,6 +101,7 @@ namespace RimQuest
                         };
                         pawn.jobs.TryTakeOrderedJob(job);
                     }
+
                     var str = string.Empty;
                     if (pTarg.Faction != null)
                     {
@@ -108,18 +112,19 @@ namespace RimQuest
                     var action = (Action) Action4;
                     var priority2 = MenuOptionPriority.InitiateSocial;
                     var thing = dest.Thing;
-                    opts.Add(FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption(label, action, priority2, null, thing), pawn, pTarg));
+                    opts.Add(FloatMenuUtility.DecoratePrioritizedTask(
+                        new FloatMenuOption(label, action, priority2, null, thing), pawn, pTarg));
                 }
             }
         }
 
-        
+
         //public class PawnUIOverlay
         //public static void DrawPawnGUIOverlay(PawnUIOverlay __instance)
         //{
 
         //}
-        
+
 
         //IncidentWorker_VisitorGroup
         //TryConvertOneSmallTrader
@@ -131,51 +136,50 @@ namespace RimQuest
             }
 
             var newQuestPawn = RimQuestUtility.GetNewQuestGiver(pawns);
-            if (newQuestPawn == null || newQuestPawn?.Faction == null)
+            if (newQuestPawn?.Faction == null)
             {
                 return;
             }
 
             var questPawns = RimQuestTracker.Instance.questPawns;
-            if (!questPawns.Any(x => x.pawn == newQuestPawn))
-            {
-                var questPawn = new QuestPawn(newQuestPawn);
-                if (questPawn != null)
-                {
-                    questPawns.Add(questPawn);
-                }
-            }
-        }
-
-
-        public static void AddQuestGiverThree(IncidentParms parms, List<Pawn> __result, IncidentWorker_TravelerGroup __instance)
-        {
-            if (__result == null|| __result.Count == 0)
+            if (questPawns.Any(x => x.pawn == newQuestPawn))
             {
                 return;
             }
 
-            if(__instance.def.defName != "TravelerGroup")
+            var questPawn = new QuestPawn(newQuestPawn);
+            questPawns.Add(questPawn);
+        }
+
+
+        public static void AddQuestGiverThree(IncidentParms parms, List<Pawn> __result,
+            IncidentWorker_TravelerGroup __instance)
+        {
+            if (__result == null || __result.Count == 0)
+            {
+                return;
+            }
+
+            if (__instance.def.defName != "TravelerGroup")
             {
                 //Log.Message($"Skip Incident: {__instance.def.defName}");
                 return;
             }
 
             var newQuestPawn = RimQuestUtility.GetNewQuestGiver(__result);
-            if (newQuestPawn == null || newQuestPawn?.Faction == null)
+            if (newQuestPawn?.Faction == null)
             {
                 return;
             }
 
             var questPawns = RimQuestTracker.Instance.questPawns;
-            if (!questPawns.Any(x => x.pawn == newQuestPawn))
+            if (questPawns.Any(x => x.pawn == newQuestPawn))
             {
-                var questPawn = new QuestPawn(newQuestPawn);
-                if (questPawn != null)
-                {
-                    questPawns.Add(questPawn);
-                }
+                return;
             }
+
+            var questPawn = new QuestPawn(newQuestPawn);
+            questPawns.Add(questPawn);
         }
 
 
@@ -194,7 +198,6 @@ namespace RimQuest
         }
 
 
-        
         private static void RenderExclamationPointOverlay(Thing t)
         {
             if (!t.Spawned)
@@ -203,27 +206,23 @@ namespace RimQuest
             }
 
             var drawPos = t.DrawPos;
-            drawPos.y = Altitudes.AltitudeFor(AltitudeLayer.MetaOverlays) + 0.28125f;
+            drawPos.y = AltitudeLayer.MetaOverlays.AltitudeFor() + 0.28125f;
             if (t is Pawn)
             {
                 drawPos.x += t.def.size.x - 0.52f;
                 drawPos.z += t.def.size.z - 0.45f;
             }
-            RenderPulsingOverlayQuest(t, HarmonyPatches.ExclamationPointMat, drawPos, MeshPool.plane05);
+
+            RenderPulsingOverlayQuest(t, ExclamationPointMat, drawPos, MeshPool.plane05);
         }
-        
-        private static readonly Material ExclamationPointMat = 
-            MaterialPool.MatFrom("UI/Overlays/RQ_ExclamationPoint", ShaderDatabase.MetaOverlay);
-        
+
         private static void RenderPulsingOverlayQuest(Thing thing, Material mat, Vector3 drawPos, Mesh mesh)
         {
             var num = (Time.realtimeSinceStartup + (397f * (thing.thingIDNumber % 571))) * 4f;
-            var num2 = ((float)Math.Sin(num) + 1f) * 0.5f;
+            var num2 = ((float) Math.Sin(num) + 1f) * 0.5f;
             num2 = 0.3f + (num2 * 0.7f);
             var material = FadedMaterialPool.FadedVersionOf(mat, num2);
             Graphics.DrawMesh(mesh, drawPos, Quaternion.identity, material, 0);
         }
-        
-        
     }
 }

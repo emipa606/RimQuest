@@ -6,6 +6,10 @@ namespace RimQuest
 {
     public class IncidentGenOption
     {
+        public readonly IncidentDef def;
+
+        public float selectionWeight;
+
         public IncidentGenOption()
         {
         }
@@ -19,11 +23,7 @@ namespace RimQuest
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
             DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "def", xmlRoot.Name);
-            selectionWeight = (float)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(float));
+            selectionWeight = (float) ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(float));
         }
-
-        public IncidentDef def;
-
-        public float selectionWeight;
     }
 }

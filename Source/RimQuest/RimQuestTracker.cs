@@ -6,9 +6,9 @@ namespace RimQuest
 {
     public class RimQuestTracker : WorldComponent
     {
+        public static RimQuestTracker Instance;
         public List<QuestPawn> questPawns = new List<QuestPawn>();
 
-        public static RimQuestTracker Instance;
         public RimQuestTracker(World world) : base(world)
         {
             Instance = this;
@@ -19,12 +19,14 @@ namespace RimQuest
             base.FinalizeInit();
             Instance = this;
         }
+
         public override void WorldComponentTick()
         {
             base.WorldComponentTick();
             if (Find.TickManager.TicksGame % 250 == 0 && !questPawns.NullOrEmpty())
             {
-                questPawns.RemoveAll(x => x.pawn == null || x.pawn.Downed || x.pawn.Dead || x.pawn.Destroyed || x.pawn.IsColonist);
+                questPawns.RemoveAll(x =>
+                    x.pawn == null || x.pawn.Downed || x.pawn.Dead || x.pawn.Destroyed || x.pawn.IsColonist);
             }
         }
 

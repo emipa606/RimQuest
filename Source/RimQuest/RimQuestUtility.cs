@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
@@ -12,12 +11,12 @@ namespace RimQuest
         {
             return pawns.FirstOrDefault(x => !x.NonHumanlikeOrWildMan() && x.trader == null);
         }
-        
+
         public static bool CanRequestQuestNow(this Pawn pawn)
         {
             if (pawn.Dead || !pawn.Spawned || !pawn.CanCasuallyInteractNow() ||
                 pawn.Downed || pawn.IsPrisoner || pawn.Faction == Faction.OfPlayer ||
-                (pawn.Faction != null && pawn.Faction.HostileTo(Faction.OfPlayer)))
+                pawn.Faction != null && pawn.Faction.HostileTo(Faction.OfPlayer))
             {
                 return false;
             }
@@ -29,7 +28,9 @@ namespace RimQuest
         public static QuestPawn GetQuestPawn(this Pawn pawn)
         {
             var possiblePawns = RimQuestTracker.Instance.questPawns;
-            return possiblePawns != null && possiblePawns.Count > 0 ? possiblePawns.FirstOrDefault(x => x.pawn == pawn) : null;
+            return possiblePawns != null && possiblePawns.Count > 0
+                ? possiblePawns.FirstOrDefault(x => x.pawn == pawn)
+                : null;
         }
     }
 }

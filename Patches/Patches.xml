@@ -1,12 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Patch>
   <!-- Example patch for adding certain World Incidents to RimQuest's blacklist.  -->
-  <!-- FOR MODDERS: You can add the below to your own mod to patch your own incidentDefs.  -->
+  <!-- FOR MODDERS: You can add the below to your own mod to patch your own incidentDefs/QuestScriptDef.  -->
   <Operation Class="PatchOperationConditional">
     <xpath>/Defs/JobDef[defName="RQ_QuestWithPawn"]</xpath>
     <success>Always</success>
     <match Class="PatchOperationAddModExtension">
       <xpath>/Defs/IncidentDef[defName="Quest_JourneyOffer"]</xpath>
+      <value>
+        <li Class="RimQuest.RimQuest_ModExtension">
+          <canBeARimQuest>false</canBeARimQuest>
+        </li>
+      </value>
+    </match>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/JobDef[defName="RQ_QuestWithPawn"]</xpath>
+    <success>Always</success>
+    <match Class="PatchOperationAddModExtension">
+      <xpath>/Defs/QuestScriptDef[defName="OpportunitySite_PeaceTalks"]</xpath>
       <value>
         <li Class="RimQuest.RimQuest_ModExtension">
           <canBeARimQuest>false</canBeARimQuest>

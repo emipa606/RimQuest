@@ -1,5 +1,8 @@
 # Changelog for RimQuest
 
+1.2.8.0 - Performance optimizations by Taranchuk, Removed peace-talks questscript, will only use incident
+
+
 1.2.7.0 - Added french translation, thanks qux!
 
 

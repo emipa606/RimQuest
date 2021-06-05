@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using RimWorld;
+﻿using System.Collections.Generic;
 using Verse;
 using Verse.AI;
 
@@ -8,17 +6,18 @@ namespace RimQuest
 {
     public class JobDriver_QuestWithPawn : JobDriver
     {
-        private Pawn QuestGiver => (Pawn)base.TargetThingA;
+        private Pawn QuestGiver => (Pawn) TargetThingA;
 
         public override bool TryMakePreToilReservations(bool yeaaa)
         {
-            return pawn.Reserve(QuestGiver, job, 1, -1, null);
+            return pawn.Reserve(QuestGiver, job);
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
             this.FailOnDespawnedOrNull(TargetIndex.A);
-            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch).FailOn(() => !QuestGiver.CanRequestQuestNow());
+            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch)
+                .FailOn(() => !QuestGiver.CanRequestQuestNow());
             var trade = new Toil();
             trade.initAction = delegate
             {
@@ -29,7 +28,6 @@ namespace RimQuest
                 }
             };
             yield return trade;
-            yield break;
         }
     }
 }

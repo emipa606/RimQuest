@@ -6,6 +6,10 @@ namespace RimQuest
 {
     public class QuestGenOption
     {
+        public readonly QuestScriptDef def;
+
+        public float selectionWeight;
+
         public QuestGenOption()
         {
         }
@@ -19,11 +23,7 @@ namespace RimQuest
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
             DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "def", xmlRoot.Name);
-            selectionWeight = (float)ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(float));
+            selectionWeight = (float) ParseHelper.FromString(xmlRoot.FirstChild.Value, typeof(float));
         }
-
-        public QuestScriptDef def;
-
-        public float selectionWeight;
     }
 }
