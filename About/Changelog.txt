@@ -1,5 +1,8 @@
 # Changelog for RimQuest
 
+1.2.9.0 - Mod updated for 1.3 and passed autotests
+
+
 1.2.8.0 - Performance optimizations by Taranchuk, Removed peace-talks questscript, will only use incident
 
 

@@ -67,7 +67,7 @@ namespace RimQuest
         {
             var currentSilver = defaultSilverCost; //50
             var priceFactorBuy_TraderPriceFactor =
-                (float) questPawn.pawn.Faction.RelationWith(Faction.OfPlayer).goodwill;
+                (float) questPawn.pawn.Faction.RelationWith(Faction.OfPlayer).baseGoodwill;
             priceFactorBuy_TraderPriceFactor += priceFactorBuy_TraderPriceFactor < 0f ? 0f : 100f;
             priceFactorBuy_TraderPriceFactor *= priceFactorBuy_TraderPriceFactor < 0f ? -1f : 1f;
             priceFactorBuy_TraderPriceFactor *= 0.005f;

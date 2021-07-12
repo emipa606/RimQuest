@@ -21,8 +21,7 @@ namespace RimQuest
             //harmony.Patch(AccessTools.Method(typeof(PawnUIOverlay), "DrawPawnGUIOverlay"),
             //    null, new HarmonyMethod(typeof(HarmonyPatches), nameof(DrawPawnGUIOverlay)));
             harmony.Patch(
-                AccessTools.Method(typeof(PawnRenderer), "RenderPawnAt",
-                    new[] {typeof(Vector3), typeof(RotDrawMode), typeof(bool), typeof(bool)}),
+                AccessTools.Method(typeof(PawnRenderer), "RenderPawnAt"),
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(RenderPawnAt)));
             harmony.Patch(AccessTools.Method(typeof(IncidentWorker_VisitorGroup), "TryConvertOnePawnToSmallTrader"),
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(AddQuestGiver)));
@@ -34,8 +33,7 @@ namespace RimQuest
                 null, new HarmonyMethod(typeof(HarmonyPatches), nameof(AddQuestGiverThree)));
         }
 
-        public static void RenderPawnAt(PawnRenderer __instance, Pawn ___pawn, Vector3 drawLoc,
-            RotDrawMode bodyDrawType, bool headStump, bool invisible)
+        public static void RenderPawnAt(Pawn ___pawn)
         {
             if (___pawn.GetQuestPawn() != null)
             {
