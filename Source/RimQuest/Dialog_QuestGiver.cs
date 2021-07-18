@@ -221,7 +221,7 @@ namespace RimQuest
                 Close();
                 Find.WindowStack.Add(new Dialog_MessageBox(
                     "RQ_QuestDialogTwo".Translate(questPawn.pawn.LabelShort, interactor.LabelShort)
-                        .AdjustedFor(questPawn.pawn), "OK".Translate(), null, null, null, title));
+                        .AdjustedFor(questPawn.pawn), "OK".Translate(), null, null, null, title, false, null, null, WindowLayer.Dialog));
             }
             else
             {
