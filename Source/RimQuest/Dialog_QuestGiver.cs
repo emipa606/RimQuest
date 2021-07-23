@@ -242,7 +242,7 @@ namespace RimQuest
         {
             var amountUnpaid = amountOwed;
             var currencies = receiver.Map.listerThings.ThingsOfDef(ThingDefOf.Silver);
-            if (currencies != null && currencies.Count > 0)
+            if (currencies is {Count: > 0})
             {
                 foreach (var currency in currencies.InRandomOrder())
                 {

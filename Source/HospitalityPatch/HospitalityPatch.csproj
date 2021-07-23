@@ -28,7 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Hospitality">
-      <HintPath>..\..\..\..\..\..\workshop\content\294100\753498552\1.2\Assemblies\Hospitality.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\753498552\1.3\Assemblies\Hospitality.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>

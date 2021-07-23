@@ -28,7 +28,7 @@ namespace RimQuest
         public static QuestPawn GetQuestPawn(this Pawn pawn)
         {
             var possiblePawns = RimQuestTracker.Instance.questPawns;
-            return possiblePawns != null && possiblePawns.Count > 0
+            return possiblePawns is {Count: > 0}
                 ? possiblePawns.FirstOrDefault(x => x.pawn == pawn)
                 : null;
         }
