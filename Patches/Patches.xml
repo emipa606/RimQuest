@@ -15,10 +15,22 @@
     </match>
   </Operation>
   <Operation Class="PatchOperationConditional">
-    <xpath>/Defs/JobDef[defName="RQ_QuestWithPawn"]</xpath>
+    <xpath>/Defs/QuestScriptDef[defName="OpportunitySite_PeaceTalks"]</xpath>
     <success>Always</success>
     <match Class="PatchOperationAddModExtension">
       <xpath>/Defs/QuestScriptDef[defName="OpportunitySite_PeaceTalks"]</xpath>
+      <value>
+        <li Class="RimQuest.RimQuest_ModExtension">
+          <canBeARimQuest>false</canBeARimQuest>
+        </li>
+      </value>
+    </match>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/QuestScriptDef[defName="OpportunitySite_WorkSite"]</xpath>
+    <success>Always</success>
+    <match Class="PatchOperationAddModExtension">
+      <xpath>/Defs/QuestScriptDef[defName="OpportunitySite_WorkSite"]</xpath>
       <value>
         <li Class="RimQuest.RimQuest_ModExtension">
           <canBeARimQuest>false</canBeARimQuest>
