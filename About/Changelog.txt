@@ -1,5 +1,8 @@
 # Changelog for RimQuest
 
+1.2.13.0 - Spanish translation added, thanks El Bongo!
+
+
 1.2.12.0 - Removed the construction site in ideology from the available quests as it does not make sense
 
 
