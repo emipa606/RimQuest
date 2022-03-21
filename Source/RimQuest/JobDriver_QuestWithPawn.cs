@@ -2,32 +2,31 @@
 using Verse;
 using Verse.AI;
 
-namespace RimQuest
+namespace RimQuest;
+
+public class JobDriver_QuestWithPawn : JobDriver
 {
-    public class JobDriver_QuestWithPawn : JobDriver
+    private Pawn QuestGiver => (Pawn)TargetThingA;
+
+    public override bool TryMakePreToilReservations(bool yeaaa)
     {
-        private Pawn QuestGiver => (Pawn) TargetThingA;
+        return pawn.Reserve(QuestGiver, job);
+    }
 
-        public override bool TryMakePreToilReservations(bool yeaaa)
+    protected override IEnumerable<Toil> MakeNewToils()
+    {
+        this.FailOnDespawnedOrNull(TargetIndex.A);
+        yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch)
+            .FailOn(() => !QuestGiver.CanRequestQuestNow());
+        var trade = new Toil();
+        trade.initAction = delegate
         {
-            return pawn.Reserve(QuestGiver, job);
-        }
-
-        protected override IEnumerable<Toil> MakeNewToils()
-        {
-            this.FailOnDespawnedOrNull(TargetIndex.A);
-            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch)
-                .FailOn(() => !QuestGiver.CanRequestQuestNow());
-            var trade = new Toil();
-            trade.initAction = delegate
+            var actor = trade.actor;
+            if (QuestGiver.CanRequestQuestNow())
             {
-                var actor = trade.actor;
-                if (QuestGiver.CanRequestQuestNow())
-                {
-                    Find.WindowStack.Add(new Dialog_QuestGiver(QuestGiver.GetQuestPawn(), actor));
-                }
-            };
-            yield return trade;
-        }
+                Find.WindowStack.Add(new Dialog_QuestGiver(QuestGiver.GetQuestPawn(), actor));
+            }
+        };
+        yield return trade;
     }
 }

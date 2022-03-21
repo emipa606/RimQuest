@@ -1,9 +1,8 @@
 ﻿using Verse;
 
-namespace RimQuest
+namespace RimQuest;
+
+public class RimQuest_ModExtension : DefModExtension
 {
-    public class RimQuest_ModExtension : DefModExtension
-    {
-        public readonly bool canBeARimQuest = true;
-    }
+    public readonly bool canBeARimQuest = true;
 }

@@ -23,4 +23,9 @@
   <RimQuest_Hospitality_Prisoners>Hospitality prisoners</RimQuest_Hospitality_Prisoners>
   <!-- A RimWorld of Magic -->
   <RimQuest_TM_OpportunitySite_ArcaneBandits>Arcane bandits</RimQuest_TM_OpportunitySite_ArcaneBandits>
+  <RimQuest_Hospitality_ValidQuests>Buyable quests and incidents</RimQuest_Hospitality_ValidQuests>
+  <RimQuest_reset_confirm>Reset all settings?</RimQuest_reset_confirm>
+  <RimQuest_reset_button>Reset</RimQuest_reset_button>
+  <RimQuest_search>Search</RimQuest_search>
+  <RimQuest_version_label>Installed mod-version: {0}</RimQuest_version_label>
 </LanguageData>

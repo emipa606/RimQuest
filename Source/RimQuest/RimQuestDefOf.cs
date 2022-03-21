@@ -1,11 +1,10 @@
 ﻿using RimWorld;
 using Verse;
 
-namespace RimQuest
+namespace RimQuest;
+
+[DefOf]
+public static class RimQuestDefOf
 {
-    [DefOf]
-    public static class RimQuestDefOf
-    {
-        public static JobDef RQ_QuestWithPawn;
-    }
+    public static JobDef RQ_QuestWithPawn;
 }
