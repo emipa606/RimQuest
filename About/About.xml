@@ -26,13 +26,12 @@
 Update of Jecrells mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=1354114366
 
-- This is an unofficial port
-- This will be removed when/if Jecrell comes back
 - Added support for the new QuestScriptDef-type as well as the old IncidentDef
 - Added support for guest-groups from Orions [url=https://steamcommunity.com/sharedfiles/filedetails/?id=753498552]Hospitality mod[/url]
 - Added Russian translation and a way to translate Quest-type quests. Thanks Reiquard!
 - Added french translation, thanks qux!
 - Added questgivers to traveling groups passing by
+- Added settings for modifying what quests and incidents can be bought
 - Performance optimizations by Taranchuk
 
 [img]https://i.imgur.com/pufA0kM.png[/img]
@@ -41,7 +40,11 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1354114366
 	[tr]
 		[td][url=https://invite.gg/Mlie][img]https://i.imgur.com/zdzzBrc.png[/img][/url][/td]
 		[td][url=https://github.com/emipa606/RimQuest][img]https://i.imgur.com/kTkpTOE.png[/img][/url][/td]
-	[/tr]
+    [/tr]
+    [tr]
+        [td][img]https://i.imgur.com/WjDSfUn.png[/img][/td]
+        [td][img]https://i.imgur.com/Be8E2qJ.png[/img][/td]
+    [/tr]
 [/table]
 	
 [img]https://i.imgur.com/Z4GOv8H.png[/img]
