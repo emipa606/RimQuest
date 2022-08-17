@@ -89,6 +89,11 @@ internal class RimQuestMod : Mod
     {
         var listing_Standard = new Listing_Standard();
         listing_Standard.Begin(rect);
+        listing_Standard.Label("RimQuest_price".Translate(instance.Settings.QuestPrice.ToStringMoney()), -1f,
+            "RimQuest_price_tooltip".Translate());
+        instance.Settings.QuestPrice =
+            (float)Math.Round(listing_Standard.Slider(instance.Settings.QuestPrice, 1f, 250f), 0);
+
         var headerLabel = listing_Standard.Label("RimQuest_Hospitality_ValidQuests".Translate());
 
         if (instance.Settings.IncidentSettings == null)

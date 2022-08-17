@@ -27,5 +27,7 @@
   <RimQuest_reset_confirm>Reset all settings?</RimQuest_reset_confirm>
   <RimQuest_reset_button>Reset</RimQuest_reset_button>
   <RimQuest_search>Search</RimQuest_search>
+  <RimQuest_price>Base quest-price: {0}</RimQuest_price>
+  <RimQuest_price_tooltip>Price will change based on trading-skill and reputation, just as normal trading</RimQuest_price_tooltip>
   <RimQuest_version_label>Installed mod-version: {0}</RimQuest_version_label>
 </LanguageData>

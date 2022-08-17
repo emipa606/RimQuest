@@ -13,14 +13,12 @@ public class Dialog_QuestGiver : Window
 
     private const float ButtonHeight = 35f;
 
-    public const float defaultSilverCost = 50;
-
-    private readonly float creationRealTime = -1f;
+    private readonly float creationRealTime;
     private readonly string title = "RQ_QuestOpportunity".Translate();
 
     public int actualPlayerSilver;
 
-    public int actualSilverCost = 50;
+    public int actualSilverCost;
 
     public float interactionDelay;
 
@@ -64,7 +62,7 @@ public class Dialog_QuestGiver : Window
 
     private int DetermineSilverCost()
     {
-        var currentSilver = defaultSilverCost; //50
+        var currentSilver = RimQuestMod.instance.Settings.QuestPrice;
         var priceFactorBuy_TraderPriceFactor =
             (float)questPawn.pawn.Faction.RelationWith(Faction.OfPlayer).baseGoodwill;
         priceFactorBuy_TraderPriceFactor += priceFactorBuy_TraderPriceFactor < 0f ? 0f : 100f;
