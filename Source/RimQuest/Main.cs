@@ -32,9 +32,9 @@ public static class Main
         foreach (var def in DefDatabase<IncidentDef>.AllDefsListForReading.OrderBy(def => def.label).ToList())
         {
             if (!def.targetTags.Contains(IncidentTargetTagDefOf.World) || def.letterDef == LetterDefOf.NegativeEvent ||
-                def.defName == "JourneyOffer" || def.defName == "CultIncident_StarsAreWrong" ||
-                def.defName == "CultIncident_StarsAreRight" || def.defName == "HPLovecraft_BloodMoon" ||
-                def.defName == "Aurora" || def.defName.Contains("GiveQuest"))
+                def.defName is "JourneyOffer" or "CultIncident_StarsAreWrong"
+                    or "CultIncident_StarsAreRight" or "HPLovecraft_BloodMoon" or "Aurora" ||
+                def.defName.Contains("GiveQuest"))
             {
                 continue;
             }

@@ -11,6 +11,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1354114366
 - Added french translation, thanks qux!
 - Added questgivers to traveling groups passing by
 - Added settings for modifying what quests and incidents can be bought
+- Added setting for setting the base-price of quests
 - Performance optimizations by Taranchuk
 
 ![Image](https://i.imgur.com/pufA0kM.png)

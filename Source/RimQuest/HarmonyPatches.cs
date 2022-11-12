@@ -18,8 +18,6 @@ public static class HarmonyPatches
     static HarmonyPatches()
     {
         var harmony = new Harmony("rimworld.rimquest");
-        //harmony.Patch(AccessTools.Method(typeof(PawnUIOverlay), "DrawPawnGUIOverlay"),
-        //    null, new HarmonyMethod(typeof(HarmonyPatches), nameof(DrawPawnGUIOverlay)));
         harmony.Patch(
             AccessTools.Method(typeof(PawnRenderer), "RenderPawnAt"),
             null, new HarmonyMethod(typeof(HarmonyPatches), nameof(RenderPawnAt)));
@@ -116,16 +114,6 @@ public static class HarmonyPatches
         }
     }
 
-
-    //public class PawnUIOverlay
-    //public static void DrawPawnGUIOverlay(PawnUIOverlay __instance)
-    //{
-
-    //}
-
-
-    //IncidentWorker_VisitorGroup
-    //TryConvertOneSmallTrader
     public static void AddQuestGiver(List<Pawn> pawns, Faction faction, Map map, ref bool __result)
     {
         if (!__result || !(pawns?.Count > 1))
@@ -160,7 +148,6 @@ public static class HarmonyPatches
 
         if (__instance.def.defName != "TravelerGroup")
         {
-            //Log.Message($"Skip Incident: {__instance.def.defName}");
             return;
         }
 

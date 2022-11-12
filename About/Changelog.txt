@@ -1,5 +1,9 @@
 # Changelog for RimQuest
 
+1.4.1 - Mod updated for 1.4 and passed autotests.
+Used DeepL to update translations for ChineseSimplified, French, German, Japanese, Russian, Spanish
+
+
 1.3.2 - You can now change the base-price of quests in the options
 
 

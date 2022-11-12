@@ -34,10 +34,8 @@ public class Dialog_QuestGiver : Window
     {
         questPawn = newQuestPawn;
         interactor = newInteractor;
-        //this.closeOnEscapeKey = true;
         forcePause = true;
         absorbInputAroundWindow = true;
-        //this.closeOnEscapeKey = false;
         creationRealTime = RealTime.LastRealTime;
         onlyOneOfTypeAllowed = false;
         actualSilverCost = DetermineSilverCost();
@@ -57,7 +55,7 @@ public class Dialog_QuestGiver : Window
     private int DetermineSilverAvailable(Pawn pawn)
     {
         var currencies = pawn.Map.listerThings.ThingsOfDef(ThingDefOf.Silver);
-        return currencies == null || currencies.Count <= 0 ? 0 : currencies.Sum(currency => currency.stackCount);
+        return currencies is not { Count: > 0 } ? 0 : currencies.Sum(currency => currency.stackCount);
     }
 
     private int DetermineSilverCost()
@@ -90,12 +88,9 @@ public class Dialog_QuestGiver : Window
     public override void DoWindowContents(Rect inRect)
     {
         var num = inRect.y;
-        //if (!this.title.NullOrEmpty())
-        //{
         Verse.Text.Font = GameFont.Medium;
         Widgets.Label(new Rect(0f, num, inRect.width, TitleHeight), title);
         num += TitleHeight;
-        //}
         Verse.Text.Font = GameFont.Small;
         var outRect = new Rect(inRect.x, num, inRect.width, inRect.height - ButtonHeight - 5f - num);
         var width = outRect.width - 16f;
@@ -165,8 +160,8 @@ public class Dialog_QuestGiver : Window
             {
                 var incidentParms =
                     StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.GiveQuest, Find.World);
-                var storytellerComp = Find.Storyteller.storytellerComps.First(x =>
-                    x is StorytellerComp_OnOffCycle || x is StorytellerComp_RandomMain);
+                var storytellerComp = Find.Storyteller.storytellerComps.First(comp =>
+                    comp is StorytellerComp_OnOffCycle or StorytellerComp_RandomMain);
                 incidentParms =
                     storytellerComp.GenerateParms(IncidentCategoryDefOf.GiveQuest, incidentParms.target);
                 QuestUtility.SendLetterQuestAvailable(
@@ -178,8 +173,8 @@ public class Dialog_QuestGiver : Window
                 var incidentParms = StorytellerUtility.DefaultParmsNow(incidentDef.category, Find.World);
                 if (incidentDef.pointsScaleable)
                 {
-                    var storytellerComp = Find.Storyteller.storytellerComps.First(x =>
-                        x is StorytellerComp_OnOffCycle || x is StorytellerComp_RandomMain);
+                    var storytellerComp = Find.Storyteller.storytellerComps.First(comp =>
+                        comp is StorytellerComp_OnOffCycle or StorytellerComp_RandomMain);
                     incidentParms = storytellerComp.GenerateParms(incidentDef.category, incidentParms.target);
                 }
 
