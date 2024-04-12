@@ -7,7 +7,7 @@ namespace RimQuest;
 public class RimQuestTracker : WorldComponent
 {
     public static RimQuestTracker Instance;
-    public List<QuestPawn> questPawns = new List<QuestPawn>();
+    public List<QuestPawn> questPawns = [];
 
     public RimQuestTracker(World world) : base(world)
     {

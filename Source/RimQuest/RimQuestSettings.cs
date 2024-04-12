@@ -31,11 +31,11 @@ internal class RimQuestSettings : ModSettings
 
     public void ResetManualValues()
     {
-        questSettingsKeys = new List<QuestScriptDef>();
-        questSettingsValues = new List<bool>();
+        questSettingsKeys = [];
+        questSettingsValues = [];
         QuestSettings = new Dictionary<QuestScriptDef, bool>();
-        incidentSettingsKeys = new List<IncidentDef>();
-        incidentSettingsValues = new List<bool>();
+        incidentSettingsKeys = [];
+        incidentSettingsValues = [];
         IncidentSettings = new Dictionary<IncidentDef, bool>();
         Main.UpdateValidQuests();
     }

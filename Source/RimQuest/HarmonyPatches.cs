@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -19,7 +18,7 @@ public static class HarmonyPatches
     {
         var harmony = new Harmony("rimworld.rimquest");
         harmony.Patch(
-            AccessTools.Method(typeof(PawnRenderer), "RenderPawnAt"),
+            AccessTools.Method(typeof(PawnRenderer), nameof(PawnRenderer.RenderPawnAt)),
             null, new HarmonyMethod(typeof(HarmonyPatches), nameof(RenderPawnAt)));
         harmony.Patch(AccessTools.Method(typeof(IncidentWorker_VisitorGroup), "TryConvertOnePawnToSmallTrader"),
             null, new HarmonyMethod(typeof(HarmonyPatches), nameof(AddQuestGiver)));
@@ -101,7 +100,7 @@ public static class HarmonyPatches
                 var str = string.Empty;
                 if (pTarg.Faction != null)
                 {
-                    str = " (" + pTarg.Faction.Name + ")";
+                    str = $" ({pTarg.Faction.Name})";
                 }
 
                 var label = "RQ_QuestWith".Translate(pTarg.LabelShort) + str;

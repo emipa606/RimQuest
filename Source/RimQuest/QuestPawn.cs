@@ -11,7 +11,7 @@ public class QuestPawn : IExposable
     public Pawn pawn;
     private QuestGiverDef questGiverDef;
     private List<QuestScriptDef> quests;
-    public List<object> questsAndIncidents = new List<object>();
+    public List<object> questsAndIncidents = [];
 
     public QuestPawn()
     {
@@ -76,7 +76,7 @@ public class QuestPawn : IExposable
     {
         if (quests == null)
         {
-            quests = new List<QuestScriptDef>();
+            quests = [];
         }
 
         if (!questGiverDef.anyQuest && questGiverDef.questsScripts == null)
@@ -119,7 +119,7 @@ public class QuestPawn : IExposable
     {
         if (incidents == null)
         {
-            incidents = new List<IncidentDef>();
+            incidents = [];
         }
 
         if (!questGiverDef.anyQuest && questGiverDef.quests == null)
@@ -160,7 +160,7 @@ public class QuestPawn : IExposable
 
     public void GenerateQuestsAndIncidents()
     {
-        questsAndIncidents = new List<object>();
+        questsAndIncidents = [];
         var tempListToChooseFrom = (from quest in quests select quest as object).ToList();
         tempListToChooseFrom.AddRange(from incident in incidents select incident as object);
 

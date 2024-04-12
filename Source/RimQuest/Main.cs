@@ -64,9 +64,9 @@ public static class Main
 
     private static bool IsAcceptableQuest(QuestScriptDef questScriptDef, bool vanillaCheck = false)
     {
-        if (!vanillaCheck && RimQuestMod.instance.Settings.QuestSettings.ContainsKey(questScriptDef))
+        if (!vanillaCheck && RimQuestMod.instance.Settings.QuestSettings.TryGetValue(questScriptDef, out var quest))
         {
-            return RimQuestMod.instance.Settings.QuestSettings[questScriptDef];
+            return quest;
         }
 
         return questScriptDef.GetModExtension<RimQuest_ModExtension>()?.canBeARimQuest ??
@@ -75,9 +75,9 @@ public static class Main
 
     private static bool IsAcceptableIncident(IncidentDef incidentDef, bool vanillaCheck = false)
     {
-        if (!vanillaCheck && RimQuestMod.instance.Settings.IncidentSettings.ContainsKey(incidentDef))
+        if (!vanillaCheck && RimQuestMod.instance.Settings.IncidentSettings.TryGetValue(incidentDef, out var incident))
         {
-            return RimQuestMod.instance.Settings.IncidentSettings[incidentDef];
+            return incident;
         }
 
         return incidentDef.GetModExtension<RimQuest_ModExtension>()?.canBeARimQuest ??
@@ -87,7 +87,7 @@ public static class Main
     public static string GetQuestReadableName(QuestScriptDef questScriptDef)
     {
         var defname = questScriptDef.defName;
-        var keyedName = "RimQuest_" + defname;
+        var keyedName = $"RimQuest_{defname}";
         if ((Prefs.DevMode || keyedName.Translate() != keyedName) &&
             (!Prefs.DevMode || !keyedName.Translate().ToString().Contains("RìṁQùèșṭ_")))
         {

@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Reflection;
 using HarmonyLib;
-using Hospitality;
 using RimQuest;
+using RimWorld;
 using Verse;
 
 namespace HospitalityPatch;
@@ -13,24 +13,22 @@ internal static class HospitalityPatch
 {
     static HospitalityPatch()
     {
-        var harmony = new Harmony("Mlie.RimQuest.HospitalityPatch");
-        harmony.PatchAll(Assembly.GetExecutingAssembly());
+        new Harmony("Mlie.RimQuest.HospitalityPatch").PatchAll(Assembly.GetExecutingAssembly());
     }
+}
 
-    [HarmonyPatch(typeof(IncidentWorker_VisitorGroup))]
-    [HarmonyPatch("GiveItems")]
-    public class Prefix_IncidentWorker_VisitorGroup
+[HarmonyPatch(typeof(IncidentWorker_VisitorGroup), "GiveItems")]
+public class Prefix_IncidentWorker_VisitorGroup
+{
+    [HarmonyPrefix]
+    public static void Prefix(ref IEnumerable<Pawn> visitors)
     {
-        [HarmonyPrefix]
-        public static void Prefix(ref IEnumerable<Pawn> visitors)
+        if (visitors == null || !visitors.Any())
         {
-            if (visitors == null || !visitors.Any())
-            {
-                return;
-            }
-
-            var value = true;
-            HarmonyPatches.AddQuestGiver(visitors.ToList(), null, null, ref value);
+            return;
         }
+
+        var value = true;
+        HarmonyPatches.AddQuestGiver(visitors.ToList(), null, null, ref value);
     }
 }

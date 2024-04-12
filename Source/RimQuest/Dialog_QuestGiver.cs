@@ -13,18 +13,18 @@ public class Dialog_QuestGiver : Window
 
     private const float ButtonHeight = 35f;
 
+    public readonly int actualPlayerSilver;
+
+    public readonly int actualSilverCost;
+
     private readonly float creationRealTime;
+
+    public readonly Pawn interactor;
+
+    public readonly QuestPawn questPawn;
     private readonly string title = "RQ_QuestOpportunity".Translate();
 
-    public int actualPlayerSilver;
-
-    public int actualSilverCost;
-
     public float interactionDelay;
-
-    public Pawn interactor;
-
-    public QuestPawn questPawn;
 
     private Vector2 scrollPosition = Vector2.zero;
 
