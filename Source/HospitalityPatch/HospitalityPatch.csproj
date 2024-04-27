@@ -6,7 +6,7 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <DebugType>None</DebugType>
     <LangVersion>latest</LangVersion>
-    <FileVersion>1.5.0</FileVersion>
+    <FileVersion>1.5.1</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Krafs.Rimworld.Ref">
@@ -19,7 +19,7 @@
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
     <Reference Include="Hospitality">
-      <HintPath>..\..\..\..\..\..\workshop\content\294100\753498552\1.4\Assemblies\Hospitality.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\753498552\1.5\Assemblies\Hospitality.dll</HintPath>
       <CopyLocal>False</CopyLocal>
       <Private>false</Private>
     </Reference>
