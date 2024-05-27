@@ -1,12 +1,11 @@
-# RimQuest
+# [RimQuest (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=2263331727)
 
 ![Image](https://i.imgur.com/buuPQel.png)
-
 Update of Jecrells mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=1354114366
 
 - Added support for the new QuestScriptDef-type as well as the old IncidentDef
-- Added support for guest-groups from Orions https://steamcommunity.com/sharedfiles/filedetails/?id=753498552]Hospitality mod
+- Added support for guest-groups from Orions [https://steamcommunity.com/sharedfiles/filedetails/?id=753498552](Hospitality mod)
 - Added Russian translation and a way to translate Quest-type quests. Thanks Reiquard!
 - Added french translation, thanks qux!
 - Added questgivers to traveling groups passing by
@@ -15,25 +14,20 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1354114366
 - Performance optimizations by Taranchuk
 
 ![Image](https://i.imgur.com/pufA0kM.png)
-
 	
 ![Image](https://i.imgur.com/Z4GOv8H.png)
-
 
 Adds quest givers to trader groups and caravans. This mod exists for those of us who feel that RimWorld could use a little more direction from time to time, and a good quest is just what we need!
 
 ![Image](https://i.imgur.com/xPCXgr9.jpg)
 
-
 When a trader or caravan arrives, simply right click the character with a green exclamation mark above their head to see what quests are available.
 
 ![Image](https://i.imgur.com/ZA8vatO.jpg)
 
-
 After accepting a quest, it will be available to you on the world map. This version contains vanilla events from RimWorld, but more quests are planned to be added in the future.
 
 ![Image](https://i.imgur.com/859MWl0.jpg)
-
 
 
 # Thank you, one and all.
@@ -64,16 +58,14 @@ This mod was commissioned by Bradr44.
 ![Image](https://i.imgur.com/PwoNOj4.png)
 
 
-
 -  See if the the error persists if you just have this mod and its requirements active.
 -  If not, try adding your other mods until it happens again.
--  Post your error-log using https://steamcommunity.com/workshop/filedetails/?id=818773962]HugsLib or the standalone https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404]Uploader and command Ctrl+F12
+-  Post your error-log using [https://steamcommunity.com/workshop/filedetails/?id=818773962]HugsLib[/url] or the standalone [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404](Uploader) and command Ctrl+F12
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.
--  Use https://github.com/RimSort/RimSort/releases/latest]RimSort to sort your mods
+-  Use [https://github.com/RimSort/RimSort/releases/latest](RimSort) to sort your mods
 
 
 
-https://steamcommunity.com/sharedfiles/filedetails/changelog/2263331727]![Image](https://img.shields.io/github/v/release/emipa606/RimQuest?label=latest%20version&style=plastic&color=9f1111&labelColor=black)
-
+[https://steamcommunity.com/sharedfiles/filedetails/changelog/2263331727]![Image]((https://img.shields.io/github/v/release/emipa606/RimQuest?label=latest%20version&style=plastic&color=9f1111&labelColor=black))
