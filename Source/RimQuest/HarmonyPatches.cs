@@ -39,33 +39,22 @@ public static class HarmonyPatches
     }
 
     //PawnGroupKindWorker_Trader
-    public static void AddQuestGiverTwo(PawnGroupMakerParms parms, PawnGroupMaker groupMaker, Pawn trader,
-        List<Thing> wares, List<Pawn> outPawns)
+    public static void AddQuestGiverTwo(List<Pawn> outPawns)
     {
-        LongEventHandler.QueueLongEvent(() =>
+        var newQuestPawn = RimQuestUtility.GetNewQuestGiver(outPawns);
+        if (newQuestPawn?.Faction == null)
         {
-            var pawn = outPawns.FirstOrDefault(x => x.Spawned);
-            var map = pawn?.MapHeld;
-            if (map == null)
-            {
-                return;
-            }
+            return;
+        }
 
-            var newQuestPawn = RimQuestUtility.GetNewQuestGiver(outPawns);
-            if (newQuestPawn?.Faction == null)
-            {
-                return;
-            }
+        var questPawns = RimQuestTracker.Instance.questPawns;
+        if (questPawns.Any(x => x.pawn == newQuestPawn))
+        {
+            return;
+        }
 
-            var questPawns = RimQuestTracker.Instance.questPawns;
-            if (questPawns.Any(x => x.pawn == newQuestPawn))
-            {
-                return;
-            }
-
-            var questPawn = new QuestPawn(newQuestPawn);
-            questPawns.Add(questPawn);
-        }, "RQ_LoadingScreen".Translate(), true, null);
+        var questPawn = new QuestPawn(newQuestPawn);
+        questPawns.Add(questPawn);
     }
 
     //FloatMenuMakerMap
@@ -113,7 +102,7 @@ public static class HarmonyPatches
         }
     }
 
-    public static void AddQuestGiver(List<Pawn> pawns, Faction faction, Map map, ref bool __result)
+    public static void AddQuestGiver(List<Pawn> pawns, ref bool __result)
     {
         if (!__result || !(pawns?.Count > 1))
         {
@@ -137,8 +126,7 @@ public static class HarmonyPatches
     }
 
 
-    public static void AddQuestGiverThree(IncidentParms parms, List<Pawn> __result,
-        IncidentWorker_TravelerGroup __instance)
+    public static void AddQuestGiverThree(List<Pawn> __result, IncidentWorker_TravelerGroup __instance)
     {
         if (__result == null || __result.Count == 0)
         {

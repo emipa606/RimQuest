@@ -81,7 +81,7 @@ public class Dialog_QuestGiver : Window
 
         currentSilver += currentSilver * priceFactorBuy_TraderPriceFactor *
                          (1f + Find.Storyteller.difficulty.tradePriceFactorLoss);
-        currentSilver = Mathf.Min(currentSilver, 200f);
+        currentSilver = Mathf.Min(currentSilver, RimQuestMod.MaxCost);
         return Mathf.RoundToInt(currentSilver);
     }
 
