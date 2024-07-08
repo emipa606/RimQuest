@@ -68,13 +68,8 @@ public class Dialog_QuestGiver : Window
         priceFactorBuy_TraderPriceFactor *= 0.005f;
         priceFactorBuy_TraderPriceFactor = 1f - priceFactorBuy_TraderPriceFactor;
 
-        var priceGain_PlayerNegotiator = interactor.GetStatValue(StatDefOf.TradePriceImprovement); //Max 20
-
-        //Avoid 0's for division operation
-        if (priceGain_PlayerNegotiator == 0)
-        {
-            priceGain_PlayerNegotiator = Mathf.Max(priceFactorBuy_TraderPriceFactor, 1);
-        }
+        var priceGain_PlayerNegotiator = interactor.GetStatValue(StatDefOf.TradePriceImprovement);
+        priceGain_PlayerNegotiator += 1;
 
         currentSilver = Mathf.Max(currentSilver, 1);
         currentSilver /= priceGain_PlayerNegotiator;

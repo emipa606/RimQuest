@@ -1,5 +1,8 @@
 # Changelog for RimQuest
 
+1.5.4 - Fixed trade-price calculations being way off due to how TradePriceImprovement is handled now.
+
+
 1.5.3 - Fixed the max-cost limit, also fixed the main menu background blinking when generated traders
 
 
