@@ -28,4 +28,6 @@
   <RimQuest_price>Prix de base de la quête : {0}</RimQuest_price>
   <RimQuest_price_tooltip>Le prix variera en fonction de la compétence et de la réputation du négociant, comme dans le cas d'un échange normal.</RimQuest_price_tooltip>
   <RimQuest_version_label>Version installée du module : {0}</RimQuest_version_label>
+  <RimQuest_chance>Chance d'apparition du donneur de quête : {0}</RimQuest_chance>
+  <RimQuest_chance_tooltip>La probabilité qu'un donneur de quête apparaisse dans un groupe de pions en visite.</RimQuest_chance_tooltip>
 </LanguageData>

@@ -27,4 +27,6 @@
   <RimQuest_price>Basis-Questpreis: {0}</RimQuest_price>
   <RimQuest_price_tooltip>Der Preis ändert sich je nach Handelsgeschick und Ansehen, genau wie beim normalen Handel.</RimQuest_price_tooltip>
   <RimQuest_version_label>Installierte Mod-Version: {0}</RimQuest_version_label>
+  <RimQuest_chance>Chance, Questgeber zu spawnen: {0}</RimQuest_chance>
+  <RimQuest_chance_tooltip>Die Chance, dass ein Questgeber in einer Gruppe von Spielfiguren auftaucht</RimQuest_chance_tooltip>
 </LanguageData>

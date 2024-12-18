@@ -27,4 +27,6 @@
   <RimQuest_price>基本クエスト料金：{0}。</RimQuest_price>
   <RimQuest_price_tooltip>通常の取引と同様に、取引スキルや評判によって価格が変動します。</RimQuest_price_tooltip>
   <RimQuest_version_label>インストールされたmod-versionです。{0}</RimQuest_version_label>
+  <RimQuest_chance>クエストギバーをスポーンする確率{0}</RimQuest_chance>
+  <RimQuest_chance_tooltip>ポーンの訪問グループにクエストギバーが出現する確率</RimQuest_chance_tooltip>
 </LanguageData>

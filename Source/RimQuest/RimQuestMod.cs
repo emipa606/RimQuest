@@ -94,6 +94,9 @@ internal class RimQuestMod : Mod
             "RimQuest_price_tooltip".Translate());
         instance.Settings.QuestPrice =
             (float)Math.Round(listing_Standard.Slider(instance.Settings.QuestPrice, 1f, MaxCost), 0);
+        instance.Settings.QuestChance = listing_Standard.SliderLabeled(
+            "RimQuest_chance".Translate(instance.Settings.QuestChance.ToStringPercent()),
+            instance.Settings.QuestChance, 0.01f, 1f, tooltip: "RimQuest_chance_tooltip".Translate());
 
         var headerLabel = listing_Standard.Label("RimQuest_Hospitality_ValidQuests".Translate());
 

@@ -53,6 +53,11 @@ public static class HarmonyPatches
             return;
         }
 
+        if (!Rand.Chance(RimQuestMod.instance.Settings.QuestChance))
+        {
+            return;
+        }
+
         var questPawn = new QuestPawn(newQuestPawn);
         questPawns.Add(questPawn);
     }
@@ -121,6 +126,11 @@ public static class HarmonyPatches
             return;
         }
 
+        if (!Rand.Chance(RimQuestMod.instance.Settings.QuestChance))
+        {
+            return;
+        }
+
         var questPawn = new QuestPawn(newQuestPawn);
         questPawns.Add(questPawn);
     }
@@ -146,6 +156,11 @@ public static class HarmonyPatches
 
         var questPawns = RimQuestTracker.Instance.questPawns;
         if (questPawns.Any(x => x.pawn == newQuestPawn))
+        {
+            return;
+        }
+
+        if (!Rand.Chance(RimQuestMod.instance.Settings.QuestChance))
         {
             return;
         }
