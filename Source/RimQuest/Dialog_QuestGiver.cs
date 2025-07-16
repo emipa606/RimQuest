@@ -13,22 +13,22 @@ public class Dialog_QuestGiver : Window
 
     private const float ButtonHeight = 35f;
 
-    public readonly int actualPlayerSilver;
+    private readonly int actualPlayerSilver;
 
-    public readonly int actualSilverCost;
+    private readonly int actualSilverCost;
 
     private readonly float creationRealTime;
 
-    public readonly Pawn interactor;
+    private readonly Pawn interactor;
 
-    public readonly QuestPawn questPawn;
+    private readonly QuestPawn questPawn;
     private readonly string title = "RQ_QuestOpportunity".Translate();
 
     public float interactionDelay;
 
     private Vector2 scrollPosition = Vector2.zero;
 
-    public object selectedQuest;
+    private object selectedQuest;
 
     public Dialog_QuestGiver(QuestPawn newQuestPawn, Pawn newInteractor)
     {
@@ -38,35 +38,35 @@ public class Dialog_QuestGiver : Window
         absorbInputAroundWindow = true;
         creationRealTime = RealTime.LastRealTime;
         onlyOneOfTypeAllowed = false;
-        actualSilverCost = DetermineSilverCost();
-        actualPlayerSilver = DetermineSilverAvailable(interactor);
+        actualSilverCost = determineSilverCost();
+        actualPlayerSilver = determineSilverAvailable(interactor);
     }
 
     private string Text =>
         "RQ_QuestDialog".Translate(interactor.LabelShort, questPawn.pawn.LabelShort, actualSilverCost);
 
-    public override Vector2 InitialSize => new Vector2(640f, 460f);
+    public override Vector2 InitialSize => new(640f, 460f);
 
     private float TimeUntilInteractive =>
         interactionDelay - (Time.realtimeSinceStartup - creationRealTime);
 
     private bool InteractionDelayExpired => TimeUntilInteractive <= 0f;
 
-    private int DetermineSilverAvailable(Pawn pawn)
+    private static int determineSilverAvailable(Pawn pawn)
     {
         var currencies = pawn.Map.listerThings.ThingsOfDef(ThingDefOf.Silver);
         return currencies is not { Count: > 0 } ? 0 : currencies.Sum(currency => currency.stackCount);
     }
 
-    private int DetermineSilverCost()
+    private int determineSilverCost()
     {
-        var currentSilver = RimQuestMod.instance.Settings.QuestPrice;
-        var priceFactorBuy_TraderPriceFactor =
+        var currentSilver = RimQuestMod.instance.Settings.questPrice;
+        var priceFactorBuyTraderPriceFactor =
             (float)questPawn.pawn.Faction.RelationWith(Faction.OfPlayer).baseGoodwill;
-        priceFactorBuy_TraderPriceFactor += priceFactorBuy_TraderPriceFactor < 0f ? 0f : 100f;
-        priceFactorBuy_TraderPriceFactor *= priceFactorBuy_TraderPriceFactor < 0f ? -1f : 1f;
-        priceFactorBuy_TraderPriceFactor *= 0.005f;
-        priceFactorBuy_TraderPriceFactor = 1f - priceFactorBuy_TraderPriceFactor;
+        priceFactorBuyTraderPriceFactor += priceFactorBuyTraderPriceFactor < 0f ? 0f : 100f;
+        priceFactorBuyTraderPriceFactor *= priceFactorBuyTraderPriceFactor < 0f ? -1f : 1f;
+        priceFactorBuyTraderPriceFactor *= 0.005f;
+        priceFactorBuyTraderPriceFactor = 1f - priceFactorBuyTraderPriceFactor;
 
         var priceGain_PlayerNegotiator = interactor.GetStatValue(StatDefOf.TradePriceImprovement);
         priceGain_PlayerNegotiator += 1;
@@ -74,7 +74,7 @@ public class Dialog_QuestGiver : Window
         currentSilver = Mathf.Max(currentSilver, 1);
         currentSilver /= priceGain_PlayerNegotiator;
 
-        currentSilver += currentSilver * priceFactorBuy_TraderPriceFactor *
+        currentSilver += currentSilver * priceFactorBuyTraderPriceFactor *
                          (1f + Find.Storyteller.difficulty.tradePriceFactorLoss);
         currentSilver = Mathf.Min(currentSilver, RimQuestMod.MaxCost);
         return Mathf.RoundToInt(currentSilver);
@@ -89,7 +89,7 @@ public class Dialog_QuestGiver : Window
         Verse.Text.Font = GameFont.Small;
         var outRect = new Rect(inRect.x, num, inRect.width, inRect.height - ButtonHeight - 5f - num);
         var width = outRect.width - 16f;
-        var viewRect = new Rect(0f, 0f, width, CalcHeight(width) + questPawn.CalcOptionsHeight(width));
+        var viewRect = new Rect(0f, 0f, width, calcHeight(width) + questPawn.CalcOptionsHeight(width));
         Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
         Widgets.Label(new Rect(0f, 0f, viewRect.width, viewRect.height - questPawn.CalcOptionsHeight(width)),
             Text.AdjustedFor(questPawn.pawn));
@@ -183,7 +183,7 @@ public class Dialog_QuestGiver : Window
             }
 
             SoundDefOf.ExecuteTrade.PlayOneShotOnCamera();
-            ReceiveSilver(questPawn.pawn, actualSilverCost);
+            receiveSilver(questPawn.pawn, actualSilverCost);
             Close();
             Find.WindowStack.Add(new Dialog_MessageBox(
                 "RQ_QuestDialogTwo".Translate(questPawn.pawn.LabelShort, interactor.LabelShort)
@@ -204,7 +204,7 @@ public class Dialog_QuestGiver : Window
         }
     }
 
-    private void ReceiveSilver(Pawn receiver, int amountOwed)
+    private static void receiveSilver(Pawn receiver, int amountOwed)
     {
         var amountUnpaid = amountOwed;
         var currencies = receiver.Map.listerThings.ThingsOfDef(ThingDefOf.Silver);
@@ -228,7 +228,7 @@ public class Dialog_QuestGiver : Window
         receiver.inventory.TryAddItemNotForSale(thing);
     }
 
-    private float CalcHeight(float width)
+    private float calcHeight(float width)
     {
         var result = Verse.Text.CalcHeight(Text, width);
         return result;

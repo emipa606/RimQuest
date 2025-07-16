@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/.github/">
+    <File Path="../.github/copilot-instructions.md" />
+  </Folder>
+  <Configurations>
+    <BuildType Name="Release" />
+  </Configurations>
+  <Project Path="HospitalityPatch/HospitalityPatch.csproj" />
+  <Project Path="RimQuest/RimQuest.csproj" />
+</Solution>

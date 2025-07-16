@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace RimQuest;
@@ -13,6 +14,9 @@ public static class Main
     public static Dictionary<IncidentDef, bool> VanillaIncidentsValues;
     public static Dictionary<QuestScriptDef, bool> Quests;
     public static Dictionary<QuestScriptDef, bool> VanillaQuestsValues;
+
+    public static readonly Material exclamationPointMat =
+        MaterialPool.MatFrom("UI/Overlays/RQ_ExclamationPoint", ShaderDatabase.MetaOverlay);
 
     static Main()
     {
@@ -39,10 +43,10 @@ public static class Main
                 continue;
             }
 
-            Incidents[def] = IsAcceptableIncident(def);
+            Incidents[def] = isAcceptableIncident(def);
             if (saveVanilla)
             {
-                VanillaIncidentsValues[def] = IsAcceptableIncident(def, true);
+                VanillaIncidentsValues[def] = isAcceptableIncident(def, true);
             }
         }
 
@@ -54,17 +58,17 @@ public static class Main
                 continue;
             }
 
-            Quests[def] = IsAcceptableQuest(def);
+            Quests[def] = isAcceptableQuest(def);
             if (saveVanilla)
             {
-                VanillaQuestsValues[def] = IsAcceptableQuest(def, true);
+                VanillaQuestsValues[def] = isAcceptableQuest(def, true);
             }
         }
     }
 
-    private static bool IsAcceptableQuest(QuestScriptDef questScriptDef, bool vanillaCheck = false)
+    private static bool isAcceptableQuest(QuestScriptDef questScriptDef, bool vanillaCheck = false)
     {
-        if (!vanillaCheck && RimQuestMod.instance.Settings.QuestSettings.TryGetValue(questScriptDef, out var quest))
+        if (!vanillaCheck && RimQuestMod.instance.Settings.questSettings.TryGetValue(questScriptDef, out var quest))
         {
             return quest;
         }
@@ -73,9 +77,9 @@ public static class Main
                true; //mod extension value if not null, otherwise assumed true.
     }
 
-    private static bool IsAcceptableIncident(IncidentDef incidentDef, bool vanillaCheck = false)
+    private static bool isAcceptableIncident(IncidentDef incidentDef, bool vanillaCheck = false)
     {
-        if (!vanillaCheck && RimQuestMod.instance.Settings.IncidentSettings.TryGetValue(incidentDef, out var incident))
+        if (!vanillaCheck && RimQuestMod.instance.Settings.incidentSettings.TryGetValue(incidentDef, out var incident))
         {
             return incident;
         }
@@ -86,24 +90,24 @@ public static class Main
 
     public static string GetQuestReadableName(QuestScriptDef questScriptDef)
     {
-        var defname = questScriptDef.defName;
-        var keyedName = $"RimQuest_{defname}";
+        var defName = questScriptDef.defName;
+        var keyedName = $"RimQuest_{defName}";
         if ((Prefs.DevMode || keyedName.Translate() != keyedName) &&
             (!Prefs.DevMode || !keyedName.Translate().ToString().Contains("RìṁQùèșṭ_")))
         {
             return keyedName.Translate();
         }
 
-        if (defname.Contains("_"))
+        if (defName.Contains("_"))
         {
-            defname = questScriptDef.defName.Split('_')[1];
+            defName = questScriptDef.defName.Split('_')[1];
         }
 
         if (questScriptDef.defName.Contains("Hospitality"))
         {
-            defname = questScriptDef.defName.Replace("_", " ");
+            defName = questScriptDef.defName.Replace("_", " ");
         }
 
-        return Regex.Replace(defname, "(\\B[A-Z])", " $1");
+        return Regex.Replace(defName, "(\\B[A-Z])", " $1");
     }
 }

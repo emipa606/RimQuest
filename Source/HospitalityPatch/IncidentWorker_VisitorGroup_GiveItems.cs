@@ -8,16 +8,17 @@ using Verse;
 namespace HospitalityPatch;
 
 [HarmonyPatch(typeof(IncidentWorker_VisitorGroup), "GiveItems")]
-public class Prefix_IncidentWorker_VisitorGroup
+public class IncidentWorker_VisitorGroup_GiveItems
 {
     public static void Prefix(ref IEnumerable<Pawn> visitors)
     {
-        if (visitors == null || !visitors.Any())
+        var enumerable = visitors as Pawn[] ?? visitors.ToArray();
+        if (visitors == null || !enumerable.Any())
         {
             return;
         }
 
         var value = true;
-        HarmonyPatches.AddQuestGiver(visitors.ToList(), ref value);
+        IncidentWorker_VisitorGroup_TryConvertOnePawnToSmallTrader.Postfix(enumerable.ToList(), ref value);
     }
 }

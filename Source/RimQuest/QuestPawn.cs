@@ -35,18 +35,18 @@ public class QuestPawn : IExposable
             Log.Error("Factionless quest giver.");
         }
 
-        GenerateQuestGiver(pawnFaction);
+        generateQuestGiver(pawnFaction);
         if (questGiverDef == null)
         {
             Log.Error("No quest giver found.");
         }
 
-        GenerateAllQuests();
-        GenerateAllIncidents();
+        generateAllQuests();
+        generateAllIncidents();
         if (!quests.Any() && !incidents.Any())
         {
-            GenerateAllQuests(true);
-            GenerateAllIncidents(true);
+            generateAllQuests(true);
+            generateAllIncidents(true);
         }
 
         GenerateQuestsAndIncidents();
@@ -64,7 +64,7 @@ public class QuestPawn : IExposable
         Scribe_Collections.Look(ref incidents, "incidents", LookMode.Def);
     }
 
-    private void GenerateQuestGiver(FactionDef pawnFaction)
+    private void generateQuestGiver(FactionDef pawnFaction)
     {
         questGiverDef = DefDatabase<QuestGiverDef>.AllDefs.FirstOrDefault(x =>
             x.factions != null && x.factions.Contains(pawnFaction) ||
@@ -72,12 +72,9 @@ public class QuestPawn : IExposable
     }
 
 
-    private void GenerateAllQuests(bool force = false)
+    private void generateAllQuests(bool force = false)
     {
-        if (quests == null)
-        {
-            quests = [];
-        }
+        quests ??= [];
 
         if (!questGiverDef.anyQuest && questGiverDef.questsScripts == null)
         {
@@ -115,12 +112,9 @@ public class QuestPawn : IExposable
         }
     }
 
-    private void GenerateAllIncidents(bool force = false)
+    private void generateAllIncidents(bool force = false)
     {
-        if (incidents == null)
-        {
-            incidents = [];
-        }
+        incidents ??= [];
 
         if (!questGiverDef.anyQuest && questGiverDef.quests == null)
         {

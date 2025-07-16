@@ -19,12 +19,12 @@ internal class RimQuestMod : Mod
     /// </summary>
     public static RimQuestMod instance;
 
-    private static readonly Vector2 buttonSize = new Vector2(120f, 25f);
+    private static readonly Vector2 buttonSize = new(120f, 25f);
     private static string currentVersion;
 
     private static string searchText = "";
-    private static readonly Vector2 searchSize = new Vector2(200f, 25f);
-    private static readonly Color alternateBackground = new Color(0.2f, 0.2f, 0.2f, 0.5f);
+    private static readonly Vector2 searchSize = new(200f, 25f);
+    private static readonly Color alternateBackground = new(0.2f, 0.2f, 0.2f, 0.5f);
     private static Vector2 scrollPosition;
 
     /// <summary>
@@ -50,14 +50,10 @@ internal class RimQuestMod : Mod
     {
         get
         {
-            if (settings == null)
-            {
-                settings = GetSettings<RimQuestSettings>();
-            }
+            settings ??= GetSettings<RimQuestSettings>();
 
             return settings;
         }
-        set => settings = value;
     }
 
     /// <summary>
@@ -69,7 +65,7 @@ internal class RimQuestMod : Mod
         return "RimQuest";
     }
 
-    private static void DrawButton(Action action, string text, Vector2 pos)
+    private static void drawButton(Action action, string text, Vector2 pos)
     {
         var rect = new Rect(pos.x, pos.y, buttonSize.x, buttonSize.y);
         if (!Widgets.ButtonText(rect, text, true, false, Color.white))
@@ -88,31 +84,25 @@ internal class RimQuestMod : Mod
     /// <param name="rect"></param>
     public override void DoSettingsWindowContents(Rect rect)
     {
-        var listing_Standard = new Listing_Standard();
-        listing_Standard.Begin(rect);
-        listing_Standard.Label("RimQuest_price".Translate(instance.Settings.QuestPrice.ToStringMoney()), -1f,
+        var listingStandard = new Listing_Standard();
+        listingStandard.Begin(rect);
+        listingStandard.Label("RimQuest_price".Translate(instance.Settings.questPrice.ToStringMoney()), -1f,
             "RimQuest_price_tooltip".Translate());
-        instance.Settings.QuestPrice =
-            (float)Math.Round(listing_Standard.Slider(instance.Settings.QuestPrice, 1f, MaxCost), 0);
-        instance.Settings.QuestChance = listing_Standard.SliderLabeled(
-            "RimQuest_chance".Translate(instance.Settings.QuestChance.ToStringPercent()),
-            instance.Settings.QuestChance, 0.01f, 1f, tooltip: "RimQuest_chance_tooltip".Translate());
+        instance.Settings.questPrice =
+            (float)Math.Round(listingStandard.Slider(instance.Settings.questPrice, 1f, MaxCost), 0);
+        instance.Settings.questChance = listingStandard.SliderLabeled(
+            "RimQuest_chance".Translate(instance.Settings.questChance.ToStringPercent()),
+            instance.Settings.questChance, 0.01f, 1f, tooltip: "RimQuest_chance_tooltip".Translate());
 
-        var headerLabel = listing_Standard.Label("RimQuest_Hospitality_ValidQuests".Translate());
+        var headerLabel = listingStandard.Label("RimQuest_Hospitality_ValidQuests".Translate());
 
-        if (instance.Settings.IncidentSettings == null)
+        instance.Settings.incidentSettings ??= new Dictionary<IncidentDef, bool>();
+
+        instance.Settings.questSettings ??= new Dictionary<QuestScriptDef, bool>();
+
+        if (instance.Settings.incidentSettings.Any() || instance.Settings.questSettings.Any())
         {
-            instance.Settings.IncidentSettings = new Dictionary<IncidentDef, bool>();
-        }
-
-        if (instance.Settings.QuestSettings == null)
-        {
-            instance.Settings.QuestSettings = new Dictionary<QuestScriptDef, bool>();
-        }
-
-        if (instance.Settings.IncidentSettings.Any() || instance.Settings.QuestSettings.Any())
-        {
-            DrawButton(() =>
+            drawButton(() =>
                 {
                     Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
                         "RimQuest_reset_confirm".Translate(),
@@ -126,9 +116,9 @@ internal class RimQuestMod : Mod
 
         if (currentVersion != null)
         {
-            listing_Standard.Gap();
+            listingStandard.Gap();
             GUI.contentColor = Color.gray;
-            listing_Standard.Label("RimQuest_version_label".Translate(currentVersion));
+            listingStandard.Label("RimQuest_version_label".Translate(currentVersion));
             GUI.contentColor = Color.white;
         }
 
@@ -141,7 +131,7 @@ internal class RimQuestMod : Mod
             headerLabel.position + new Vector2((rect.width / 2) - (searchSize.x / 2), 0),
             searchSize), "RimQuest_search".Translate());
 
-        listing_Standard.End();
+        listingStandard.End();
 
 
         var allQuests = Main.Quests;
@@ -185,15 +175,15 @@ internal class RimQuestMod : Mod
 
             var questLabel = $"{Main.GetQuestReadableName(questScriptDef)} ({questScriptDef.defName}) - {modInfo}";
             var selectedValue = Main.VanillaQuestsValues[questScriptDef];
-            if (instance.Settings.QuestSettings.ContainsKey(questScriptDef))
+            if (instance.Settings.questSettings.ContainsKey(questScriptDef))
             {
-                if (instance.Settings.QuestSettings[questScriptDef] == selectedValue)
+                if (instance.Settings.questSettings[questScriptDef] == selectedValue)
                 {
-                    instance.Settings.QuestSettings.Remove(questScriptDef);
+                    instance.Settings.questSettings.Remove(questScriptDef);
                 }
                 else
                 {
-                    selectedValue = instance.Settings.QuestSettings[questScriptDef];
+                    selectedValue = instance.Settings.questSettings[questScriptDef];
                 }
             }
 
@@ -204,7 +194,7 @@ internal class RimQuestMod : Mod
 
             if (wasValue != selectedValue)
             {
-                instance.Settings.QuestSettings[questScriptDef] = selectedValue;
+                instance.Settings.questSettings[questScriptDef] = selectedValue;
             }
         }
 
@@ -220,15 +210,15 @@ internal class RimQuestMod : Mod
 
             var incidentLabel = $"{incidentDef.LabelCap} ({incidentDef.defName}) - {modInfo}";
             var selectedValue = Main.VanillaIncidentsValues[incidentDef];
-            if (instance.Settings.IncidentSettings.ContainsKey(incidentDef))
+            if (instance.Settings.incidentSettings.ContainsKey(incidentDef))
             {
-                if (instance.Settings.IncidentSettings[incidentDef] == selectedValue)
+                if (instance.Settings.incidentSettings[incidentDef] == selectedValue)
                 {
-                    instance.Settings.IncidentSettings.Remove(incidentDef);
+                    instance.Settings.incidentSettings.Remove(incidentDef);
                 }
                 else
                 {
-                    selectedValue = instance.Settings.IncidentSettings[incidentDef];
+                    selectedValue = instance.Settings.incidentSettings[incidentDef];
                 }
             }
 
@@ -239,7 +229,7 @@ internal class RimQuestMod : Mod
 
             if (wasValue != selectedValue)
             {
-                instance.Settings.IncidentSettings[incidentDef] = selectedValue;
+                instance.Settings.incidentSettings[incidentDef] = selectedValue;
             }
         }
 

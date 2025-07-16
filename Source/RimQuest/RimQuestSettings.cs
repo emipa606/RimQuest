@@ -9,24 +9,24 @@ namespace RimQuest;
 /// </summary>
 internal class RimQuestSettings : ModSettings
 {
-    public Dictionary<IncidentDef, bool> IncidentSettings = new Dictionary<IncidentDef, bool>();
+    public Dictionary<IncidentDef, bool> incidentSettings = new();
     private List<IncidentDef> incidentSettingsKeys;
     private List<bool> incidentSettingsValues;
-    public float QuestChance = 1f;
-    public float QuestPrice = 50f;
-    public Dictionary<QuestScriptDef, bool> QuestSettings = new Dictionary<QuestScriptDef, bool>();
+    public float questChance = 1f;
+    public float questPrice = 50f;
+    public Dictionary<QuestScriptDef, bool> questSettings = new();
     private List<QuestScriptDef> questSettingsKeys;
     private List<bool> questSettingsValues;
 
     public override void ExposeData()
     {
         base.ExposeData();
-        Scribe_Values.Look(ref QuestPrice, "QuestPrice", 50f);
-        Scribe_Values.Look(ref QuestChance, "QuestChance", 1f);
-        Scribe_Collections.Look(ref QuestSettings, "QuestSettings", LookMode.Def,
+        Scribe_Values.Look(ref questPrice, "QuestPrice", 50f);
+        Scribe_Values.Look(ref questChance, "QuestChance", 1f);
+        Scribe_Collections.Look(ref questSettings, "QuestSettings", LookMode.Def,
             LookMode.Value,
             ref questSettingsKeys, ref questSettingsValues);
-        Scribe_Collections.Look(ref IncidentSettings, "IncidentSettings", LookMode.Def,
+        Scribe_Collections.Look(ref incidentSettings, "IncidentSettings", LookMode.Def,
             LookMode.Value,
             ref incidentSettingsKeys, ref incidentSettingsValues);
     }
@@ -35,10 +35,10 @@ internal class RimQuestSettings : ModSettings
     {
         questSettingsKeys = [];
         questSettingsValues = [];
-        QuestSettings = new Dictionary<QuestScriptDef, bool>();
+        questSettings = new Dictionary<QuestScriptDef, bool>();
         incidentSettingsKeys = [];
         incidentSettingsValues = [];
-        IncidentSettings = new Dictionary<IncidentDef, bool>();
+        incidentSettings = new Dictionary<IncidentDef, bool>();
         Main.UpdateValidQuests();
     }
 }

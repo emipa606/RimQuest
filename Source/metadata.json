@@ -2,7 +2,14 @@
   "Continued": true,
   "CanAdd": "0",
   "CanRemove": "2",
-  "PreviewVersion": "1.5",
+  "PreviewVersion": "1.6",
   "SocialImageSet": true,
-  "SearchTags": " quest givers"
+  "SearchTags": " quest givers",
+  "Patches": true,
+  "Defs": true,
+  "Assemblies": true,
+  "LinesOfCode": 44934,
+  "LinesOfXML": 4808,
+  "CodeBaseSize": 74,
+  "LastXmlCleaning": "2025-07-16T23:57:05.8543088+02:00"
 }
