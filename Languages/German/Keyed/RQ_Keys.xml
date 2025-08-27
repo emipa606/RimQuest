@@ -29,4 +29,10 @@
   <RimQuest_version_label>Installierte Mod-Version: {0}</RimQuest_version_label>
   <RimQuest_chance>Chance, Questgeber zu spawnen: {0}</RimQuest_chance>
   <RimQuest_chance_tooltip>Die Chance, dass ein Questgeber in einer Gruppe von Spielfiguren auftaucht</RimQuest_chance_tooltip>
+  <!-- Template for translating quests: -->
+  <!-- <RimQuest_DEFNAME>Quest name</RimQuest_DEFNAME> -->
+  <!-- Where DEFNAME is a QuestScriptDef defName [RimWorld\Data\Core|Royalty\Defs\QuestScriptDefs] -->
+  <!-- A RimWorld of Magic -->
+  <RimQuest_amount>Angebotene Quests: {0}</RimQuest_amount>
+  <RimQuest_amount_tooltip>Die Menge der Quests, die von jedem Händler angeboten werden</RimQuest_amount_tooltip>
 </LanguageData>

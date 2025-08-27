@@ -100,7 +100,7 @@ public class QuestPawn : IExposable
             }
         }
 
-        for (var i = 0; i < questGiverDef.maxOptions; i++)
+        for (var i = 0; i < RimQuestMod.instance.Settings.amount; i++)
         {
             if (!result.TryRandomElementByWeight(x => x.selectionWeight, out var quest))
             {
@@ -140,7 +140,7 @@ public class QuestPawn : IExposable
             }
         }
 
-        for (var i = 0; i < questGiverDef.maxOptions; i++)
+        for (var i = 0; i < RimQuestMod.instance.Settings.amount; i++)
         {
             if (!result.TryRandomElementByWeight(x => x.selectionWeight, out var incident))
             {
@@ -158,7 +158,7 @@ public class QuestPawn : IExposable
         var tempListToChooseFrom = (from quest in quests select quest as object).ToList();
         tempListToChooseFrom.AddRange(from incident in incidents select incident as object);
 
-        for (var i = 0; i < questGiverDef.maxOptions; i++)
+        for (var i = 0; i < RimQuestMod.instance.Settings.amount; i++)
         {
             var objectToAdd = tempListToChooseFrom.RandomElement();
             questsAndIncidents.Add(objectToAdd);

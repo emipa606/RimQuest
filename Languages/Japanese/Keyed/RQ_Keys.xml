@@ -29,4 +29,10 @@
   <RimQuest_version_label>インストールされたmod-versionです。{0}</RimQuest_version_label>
   <RimQuest_chance>クエストギバーをスポーンする確率{0}</RimQuest_chance>
   <RimQuest_chance_tooltip>ポーンの訪問グループにクエストギバーが出現する確率</RimQuest_chance_tooltip>
+  <!-- Template for translating quests: -->
+  <!-- <RimQuest_DEFNAME>Quest name</RimQuest_DEFNAME> -->
+  <!-- Where DEFNAME is a QuestScriptDef defName [RimWorld\Data\Core|Royalty\Defs\QuestScriptDefs] -->
+  <!-- A RimWorld of Magic -->
+  <RimQuest_amount>提供されるクエスト{0}</RimQuest_amount>
+  <RimQuest_amount_tooltip>各商人が提供するクエストの量</RimQuest_amount_tooltip>
 </LanguageData>

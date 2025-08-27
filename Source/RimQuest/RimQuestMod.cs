@@ -94,6 +94,10 @@ internal class RimQuestMod : Mod
             "RimQuest_chance".Translate(instance.Settings.questChance.ToStringPercent()),
             instance.Settings.questChance, 0.01f, 1f, tooltip: "RimQuest_chance_tooltip".Translate());
 
+        instance.Settings.amount = (int)listingStandard.SliderLabeled(
+            "RimQuest_amount".Translate(instance.Settings.amount), instance.Settings.amount, 1, 10,
+            tooltip: "RimQuest_amount_tooltip".Translate());
+
         var headerLabel = listingStandard.Label("RimQuest_Hospitality_ValidQuests".Translate());
 
         instance.Settings.incidentSettings ??= new Dictionary<IncidentDef, bool>();

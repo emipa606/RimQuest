@@ -45,7 +45,8 @@ public class Dialog_QuestGiver : Window
     private string Text =>
         "RQ_QuestDialog".Translate(interactor.LabelShort, questPawn.pawn.LabelShort, actualSilverCost);
 
-    public override Vector2 InitialSize => new(640f, 460f);
+    public override Vector2 InitialSize =>
+        new Vector2(640f, Math.Max(460f, 320f + (RimQuestMod.instance.Settings.amount * 25)));
 
     private float TimeUntilInteractive =>
         interactionDelay - (Time.realtimeSinceStartup - creationRealTime);
@@ -102,16 +103,19 @@ public class Dialog_QuestGiver : Window
         {
             object questDef = null;
             var questName = string.Empty;
+            var questDescription = string.Empty;
             if (questPawn.questsAndIncidents[index] is QuestScriptDef questScriptDef)
             {
                 questName = Main.GetQuestReadableName(questScriptDef);
                 questDef = questScriptDef;
+                questDescription = questScriptDef.description;
             }
 
             if (questPawn.questsAndIncidents[index] is IncidentDef incidentDef)
             {
                 questName = incidentDef.LabelCap;
                 questDef = incidentDef;
+                questDescription = incidentDef.description;
             }
 
             if (string.IsNullOrEmpty(questName))
@@ -119,7 +123,7 @@ public class Dialog_QuestGiver : Window
                 continue;
             }
 
-            var rect6 = new Rect(24f,
+            var rect6 = new Rect(viewRect.width / 4,
                 viewRect.height - questPawn.CalcOptionsHeight(width) +
                 ((Verse.Text.CalcHeight(questName, width) + 12f) * index) + 8f, viewRect.width / 2f,
                 Verse.Text.CalcHeight(questName, width));
@@ -132,6 +136,8 @@ public class Dialog_QuestGiver : Window
             {
                 selectedQuest = questDef;
             }
+
+            TooltipHandler.TipRegion(rect6, questDescription);
         }
 
         Widgets.EndScrollView();

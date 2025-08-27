@@ -9,12 +9,13 @@ namespace RimQuest;
 /// </summary>
 internal class RimQuestSettings : ModSettings
 {
-    public Dictionary<IncidentDef, bool> incidentSettings = new();
+    public int amount = 3;
+    public Dictionary<IncidentDef, bool> incidentSettings = new Dictionary<IncidentDef, bool>();
     private List<IncidentDef> incidentSettingsKeys;
     private List<bool> incidentSettingsValues;
     public float questChance = 1f;
     public float questPrice = 50f;
-    public Dictionary<QuestScriptDef, bool> questSettings = new();
+    public Dictionary<QuestScriptDef, bool> questSettings = new Dictionary<QuestScriptDef, bool>();
     private List<QuestScriptDef> questSettingsKeys;
     private List<bool> questSettingsValues;
 
@@ -23,6 +24,7 @@ internal class RimQuestSettings : ModSettings
         base.ExposeData();
         Scribe_Values.Look(ref questPrice, "QuestPrice", 50f);
         Scribe_Values.Look(ref questChance, "QuestChance", 1f);
+        Scribe_Values.Look(ref amount, "QuestAmount", 3);
         Scribe_Collections.Look(ref questSettings, "QuestSettings", LookMode.Def,
             LookMode.Value,
             ref questSettingsKeys, ref questSettingsValues);
@@ -33,6 +35,7 @@ internal class RimQuestSettings : ModSettings
 
     public void ResetManualValues()
     {
+        amount = 3;
         questSettingsKeys = [];
         questSettingsValues = [];
         questSettings = new Dictionary<QuestScriptDef, bool>();

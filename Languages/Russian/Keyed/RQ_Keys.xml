@@ -39,4 +39,9 @@
   <RimQuest_version_label>Установленная версия мода: {0}</RimQuest_version_label>
   <RimQuest_chance>Шанс породить квестодателя: {0}</RimQuest_chance>
   <RimQuest_chance_tooltip>Шанс появления квестодателя в посещаемой группе пешек</RimQuest_chance_tooltip>
+  <!-- Template for translating quests: -->
+  <!-- <RimQuest_DEFNAME>Quest name</RimQuest_DEFNAME> -->
+  <!-- Where DEFNAME is a QuestScriptDef defName [RimWorld\Data\Core|Royalty\Defs\QuestScriptDefs] -->
+  <RimQuest_amount>Предлагаемые квесты: {0}</RimQuest_amount>
+  <RimQuest_amount_tooltip>Количество квестов, предлагаемых каждым торговцем</RimQuest_amount_tooltip>
 </LanguageData>
