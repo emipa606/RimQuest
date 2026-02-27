@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using RimWorld;
+using RimWorld.QuestGen;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -165,8 +166,14 @@ public class Dialog_QuestGiver : Window
                     comp is StorytellerComp_OnOffCycle or StorytellerComp_RandomMain);
                 incidentParms =
                     storytellerComp.GenerateParms(IncidentCategoryDefOf.GiveQuest, incidentParms.target);
+
+                var slate = new Slate();
+
+                slate.Set("points", incidentParms.points);
+                slate.Set("discoveryMethod", "QuestDiscoveredFromTrader".Translate(questPawn.pawn.Named("TRADER"), interactor.Named("NEGOTIATOR")));
+
                 QuestUtility.SendLetterQuestAvailable(
-                    QuestUtility.GenerateQuestAndMakeAvailable(questDef, incidentParms.points));
+                    QuestUtility.GenerateQuestAndMakeAvailable(questDef, slate));
             }
 
             if (selectedQuest is IncidentDef incidentDef)
