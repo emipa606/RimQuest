@@ -47,7 +47,7 @@ public class Dialog_QuestGiver : Window
         "RQ_QuestDialog".Translate(interactor.LabelShort, questPawn.pawn.LabelShort, actualSilverCost);
 
     public override Vector2 InitialSize =>
-        new Vector2(640f, Math.Max(460f, 320f + (RimQuestMod.instance.Settings.amount * 25)));
+        new(640f, Math.Max(460f, 320f + (RimQuestMod.instance.Settings.amount * 25)));
 
     private float TimeUntilInteractive =>
         interactionDelay - (Time.realtimeSinceStartup - creationRealTime);
@@ -158,35 +158,41 @@ public class Dialog_QuestGiver : Window
                 return;
             }
 
-            if (selectedQuest is QuestScriptDef questDef)
+            switch (selectedQuest)
             {
-                var incidentParms =
-                    StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.GiveQuest, Find.World);
-                var storytellerComp = Find.Storyteller.storytellerComps.First(comp =>
-                    comp is StorytellerComp_OnOffCycle or StorytellerComp_RandomMain);
-                incidentParms =
-                    storytellerComp.GenerateParms(IncidentCategoryDefOf.GiveQuest, incidentParms.target);
-
-                var slate = new Slate();
-
-                slate.Set("points", incidentParms.points);
-                slate.Set("discoveryMethod", "QuestDiscoveredFromTrader".Translate(questPawn.pawn.Named("TRADER"), interactor.Named("NEGOTIATOR")));
-
-                QuestUtility.SendLetterQuestAvailable(
-                    QuestUtility.GenerateQuestAndMakeAvailable(questDef, slate));
-            }
-
-            if (selectedQuest is IncidentDef incidentDef)
-            {
-                var incidentParms = StorytellerUtility.DefaultParmsNow(incidentDef.category, Find.World);
-                if (incidentDef.pointsScaleable)
+                case QuestScriptDef questDef:
                 {
+                    var incidentParms =
+                        StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.GiveQuest, Find.World);
                     var storytellerComp = Find.Storyteller.storytellerComps.First(comp =>
                         comp is StorytellerComp_OnOffCycle or StorytellerComp_RandomMain);
-                    incidentParms = storytellerComp.GenerateParms(incidentDef.category, incidentParms.target);
-                }
+                    incidentParms =
+                        storytellerComp.GenerateParms(IncidentCategoryDefOf.GiveQuest, incidentParms.target);
 
-                incidentDef.Worker.TryExecute(incidentParms);
+                    var slate = new Slate();
+
+                    slate.Set("points", incidentParms.points);
+                    slate.Set("discoveryMethod",
+                        "QuestDiscoveredFromTrader".Translate(questPawn.pawn.Named("TRADER"),
+                            interactor.Named("NEGOTIATOR")));
+
+                    QuestUtility.SendLetterQuestAvailable(
+                        QuestUtility.GenerateQuestAndMakeAvailable(questDef, slate));
+                    break;
+                }
+                case IncidentDef incidentDef:
+                {
+                    var incidentParms = StorytellerUtility.DefaultParmsNow(incidentDef.category, Find.World);
+                    if (incidentDef.pointsScaleable)
+                    {
+                        var storytellerComp = Find.Storyteller.storytellerComps.First(comp =>
+                            comp is StorytellerComp_OnOffCycle or StorytellerComp_RandomMain);
+                        incidentParms = storytellerComp.GenerateParms(incidentDef.category, incidentParms.target);
+                    }
+
+                    incidentDef.Worker.TryExecute(incidentParms);
+                    break;
+                }
             }
 
             var questPawns = RimQuestTracker.Instance.questPawns;

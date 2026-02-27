@@ -1,6 +1,6 @@
 # [RimQuest (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=2263331727)
 
-![Image](https://i.imgur.com/buuPQel.png)
+![Image](https://img.litet.net/logos/Info.png)
 
 Update of Jecrells mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=1354114366
@@ -15,21 +15,21 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1354114366
 - Added setting to change the spawn chance of quest-givers
 - Performance optimizations by Taranchuk
 
-![Image](https://i.imgur.com/pufA0kM.png)
+![Image](https://img.litet.net/logos/Notice.png)
 	
-![Image](https://i.imgur.com/Z4GOv8H.png)
+![Image](https://img.litet.net/logos/OriginalDescription.png)
 
 Adds quest givers to trader groups and caravans. This mod exists for those of us who feel that RimWorld could use a little more direction from time to time, and a good quest is just what we need!
 
-![Image](https://i.imgur.com/xPCXgr9.jpg)
+![Image](https://img.litet.net/xPCXgr9.jpg)
 
 When a trader or caravan arrives, simply right click the character with a green exclamation mark above their head to see what quests are available.
 
-![Image](https://i.imgur.com/ZA8vatO.jpg)
+![Image](https://img.litet.net/ZA8vatO.jpg)
 
 After accepting a quest, it will be available to you on the world map. This version contains vanilla events from RimWorld, but more quests are planned to be added in the future.
 
-![Image](https://i.imgur.com/859MWl0.jpg)
+![Image](https://img.litet.net/859MWl0.jpg)
 
 
 # Thank you, one and all.
@@ -57,13 +57,13 @@ https://ludeon.com/forums/index.php?topic=39130.0
 This mod was commissioned by Bradr44.
 
 
-![Image](https://i.imgur.com/PwoNOj4.png)
+![Image](https://img.litet.net/logos/ReportingIssues.png)
 
 
 
 -  See if the the error persists if you just have this mod and its requirements active.
 -  If not, try adding your other mods until it happens again.
--  Post your error-log using the [Log Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) or the standalone [Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) and command Ctrl+F12
+-  Always post your log using the [Log Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404)
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.
@@ -71,4 +71,4 @@ This mod was commissioned by Bradr44.
 
  
 
-[![Image](https://img.shields.io/github/v/release/emipa606/RimQuest?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2263331727) | tags:  quest givers
+[![Image](https://img.shields.io/github/v/release/emipa606/RimQuest?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2263331727) | tags: quest givers

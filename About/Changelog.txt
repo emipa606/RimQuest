@@ -1,5 +1,8 @@
 # Changelog for RimQuest
 
+1.6.2 - Should support more quest-types now, thanks to a-certain-existence
+
+
 1.6.1 - Added mod-setting for the amount of quests offered
 Used DeepL to update translations for ChineseSimplified, French, German, Japanese, Russian, Spanish
 

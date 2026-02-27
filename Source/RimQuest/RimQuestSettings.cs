@@ -10,12 +10,12 @@ namespace RimQuest;
 internal class RimQuestSettings : ModSettings
 {
     public int amount = 3;
-    public Dictionary<IncidentDef, bool> incidentSettings = new Dictionary<IncidentDef, bool>();
+    public Dictionary<IncidentDef, bool> incidentSettings = new();
     private List<IncidentDef> incidentSettingsKeys;
     private List<bool> incidentSettingsValues;
     public float questChance = 1f;
     public float questPrice = 50f;
-    public Dictionary<QuestScriptDef, bool> questSettings = new Dictionary<QuestScriptDef, bool>();
+    public Dictionary<QuestScriptDef, bool> questSettings = new();
     private List<QuestScriptDef> questSettingsKeys;
     private List<bool> questSettingsValues;
 

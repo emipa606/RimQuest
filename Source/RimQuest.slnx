@@ -1,10 +1,22 @@
 <Solution>
-  <Folder Name="/.github/">
-    <File Path="../.github/copilot-instructions.md" />
-  </Folder>
   <Configurations>
     <BuildType Name="Release" />
   </Configurations>
   <Project Path="HospitalityPatch/HospitalityPatch.csproj" />
   <Project Path="RimQuest/RimQuest.csproj" />
+  <Folder Name="/.github/">
+    <File Path="../.github/copilot-instructions.md" />
+  </Folder>
+  <Folder Name="/XML/Patches/">
+    <File Path="../Patches/Patches.xml" />
+  </Folder>
+  <Folder Name="/XML/About/">
+    <File Path="../About/about.xml" />
+  </Folder>
+  <Folder Name="/XML/1.6/Defs/JobDefs/">
+    <File Path="../1.6/Defs/JobDefs/RQ_Jobs.xml" />
+  </Folder>
+  <Folder Name="/XML/1.6/Defs/QuestDefs/">
+    <File Path="../1.6/Defs/QuestDefs/QuestGiverDefs.xml" />
+  </Folder>
 </Solution>
