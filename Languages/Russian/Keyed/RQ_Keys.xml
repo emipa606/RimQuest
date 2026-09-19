@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <!-- Setting Quest Giver... -->
   <RQ_LoadingScreen>Установка хранителя историй...</RQ_LoadingScreen>
@@ -44,4 +44,6 @@
   <!-- Where DEFNAME is a QuestScriptDef defName [RimWorld\Data\Core|Royalty\Defs\QuestScriptDefs] -->
   <RimQuest_amount>Предлагаемые квесты: {0}</RimQuest_amount>
   <RimQuest_amount_tooltip>Количество квестов, предлагаемых каждым торговцем</RimQuest_amount_tooltip>
+  <RimQuest_pauseOnClose>Приостановить игру при закрытии окна квеста</RimQuest_pauseOnClose>
+  <RimQuest_pauseOnClose_tooltip>Если эта опция включена, игра будет приостанавливаться при закрытии окна дающего квест персонажа. Отключите эту опцию, если хотите, чтобы игра продолжалась без приостановки.</RimQuest_pauseOnClose_tooltip>
 </LanguageData>

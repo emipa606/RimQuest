@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <RQ_LoadingScreen>Setting Quest Giver...</RQ_LoadingScreen>
   <RQ_SilverAmt>{0} argent</RQ_SilverAmt>
@@ -35,4 +35,6 @@
   <!-- A RimWorld of Magic -->
   <RimQuest_amount>Quêtes proposées : {0}</RimQuest_amount>
   <RimQuest_amount_tooltip>Le nombre de quêtes offertes par chaque marchand</RimQuest_amount_tooltip>
+  <RimQuest_pauseOnClose>Mettre le jeu en pause lorsque la fenêtre de quête se ferme</RimQuest_pauseOnClose>
+  <RimQuest_pauseOnClose_tooltip>Lorsque cette option est activée, le jeu sera mis en pause lorsque vous fermerez la fenêtre du donneur de quête. Désactivez-la si vous préférez que le jeu se poursuive sans être mis en pause.</RimQuest_pauseOnClose_tooltip>
 </LanguageData>

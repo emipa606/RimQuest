@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <RQ_CannotQuest>クエストが確認できません</RQ_CannotQuest>
   <RQ_QuestWith>{0}のクエストを確認する</RQ_QuestWith>
@@ -35,4 +35,6 @@
   <!-- A RimWorld of Magic -->
   <RimQuest_amount>提供されるクエスト{0}</RimQuest_amount>
   <RimQuest_amount_tooltip>各商人が提供するクエストの量</RimQuest_amount_tooltip>
+  <RimQuest_pauseOnClose>クエストウィンドウが閉じたらゲームを一時停止する</RimQuest_pauseOnClose>
+  <RimQuest_pauseOnClose_tooltip>有効にすると、クエスト発注者のウィンドウを閉じるとゲームが一時停止します。ゲームを一時停止せずに続けたい場合は、無効にしてください。</RimQuest_pauseOnClose_tooltip>
 </LanguageData>

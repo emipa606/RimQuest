@@ -8,7 +8,7 @@ using Verse;
 namespace HospitalityPatch;
 
 [HarmonyPatch(typeof(IncidentWorker_VisitorGroup), "GiveItems")]
-public class IncidentWorker_VisitorGroup_GiveItems
+public static class IncidentWorker_VisitorGroup_GiveItems
 {
     public static void Prefix(ref IEnumerable<Pawn> visitors)
     {

@@ -1,5 +1,9 @@
 # Changelog for RimQuest
 
+1.6.3 - Added option to pause after quest-window is closed. Code cleanup.
+Used DeepL to update translations for ChineseSimplified, French, German, Japanese, Russian, Spanish
+
+
 1.6.2 - Should support more quest-types now, thanks to a-certain-existence
 
 

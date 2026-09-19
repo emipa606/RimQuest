@@ -18,8 +18,6 @@ public class Dialog_QuestGiver : Window
 
     private readonly int actualSilverCost;
 
-    private readonly float creationRealTime;
-
     private readonly Pawn interactor;
 
     private readonly QuestPawn questPawn;
@@ -37,7 +35,7 @@ public class Dialog_QuestGiver : Window
         interactor = newInteractor;
         forcePause = true;
         absorbInputAroundWindow = true;
-        creationRealTime = RealTime.LastRealTime;
+        TimeUntilInteractive = RealTime.LastRealTime;
         onlyOneOfTypeAllowed = false;
         actualSilverCost = determineSilverCost();
         actualPlayerSilver = determineSilverAvailable(interactor);
@@ -50,7 +48,7 @@ public class Dialog_QuestGiver : Window
         new(640f, Math.Max(460f, 320f + (RimQuestMod.instance.Settings.amount * 25)));
 
     private float TimeUntilInteractive =>
-        interactionDelay - (Time.realtimeSinceStartup - creationRealTime);
+        interactionDelay - (Time.realtimeSinceStartup - field);
 
     private bool InteractionDelayExpired => TimeUntilInteractive <= 0f;
 
@@ -95,6 +93,22 @@ public class Dialog_QuestGiver : Window
         Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
         Widgets.Label(new Rect(0f, 0f, viewRect.width, viewRect.height - questPawn.CalcOptionsHeight(width)),
             Text.AdjustedFor(questPawn.pawn));
+
+        RenderQuestList(viewRect, width);
+
+        Widgets.EndScrollView();
+
+        if (Widgets.ButtonText(new Rect(0f, inRect.height - ButtonHeight, (inRect.width / 2f) - 20f, ButtonHeight),
+                "CancelButton".Translate(), true, false))
+        {
+            Close();
+        }
+
+        HandleQuestConfirmation(inRect);
+    }
+
+    private void RenderQuestList(Rect viewRect, float width)
+    {
         if (questPawn.questsAndIncidents.Count == 0)
         {
             questPawn.GenerateQuestsAndIncidents();
@@ -102,22 +116,7 @@ public class Dialog_QuestGiver : Window
 
         for (var index = 0; index < questPawn.questsAndIncidents.Count; index++)
         {
-            object questDef = null;
-            var questName = string.Empty;
-            var questDescription = string.Empty;
-            if (questPawn.questsAndIncidents[index] is QuestScriptDef questScriptDef)
-            {
-                questName = Main.GetQuestReadableName(questScriptDef);
-                questDef = questScriptDef;
-                questDescription = questScriptDef.description;
-            }
-
-            if (questPawn.questsAndIncidents[index] is IncidentDef incidentDef)
-            {
-                questName = incidentDef.LabelCap;
-                questDef = incidentDef;
-                questDescription = incidentDef.description;
-            }
+            var (questName, questDef, questDescription) = ExtractQuestInfo(index);
 
             if (string.IsNullOrEmpty(questName))
             {
@@ -140,87 +139,129 @@ public class Dialog_QuestGiver : Window
 
             TooltipHandler.TipRegion(rect6, questDescription);
         }
+    }
 
-        Widgets.EndScrollView();
-        if (Widgets.ButtonText(new Rect(0f, inRect.height - ButtonHeight, (inRect.width / 2f) - 20f, ButtonHeight),
-                "CancelButton".Translate(), true, false))
+    private (string questName, object questDef, string questDescription) ExtractQuestInfo(int index)
+    {
+        object questDef = null;
+        var questName = string.Empty;
+        var questDescription = string.Empty;
+
+        if (questPawn.questsAndIncidents[index] is QuestScriptDef questScriptDef)
         {
-            Close();
+            questName = Main.GetQuestReadableName(questScriptDef);
+            questDef = questScriptDef;
+            questDescription = questScriptDef.description;
+        }
+        else if (questPawn.questsAndIncidents[index] is IncidentDef incidentDef)
+        {
+            questName = incidentDef.LabelCap;
+            questDef = incidentDef;
+            questDescription = incidentDef.description;
         }
 
+        return (questName, questDef, questDescription);
+    }
+
+    private void HandleQuestConfirmation(Rect inRect)
+    {
         if (actualPlayerSilver >= actualSilverCost)
         {
-            if (selectedQuest == null || !Widgets.ButtonText(
-                    new Rect((inRect.width / 2f) + 20f, inRect.height - ButtonHeight, (inRect.width / 2f) - 20f,
-                        ButtonHeight),
-                    "Confirm".Translate() + " (" + "RQ_SilverAmt".Translate(actualSilverCost) + ")", true, false))
-            {
-                return;
-            }
-
-            switch (selectedQuest)
-            {
-                case QuestScriptDef questDef:
-                {
-                    var incidentParms =
-                        StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.GiveQuest, Find.World);
-                    var storytellerComp = Find.Storyteller.storytellerComps.First(comp =>
-                        comp is StorytellerComp_OnOffCycle or StorytellerComp_RandomMain);
-                    incidentParms =
-                        storytellerComp.GenerateParms(IncidentCategoryDefOf.GiveQuest, incidentParms.target);
-
-                    var slate = new Slate();
-
-                    slate.Set("points", incidentParms.points);
-                    slate.Set("discoveryMethod",
-                        "QuestDiscoveredFromTrader".Translate(questPawn.pawn.Named("TRADER"),
-                            interactor.Named("NEGOTIATOR")));
-
-                    QuestUtility.SendLetterQuestAvailable(
-                        QuestUtility.GenerateQuestAndMakeAvailable(questDef, slate));
-                    break;
-                }
-                case IncidentDef incidentDef:
-                {
-                    var incidentParms = StorytellerUtility.DefaultParmsNow(incidentDef.category, Find.World);
-                    if (incidentDef.pointsScaleable)
-                    {
-                        var storytellerComp = Find.Storyteller.storytellerComps.First(comp =>
-                            comp is StorytellerComp_OnOffCycle or StorytellerComp_RandomMain);
-                        incidentParms = storytellerComp.GenerateParms(incidentDef.category, incidentParms.target);
-                    }
-
-                    incidentDef.Worker.TryExecute(incidentParms);
-                    break;
-                }
-            }
-
-            var questPawns = RimQuestTracker.Instance.questPawns;
-            if (questPawns != null && questPawns.Contains(questPawn))
-            {
-                questPawns.Remove(questPawn);
-            }
-
-            SoundDefOf.ExecuteTrade.PlayOneShotOnCamera();
-            receiveSilver(questPawn.pawn, actualSilverCost);
-            Close();
-            Find.WindowStack.Add(new Dialog_MessageBox(
-                "RQ_QuestDialogTwo".Translate(questPawn.pawn.LabelShort, interactor.LabelShort)
-                    .AdjustedFor(questPawn.pawn), "OK".Translate(), null, null, null, title));
+            HandleSufficientFunds(inRect);
         }
         else
         {
-            if (!Widgets.ButtonText(
-                    new Rect((inRect.width / 2f) + 20f, inRect.height - ButtonHeight, (inRect.width / 2f) - 20f,
-                        ButtonHeight),
-                    "RQ_LackFunds".Translate(), true, false))
-            {
-                return;
-            }
-
-            SoundDefOf.ClickReject.PlayOneShotOnCamera();
-            Messages.Message("RQ_LackFundsMessage".Translate(), MessageTypeDefOf.RejectInput);
+            HandleInsufficientFunds(inRect);
         }
+    }
+
+    private void HandleSufficientFunds(Rect inRect)
+    {
+        if (selectedQuest == null || !Widgets.ButtonText(
+                new Rect((inRect.width / 2f) + 20f, inRect.height - ButtonHeight, (inRect.width / 2f) - 20f,
+                    ButtonHeight),
+                "Confirm".Translate() + " (" + "RQ_SilverAmt".Translate(actualSilverCost) + ")", true, false))
+        {
+            return;
+        }
+
+        ExecuteSelectedQuest();
+    }
+
+    private void ExecuteSelectedQuest()
+    {
+        switch (selectedQuest)
+        {
+            case QuestScriptDef questDef:
+                ExecuteQuestScript(questDef);
+                break;
+            case IncidentDef incidentDef:
+                ExecuteIncident(incidentDef);
+                break;
+        }
+
+        RemoveQuestPawnFromTracker();
+        SoundDefOf.ExecuteTrade.PlayOneShotOnCamera();
+        receiveSilver(questPawn.pawn, actualSilverCost);
+        Close();
+        Find.WindowStack.Add(new Dialog_MessageBox(
+            "RQ_QuestDialogTwo".Translate(questPawn.pawn.LabelShort, interactor.LabelShort)
+                .AdjustedFor(questPawn.pawn), "OK".Translate(), null, null, null, title));
+    }
+
+    private void ExecuteQuestScript(QuestScriptDef questDef)
+    {
+        var incidentParms =
+            StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.GiveQuest, Find.World);
+        var storytellerComp = Find.Storyteller.storytellerComps.First(comp =>
+            comp is StorytellerComp_OnOffCycle or StorytellerComp_RandomMain);
+        incidentParms =
+            storytellerComp.GenerateParms(IncidentCategoryDefOf.GiveQuest, incidentParms.target);
+
+        var slate = new Slate();
+        slate.Set("points", incidentParms.points);
+        slate.Set("discoveryMethod",
+            "QuestDiscoveredFromTrader".Translate(questPawn.pawn.Named("TRADER"),
+                interactor.Named("NEGOTIATOR")));
+
+        QuestUtility.SendLetterQuestAvailable(
+            QuestUtility.GenerateQuestAndMakeAvailable(questDef, slate));
+    }
+
+    private static void ExecuteIncident(IncidentDef incidentDef)
+    {
+        var incidentParms = StorytellerUtility.DefaultParmsNow(incidentDef.category, Find.World);
+        if (incidentDef.pointsScaleable)
+        {
+            var storytellerComp = Find.Storyteller.storytellerComps.First(comp =>
+                comp is StorytellerComp_OnOffCycle or StorytellerComp_RandomMain);
+            incidentParms = storytellerComp.GenerateParms(incidentDef.category, incidentParms.target);
+        }
+
+        incidentDef.Worker.TryExecute(incidentParms);
+    }
+
+    private void RemoveQuestPawnFromTracker()
+    {
+        var questPawns = RimQuestTracker.Instance.questPawns;
+        if (questPawns != null && questPawns.Contains(questPawn))
+        {
+            questPawns.Remove(questPawn);
+        }
+    }
+
+    private static void HandleInsufficientFunds(Rect inRect)
+    {
+        if (!Widgets.ButtonText(
+                new Rect((inRect.width / 2f) + 20f, inRect.height - ButtonHeight, (inRect.width / 2f) - 20f,
+                    ButtonHeight),
+                "RQ_LackFunds".Translate(), true, false))
+        {
+            return;
+        }
+
+        SoundDefOf.ClickReject.PlayOneShotOnCamera();
+        Messages.Message("RQ_LackFundsMessage".Translate(), MessageTypeDefOf.RejectInput);
     }
 
     private static void receiveSilver(Pawn receiver, int amountOwed)
@@ -251,5 +292,21 @@ public class Dialog_QuestGiver : Window
     {
         var result = Verse.Text.CalcHeight(Text, width);
         return result;
+    }
+
+    public override void Close(bool doCloseSound = true)
+    {
+        base.Close(doCloseSound);
+
+        if (RimQuestMod.instance.Settings.pauseOnClose)
+        {
+            LongEventHandler.ExecuteWhenFinished(() =>
+            {
+                if (!Find.TickManager.Paused)
+                {
+                    Find.TickManager.CurTimeSpeed = TimeSpeed.Paused;
+                }
+            });
+        }
     }
 }

@@ -28,11 +28,6 @@ internal class RimQuestMod : Mod
     private static Vector2 scrollPosition;
 
     /// <summary>
-    ///     The private settings
-    /// </summary>
-    private RimQuestSettings settings;
-
-    /// <summary>
     ///     Constructor
     /// </summary>
     /// <param name="content"></param>
@@ -50,9 +45,9 @@ internal class RimQuestMod : Mod
     {
         get
         {
-            settings ??= GetSettings<RimQuestSettings>();
+            field ??= GetSettings<RimQuestSettings>();
 
-            return settings;
+            return field;
         }
     }
 
@@ -81,11 +76,11 @@ internal class RimQuestMod : Mod
     ///     The settings-window
     ///     For more info: https://rimworldwiki.com/wiki/Modding_Tutorials/ModSettings
     /// </summary>
-    /// <param name="rect"></param>
-    public override void DoSettingsWindowContents(Rect rect)
+    /// <param name="inRect"></param>
+    public override void DoSettingsWindowContents(Rect inRect)
     {
         var listingStandard = new Listing_Standard();
-        listingStandard.Begin(rect);
+        listingStandard.Begin(inRect);
         listingStandard.Label("RimQuest_price".Translate(instance.Settings.questPrice.ToStringMoney()), -1f,
             "RimQuest_price_tooltip".Translate());
         instance.Settings.questPrice =
@@ -97,6 +92,10 @@ internal class RimQuestMod : Mod
         instance.Settings.amount = (int)listingStandard.SliderLabeled(
             "RimQuest_amount".Translate(instance.Settings.amount), instance.Settings.amount, 1, 10,
             tooltip: "RimQuest_amount_tooltip".Translate());
+
+        listingStandard.CheckboxLabeled("RimQuest_pauseOnClose".Translate(),
+            ref instance.Settings.pauseOnClose,
+            "RimQuest_pauseOnClose_tooltip".Translate());
 
         var headerLabel = listingStandard.Label("RimQuest_Hospitality_ValidQuests".Translate());
 
@@ -128,35 +127,21 @@ internal class RimQuestMod : Mod
 
         searchText =
             Widgets.TextField(
-                new Rect(headerLabel.position + new Vector2((rect.width / 2) - (searchSize.x / 2), 0),
+                new Rect(headerLabel.position + new Vector2((inRect.width / 2) - (searchSize.x / 2), 0),
                     searchSize),
                 searchText);
         TooltipHandler.TipRegion(new Rect(
-            headerLabel.position + new Vector2((rect.width / 2) - (searchSize.x / 2), 0),
+            headerLabel.position + new Vector2((inRect.width / 2) - (searchSize.x / 2), 0),
             searchSize), "RimQuest_search".Translate());
 
         listingStandard.End();
 
+        var (allQuests, allIncidents) = FilterQuestsAndIncidents(searchText);
 
-        var allQuests = Main.Quests;
-        var allIncidents = Main.Incidents;
-        if (!string.IsNullOrEmpty(searchText))
-        {
-            allQuests = Main.Quests.Where(keyValuePair =>
-                keyValuePair.Key.defName.ToLower().Contains(searchText.ToLower()) || keyValuePair.Key.modContentPack
-                    .Name
-                    .ToLower()
-                    .Contains(searchText.ToLower())).ToDictionary(pair => pair.Key, pair => pair.Value);
-            allIncidents = Main.Incidents.Where(keyValuePair =>
-                keyValuePair.Key.label.ToLower().Contains(searchText.ToLower()) || keyValuePair.Key.modContentPack.Name
-                    .ToLower()
-                    .Contains(searchText.ToLower())).ToDictionary(pair => pair.Key, pair => pair.Value);
-        }
-
-        var borderRect = rect;
+        var borderRect = inRect;
         borderRect.y += headerLabel.y + 90;
         borderRect.height -= headerLabel.y + 90;
-        var scrollContentRect = rect;
+        var scrollContentRect = inRect;
         scrollContentRect.height = (allQuests.Count + allIncidents.Count) * 61f;
         scrollContentRect.width -= 20;
         scrollContentRect.x = 0;
@@ -167,74 +152,17 @@ internal class RimQuestMod : Mod
         Widgets.BeginScrollView(borderRect, ref scrollPosition, scrollContentRect);
         scrollListing.Begin(scrollContentRect);
         var alternate = false;
+
         foreach (var questScriptDef in allQuests.Keys)
         {
-            var modInfo = questScriptDef.modContentPack?.Name;
-            var selectorRect = scrollListing.GetRect(60);
             alternate = !alternate;
-            if (alternate)
-            {
-                Widgets.DrawBoxSolid(selectorRect.ExpandedBy(10, 0), alternateBackground);
-            }
-
-            var questLabel = $"{Main.GetQuestReadableName(questScriptDef)} ({questScriptDef.defName}) - {modInfo}";
-            var selectedValue = Main.VanillaQuestsValues[questScriptDef];
-            if (instance.Settings.questSettings.ContainsKey(questScriptDef))
-            {
-                if (instance.Settings.questSettings[questScriptDef] == selectedValue)
-                {
-                    instance.Settings.questSettings.Remove(questScriptDef);
-                }
-                else
-                {
-                    selectedValue = instance.Settings.questSettings[questScriptDef];
-                }
-            }
-
-            var wasValue = selectedValue;
-
-
-            Widgets.CheckboxLabeled(selectorRect, questLabel, ref selectedValue);
-
-            if (wasValue != selectedValue)
-            {
-                instance.Settings.questSettings[questScriptDef] = selectedValue;
-            }
+            RenderQuestItem(scrollListing, questScriptDef, alternate);
         }
 
         foreach (var incidentDef in allIncidents.Keys)
         {
-            var modInfo = incidentDef.modContentPack?.Name;
-            var selectorRect = scrollListing.GetRect(60);
             alternate = !alternate;
-            if (alternate)
-            {
-                Widgets.DrawBoxSolid(selectorRect.ExpandedBy(10, 0), alternateBackground);
-            }
-
-            var incidentLabel = $"{incidentDef.LabelCap} ({incidentDef.defName}) - {modInfo}";
-            var selectedValue = Main.VanillaIncidentsValues[incidentDef];
-            if (instance.Settings.incidentSettings.ContainsKey(incidentDef))
-            {
-                if (instance.Settings.incidentSettings[incidentDef] == selectedValue)
-                {
-                    instance.Settings.incidentSettings.Remove(incidentDef);
-                }
-                else
-                {
-                    selectedValue = instance.Settings.incidentSettings[incidentDef];
-                }
-            }
-
-            var wasValue = selectedValue;
-
-
-            Widgets.CheckboxLabeled(selectorRect, incidentLabel, ref selectedValue);
-
-            if (wasValue != selectedValue)
-            {
-                instance.Settings.incidentSettings[incidentDef] = selectedValue;
-            }
+            RenderIncidentItem(scrollListing, incidentDef, alternate);
         }
 
         scrollListing.End();
@@ -245,5 +173,92 @@ internal class RimQuestMod : Mod
     {
         base.WriteSettings();
         Main.UpdateValidQuests();
+    }
+
+    private static (Dictionary<QuestScriptDef, bool>, Dictionary<IncidentDef, bool>) FilterQuestsAndIncidents(
+        string filterText)
+    {
+        var allQuests = Main.Quests;
+        var allIncidents = Main.Incidents;
+
+        if (string.IsNullOrEmpty(filterText))
+        {
+            return (allQuests, allIncidents);
+        }
+
+        var lowerFilter = filterText.ToLower();
+        allQuests = Main.Quests.Where(keyValuePair =>
+                keyValuePair.Key.defName.ToLower().Contains(lowerFilter) ||
+                keyValuePair.Key.modContentPack.Name.ToLower().Contains(lowerFilter))
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
+
+        allIncidents = Main.Incidents.Where(keyValuePair =>
+                keyValuePair.Key.label.ToLower().Contains(lowerFilter) ||
+                keyValuePair.Key.modContentPack.Name.ToLower().Contains(lowerFilter))
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
+
+        return (allQuests, allIncidents);
+    }
+
+    private static void RenderQuestItem(Listing_Standard listing, QuestScriptDef questDef, bool alternate)
+    {
+        var modInfo = questDef.modContentPack?.Name;
+        var selectorRect = listing.GetRect(60);
+
+        if (alternate)
+        {
+            Widgets.DrawBoxSolid(selectorRect.ExpandedBy(10, 0), alternateBackground);
+        }
+
+        var questLabel = $"{Main.GetQuestReadableName(questDef)} ({questDef.defName}) - {modInfo}";
+        var selectedValue = Main.VanillaQuestsValues[questDef];
+
+        if (instance.Settings.questSettings.ContainsKey(questDef))
+        {
+            selectedValue = instance.Settings.questSettings[questDef];
+            if (selectedValue == Main.VanillaQuestsValues[questDef])
+            {
+                instance.Settings.questSettings.Remove(questDef);
+            }
+        }
+
+        var wasValue = selectedValue;
+        Widgets.CheckboxLabeled(selectorRect, questLabel, ref selectedValue);
+
+        if (wasValue != selectedValue)
+        {
+            instance.Settings.questSettings[questDef] = selectedValue;
+        }
+    }
+
+    private static void RenderIncidentItem(Listing_Standard listing, IncidentDef incidentDef, bool alternate)
+    {
+        var modInfo = incidentDef.modContentPack?.Name;
+        var selectorRect = listing.GetRect(60);
+
+        if (alternate)
+        {
+            Widgets.DrawBoxSolid(selectorRect.ExpandedBy(10, 0), alternateBackground);
+        }
+
+        var incidentLabel = $"{incidentDef.LabelCap} ({incidentDef.defName}) - {modInfo}";
+        var selectedValue = Main.VanillaIncidentsValues[incidentDef];
+
+        if (instance.Settings.incidentSettings.ContainsKey(incidentDef))
+        {
+            selectedValue = instance.Settings.incidentSettings[incidentDef];
+            if (selectedValue == Main.VanillaIncidentsValues[incidentDef])
+            {
+                instance.Settings.incidentSettings.Remove(incidentDef);
+            }
+        }
+
+        var wasValue = selectedValue;
+        Widgets.CheckboxLabeled(selectorRect, incidentLabel, ref selectedValue);
+
+        if (wasValue != selectedValue)
+        {
+            instance.Settings.incidentSettings[incidentDef] = selectedValue;
+        }
     }
 }

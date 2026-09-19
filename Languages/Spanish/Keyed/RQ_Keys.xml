@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <RQ_LoadingScreen>Setting Quest Giver...</RQ_LoadingScreen>
   <RQ_SilverAmt>{0} de plata</RQ_SilverAmt>
@@ -35,4 +35,6 @@
   <!-- A RimWorld of Magic -->
   <RimQuest_amount>Misiones ofrecidas: {0}</RimQuest_amount>
   <RimQuest_amount_tooltip>La cantidad de misiones ofrecidas por cada comerciante</RimQuest_amount_tooltip>
+  <RimQuest_pauseOnClose>Pausar el juego al cerrar la ventana de misiones</RimQuest_pauseOnClose>
+  <RimQuest_pauseOnClose_tooltip>Si se activa, el juego se pausará al cerrar la ventana del personaje que te da la misión. Desactívalo si prefieres que el juego continúe sin pausarse.</RimQuest_pauseOnClose_tooltip>
 </LanguageData>

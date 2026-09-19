@@ -19,4 +19,7 @@
   <Folder Name="/XML/1.6/Defs/QuestDefs/">
     <File Path="../1.6/Defs/QuestDefs/QuestGiverDefs.xml" />
   </Folder>
+  <Folder Name="/XML/Languages/English/Keyed/">
+    <File Path="../Languages/English/Keyed/RQ_Keys.xml" />
+  </Folder>
 </Solution>

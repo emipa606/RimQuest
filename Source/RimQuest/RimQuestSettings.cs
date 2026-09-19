@@ -13,6 +13,7 @@ internal class RimQuestSettings : ModSettings
     public Dictionary<IncidentDef, bool> incidentSettings = new();
     private List<IncidentDef> incidentSettingsKeys;
     private List<bool> incidentSettingsValues;
+    public bool pauseOnClose;
     public float questChance = 1f;
     public float questPrice = 50f;
     public Dictionary<QuestScriptDef, bool> questSettings = new();
@@ -25,6 +26,7 @@ internal class RimQuestSettings : ModSettings
         Scribe_Values.Look(ref questPrice, "QuestPrice", 50f);
         Scribe_Values.Look(ref questChance, "QuestChance", 1f);
         Scribe_Values.Look(ref amount, "QuestAmount", 3);
+        Scribe_Values.Look(ref pauseOnClose, "PauseOnClose");
         Scribe_Collections.Look(ref questSettings, "QuestSettings", LookMode.Def,
             LookMode.Value,
             ref questSettingsKeys, ref questSettingsValues);

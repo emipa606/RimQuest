@@ -71,4 +71,4 @@ This mod was commissioned by Bradr44.
 
  
 
-[![Image](https://img.shields.io/github/v/release/emipa606/RimQuest?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2263331727) | tags: quest givers
+[![Image](https://img.shields.io/github/v/release/emipa606/RimQuest?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2263331727) | quest givers

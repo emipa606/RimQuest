@@ -8,7 +8,7 @@ public class JobDriver_QuestWithPawn : JobDriver
 {
     private Pawn QuestGiver => (Pawn)TargetThingA;
 
-    public override bool TryMakePreToilReservations(bool yeaaa)
+    public override bool TryMakePreToilReservations(bool errorOnFailed)
     {
         return pawn.Reserve(QuestGiver, job);
     }

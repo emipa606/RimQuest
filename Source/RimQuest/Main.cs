@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using RimWorld;
@@ -108,6 +109,6 @@ public static class Main
             defName = questScriptDef.defName.Replace("_", " ");
         }
 
-        return Regex.Replace(defName, "(\\B[A-Z])", " $1");
+        return Regex.Replace(defName, "(?<=[a-z])(?=[A-Z])", " ", RegexOptions.None, new TimeSpan(0, 0, 0, 2));
     }
 }
